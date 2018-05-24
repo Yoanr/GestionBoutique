@@ -1,0 +1,23 @@
+@startuml
+
+class Client {
+-id
+-nom
+-prenom
+-adresse
+-commandes
+}
+
+class Commande {
+-id
+-idClient
+-articles
+-reduction
+-fraixdeport
+-prixtotal
+
+}
+
+Commande -* Client : commande
+
+@enduml
