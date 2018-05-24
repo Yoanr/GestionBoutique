@@ -5,19 +5,50 @@ class Client {
 -nom
 -prenom
 -adresse
--commandes
 }
 
 class Commande {
 -id
--idClient
--articles
 -reduction
 -fraixdeport
 -prixtotal
 
 }
 
-Commande -* Client : commande
+class Article {
+-prixPublique
+-cout
+}
 
+
+class Boutique{
+-coutFixe
+-coutMobile
+}
+
+class Lot{
+-type
+-nbArticle
+-reduction
+-articles
+}
+class Objet{
+-nom;
+-reference;
+-marque;
+-prix;
+}
+
+class Stock{
+-quantite
+}
+
+Client "1" -- "1..*" Commande 
+Article -|> Objet
+Lot -|> Objet
+Lot --* "2..*" Article
+Objet "1..*" *-- Commande
+
+Boutique "0..*" -- "1..*" Article
+(Boutique, Article) .. Stock
 @enduml
