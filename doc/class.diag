@@ -24,6 +24,7 @@ class Article {
 class Boutique{
 -coutFixe
 -coutMobile
+<<static>> +main(String[] args)
 }
 
 class Lot{
@@ -32,7 +33,7 @@ class Lot{
 -reduction
 -articles
 }
-class Objet{
+interface Objet{
 -nom;
 -reference;
 -marque;
@@ -40,12 +41,15 @@ class Objet{
 }
 
 class Stylo{
+-typeEncre
 }
 
 class Ramette{
+-dimensionL
+-dimensionH
 }
 
-class ArticleFactory{
+class "<< singleton >>\nArticleFactory"{
 +createArticle(TypeArticle);
 }
 
@@ -54,16 +58,20 @@ class Stock{
 -quantite
 }
 
+
+
 Client "1" -- "1..*" Commande 
 Article -|> Objet
 Lot -|> Objet
 Lot --* "2..*" Article
-Stylo -|> Article
-Ramette -|> Article
+Stylo -up-|> Article
+Ramette -up-|> Article
 Objet "1..*" *-- Commande
-Boutique "1" .. "0..*" Client
-ArticleFactory .. Article : "create"
+Boutique "1" -- "0..*" Client
+"<< singleton >>\nArticleFactory" .up.> Article : "<< create >>"
 
-Boutique "0..*" -- "1..*" Article
+Boutique "0..*" -right-  Article
 (Boutique, Article) .. Stock
+Boutique .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
+
 @enduml
