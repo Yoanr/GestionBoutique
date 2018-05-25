@@ -39,6 +39,17 @@ class Objet{
 -prix;
 }
 
+class Stylo{
+}
+
+class Ramette{
+}
+
+class ArticleFactory{
++createArticle(TypeArticle);
+}
+
+
 class Stock{
 -quantite
 }
@@ -47,7 +58,11 @@ Client "1" -- "1..*" Commande
 Article -|> Objet
 Lot -|> Objet
 Lot --* "2..*" Article
+Stylo -|> Article
+Ramette -|> Article
 Objet "1..*" *-- Commande
+Boutique "1" .. "0..*" Client
+ArticleFactory .. Article : "create"
 
 Boutique "0..*" -- "1..*" Article
 (Boutique, Article) .. Stock
