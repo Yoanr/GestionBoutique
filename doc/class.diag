@@ -1,6 +1,7 @@
 @startuml
 
 class Client {
++Client()
 -id
 -nom
 -prenom
@@ -8,6 +9,7 @@ class Client {
 }
 
 class Commande {
++Commande()
 -id
 -reduction
 -fraixdeport
@@ -16,6 +18,7 @@ class Commande {
 }
 
 class Article {
++Article()
 -prixPublique
 -cout
 }
@@ -28,19 +31,21 @@ class Boutique{
 }
 
 class Lot{
++Lot()
 -type
 -nbArticle
 -reduction
 -articles
 }
 interface Objet{
--nom;
--reference;
--marque;
--prix;
+-nom
+-reference
+-marque
+-prix
 }
 
 class Stylo{
++Stylo()
 -typeEncre
 }
 
@@ -50,7 +55,9 @@ class Ramette{
 }
 
 class "<< singleton >>\nArticleFactory"{
-+createArticle(TypeArticle);
++creerArticle(TypeArticle)
+-ArticleFactory()
++getInstance()
 }
 
 
@@ -58,8 +65,38 @@ class Stock{
 -quantite
 }
 
+class "<< singleton >>\nBaseDonnee"{
+-BaseDonnee()
++getInstance()
++getAll()
+-getCommandeBoutique()
+-getCommandeClient()
+-getClient()
+-getStock()
++addClient()
++addCommande()
++modifierStock()
+-clients
+-commandes
+-stocks
+
+}
+class Interpreteur{
++Interpreter(String s)
+}
+
+class Afficheur{
++afficherClient()
++afficherCommande()
++afficherStock()
++afficherBoutique()
+}
 
 
+
+
+"<< singleton >>\nBaseDonnee" .left.> Client : << uses >>
+"<< singleton >>\nBaseDonnee" .down.> Commande : << uses >>
 Client "1" -- "1..*" Commande 
 Article -|> Objet
 Lot -|> Objet
@@ -67,11 +104,12 @@ Lot --* "2..*" Article
 Stylo -up-|> Article
 Ramette -up-|> Article
 Objet "1..*" *-- Commande
-Boutique "1" -- "0..*" Client
 "<< singleton >>\nArticleFactory" .up.> Article : "<< create >>"
 
 Boutique "0..*" -right-  Article
 (Boutique, Article) .. Stock
-Boutique .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
-
+"<< singleton >>\nBaseDonnee" .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
+Boutique ..> Interpreteur : << uses >>
+Interpreteur .right.> "<< singleton >>\nBaseDonnee" : << uses >>
+Interpreteur .left.> Afficheur : << uses >>
 @enduml
