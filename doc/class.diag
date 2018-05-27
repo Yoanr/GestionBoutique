@@ -24,9 +24,10 @@ class Article {
 }
 
 
-class Boutique{
+class "BoutiqueMain" as Boutique{
 -coutFixe
 -coutMobile
+<<static>> -Application()
 <<static>> +main(String[] args)
 }
 
@@ -65,7 +66,7 @@ class Stock{
 -quantite
 }
 
-class "<< singleton >>\nBaseDonnee"{
+class "<< singleton >>\nBaseDonnee" as BaseDonnee{
 -BaseDonnee()
 +getInstance()
 +getAll()
@@ -95,8 +96,8 @@ class Afficheur{
 
 
 
-"<< singleton >>\nBaseDonnee" .left.> Client : << uses >>
-"<< singleton >>\nBaseDonnee" .down.> Commande : << uses >>
+BaseDonnee .left.> Client : << uses >>
+BaseDonnee .down.> Commande : << uses >>
 Client "1" -- "1..*" Commande 
 Article -|> Objet
 Lot -|> Objet
@@ -104,12 +105,12 @@ Lot --* "2..*" Article
 Stylo -up-|> Article
 Ramette -up-|> Article
 Objet "1..*" *-- Commande
-"<< singleton >>\nArticleFactory" .up.> Article : "<< create >>"
+"<< singleton >>\nArticleFactory" .down.> Article : "<< create >>"
 
-Boutique "0..*" -right-  Article
-(Boutique, Article) .. Stock
-"<< singleton >>\nBaseDonnee" .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
+BaseDonnee  -right-  Article
+(BaseDonnee, Article) .up. Stock
+BaseDonnee .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
 Boutique ..> Interpreteur : << uses >>
-Interpreteur .right.> "<< singleton >>\nBaseDonnee" : << uses >>
+Interpreteur .right.> BaseDonnee : << uses >>
 Interpreteur .left.> Afficheur : << uses >>
 @enduml
