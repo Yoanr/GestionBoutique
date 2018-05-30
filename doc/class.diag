@@ -66,8 +66,8 @@ class Stock{
 -quantite
 }
 
-class "<< singleton >>\nBaseDonnee" as BaseDonnee{
--BaseDonnee()
+class "<< singleton >>\nModele" as Modele{
+-Modele()
 +getInstance()
 +getAll()
 -getCommandeBoutique()
@@ -82,11 +82,11 @@ class "<< singleton >>\nBaseDonnee" as BaseDonnee{
 -stocks
 
 }
-class Interpreteur{
-+Interpreter(String s)
+class Controlleur{
++Controlleur(String s)
 }
 
-class Afficheur{
+class Vue{
 +afficherClient()
 +afficherCommande()
 +afficherStock()
@@ -96,8 +96,8 @@ class Afficheur{
 
 
 
-BaseDonnee .left.> Client : << uses >>
-BaseDonnee .down.> Commande : << uses >>
+Modele .left.> Client : << uses >>
+Modele .down.> Commande : << uses >>
 Client "1" -- "1..*" Commande 
 Article -|> Objet
 Lot -|> Objet
@@ -107,10 +107,10 @@ Ramette -up-|> Article
 Objet "1..*" *-- Commande
 "<< singleton >>\nArticleFactory" .down.> Article : "<< create >>"
 
-BaseDonnee  -right-  Article
-(BaseDonnee, Article) .up. Stock
-BaseDonnee .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
-Boutique ..> Interpreteur : << uses >>
-Interpreteur .right.> BaseDonnee : << uses >>
-Interpreteur .left.> Afficheur : << uses >>
+Modele  -right-  Article
+(Modele, Article) .up. Stock
+Modele .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
+Boutique ..> Controlleur : << uses >>
+Controlleur .right.> Modele : << uses >>
+Controlleur .left.> Vue : << uses >>
 @enduml
