@@ -1,5 +1,8 @@
 @startuml
 
+database "File" {
+}
+
 class Client {
 +Client()
 -id
@@ -55,7 +58,7 @@ class Ramette{
 -dimensionH
 }
 
-class "<< singleton >>\nArticleFactory"{
+class "<< singleton >>\nArticleFactory" as ArticleFactory{
 +creerArticle(TypeArticle)
 -ArticleFactory()
 +getInstance()
@@ -69,7 +72,6 @@ class Stock{
 class "<< singleton >>\nModele" as Modele{
 -Modele()
 +getInstance()
-+getAll()
 -getCommandeBoutique()
 -getCommandeClient()
 -getClient()
@@ -86,7 +88,12 @@ class Controlleur{
 +Controlleur(String s)
 }
 
-class Vue{
+class ControlleurTerminal{
+}
+class ControlleurGraphique{
+}
+
+class VueTerminal{
 +afficherClient()
 +afficherCommande()
 +afficherStock()
@@ -96,21 +103,32 @@ class Vue{
 
 
 
-Modele .left.> Client : << uses >>
-Modele .down.> Commande : << uses >>
+Modele ..> Client : << use >>
+Modele ..> Commande : << use >>
 Client "1" -- "1..*" Commande 
 Article -|> Objet
 Lot -|> Objet
 Lot --* "2..*" Article
-Stylo -up-|> Article
-Ramette -up-|> Article
+Stylo --|> Article
+Ramette --|> Article
 Objet "1..*" *-- Commande
-"<< singleton >>\nArticleFactory" .down.> Article : "<< create >>"
 
-Modele  -right-  Article
-(Modele, Article) .up. Stock
-Modele .up.> "<< singleton >>\nArticleFactory" : "<< uses >>"
-Boutique ..> Controlleur : << uses >>
-Controlleur .right.> Modele : << uses >>
-Controlleur .left.> Vue : << uses >>
+ArticleFactory ..> Article : "<< create >>"
+
+Modele  --  Article
+(Modele, Article) .. Stock
+Modele ..> ArticleFactory : "<< use >>"
+Modele ..> File : << read >>
+
+ControlleurGraphique -|> Controlleur
+ControlleurTerminal -|> Controlleur
+
+Controlleur ..> Modele : << uses >>
+
+ControlleurTerminal ..> VueTerminal : << use >>
+ControlleurGraphique ..> VueGraphique : << use >>
+VueGraphique -() javaFX
+
+
+Boutique ..> Controlleur : << use >>
 @enduml
