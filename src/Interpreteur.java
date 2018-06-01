@@ -40,6 +40,8 @@ public class Interpreteur {
 			System.out.println("modifier");
 		} else if (this.arguments[0].equals(this.commandes[3])) {
 			System.out.println("supprimer");
+		}else if(this.arguments[0].equals("quitter")) {
+			return true;
 		}
 		return false;
 
