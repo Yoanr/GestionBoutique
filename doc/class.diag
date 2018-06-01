@@ -1,6 +1,6 @@
 @startuml
 
-database "File" {
+database "DonneeConteneur" {
 }
 
 class Client {
@@ -14,9 +14,19 @@ class Client {
 class Commande {
 +Commande()
 -id
+-date
 -reduction
 -fraixdeport
 -prixtotal
+
+}
+
+class Boutique {
+-LOYER
+-SALAIRE
+-CHARGE
+-ca
+-benefice
 
 }
 
@@ -27,7 +37,7 @@ class Article {
 }
 
 
-class "BoutiqueMain" as Boutique{
+class Main{
 -coutFixe
 -coutMobile
 <<static>> -Application()
@@ -46,6 +56,11 @@ interface Objet{
 -reference
 -marque
 -prix
+}
+
+class LigneDeCommande{
+-quantite
+-prixLigne
 }
 
 class Stylo{
@@ -72,16 +87,18 @@ class Stock{
 class "<< singleton >>\nModele" as Modele{
 -Modele()
 +getInstance()
--getCommandeBoutique()
--getCommandeClient()
--getClient()
--getStock()
-+addClient()
-+addCommande()
-+modifierStock()
 -clients
 -commandes
 -stocks
+
++getCommandesBoutique()
++getCommandesClient()
++getClients()
++getStock()
++addClient()
++addCommande()
++modifierStock()
++getBoutiqueInfo()
 
 }
 class Controlleur{
@@ -101,27 +118,38 @@ class VueTerminal{
 }
 
 
+class DonneeManager{
+-lire()
+-ecrire()
+}
 
 
-Modele ..> Client : << use >>
-Modele ..> Commande : << use >>
+
+
+
 Client "1" -- "1..*" Commande 
-Article -|> Objet
-Lot -|> Objet
+Article -up-|> Objet
+Lot -up-|> Objet
 Lot --* "2..*" Article
-Stylo --|> Article
-Ramette --|> Article
-Objet "1..*" *-- Commande
+Stylo -up-|> Article
+Ramette -up-|> Article
+Objet "1..*" *-left- Commande
+(Objet, Commande) .. LigneDeCommande
 
 ArticleFactory ..> Article : "<< create >>"
 
 Modele  --  Article
 (Modele, Article) .. Stock
 Modele ..> ArticleFactory : "<< use >>"
-Modele ..> File : << read >>
+Modele ..> Boutique : "<< use >>"
+Modele ..> Client : << use >>
+Modele ..> Commande : << use >>
+Modele ..> DonneeManager : << use >>
 
-ControlleurGraphique -|> Controlleur
-ControlleurTerminal -|> Controlleur
+DonneeManager ..> DonneeConteneur : << read >>
+
+ControlleurGraphique -up-|> Controlleur
+ControlleurTerminal -up-|> Controlleur
 
 Controlleur ..> Modele : << uses >>
 
@@ -130,5 +158,5 @@ ControlleurGraphique ..> VueGraphique : << use >>
 VueGraphique -() javaFX
 
 
-Boutique ..> Controlleur : << use >>
+Main ..> Controlleur : << use >>
 @enduml

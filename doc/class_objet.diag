@@ -32,7 +32,7 @@ class Lot{
 -reduction
 -articles
 }
-interface Objet{
+interface Vendable{
 -nom
 -reference
 -marque
@@ -57,12 +57,12 @@ class Stock{
 
 Boutique -- Client
 Client -- Commande
-Article ..> Objet : << use >>
-Lot ..> Objet : << use >>
+Article ..> Vendable : << use >>
+Lot ..> Vendable : << use >>
 Lot --* "2..*" Article
 Stylo -up-|> Article
 Ramette -up-|> Article
-Objet "1..*" *-- Commande
+Vendable "1..*" *-- Commande
 (Boutique, Article) .. Stock
 
 
