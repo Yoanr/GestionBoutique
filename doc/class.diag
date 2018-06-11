@@ -115,6 +115,7 @@ class VueTerminal{
 +afficherCommande()
 +afficherStock()
 +afficherBoutique()
++afficherMenu()
 }
 
 
@@ -142,7 +143,7 @@ Modele  --  Article
 (Modele, Article) .. Stock
 Modele ..> ArticleFactory : "<< use >>"
 Modele ..> Boutique : "<< use >>"
-Modele ..> Client : << use >>
+Modele .up.> Client : << use >>
 Modele ..> Commande : << use >>
 Modele ..> DonneeManager : << use >>
 
