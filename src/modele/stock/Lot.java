@@ -6,6 +6,7 @@ import java.util.List;
 public class Lot extends ObjetVendable {
     private Article type;
     private static int nbArticle;
+
     private int reduc;
     private List<Article> articles;
 
@@ -18,9 +19,6 @@ public class Lot extends ObjetVendable {
         articles.add(article);
 
         nbArticle = 1;
-
-        reduc = 10;
-
         updatePrix();
     }
 
@@ -62,5 +60,13 @@ public class Lot extends ObjetVendable {
 
     public double getPrix() {
         return prix;
+    }
+
+    public int getReduc() {
+        return reduc;
+    }
+
+    public void setReduc(int reduc) {
+        this.reduc = reduc;
     }
 }

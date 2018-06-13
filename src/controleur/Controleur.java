@@ -4,13 +4,11 @@ import vue.VueGraphique;
 import vue.VueTerminal;
 
 public class Controleur {
-    public Controleur(String [] args) {
-        if (args.length == 1 && "command Line".equals(args[0]))
+    public Controleur(String arg) {
+         if("commandLine".equals(arg))
             controllerCommandLine();
         else
             controllerGraphique();
-
-
     }
 
     private void controllerCommandLine(){

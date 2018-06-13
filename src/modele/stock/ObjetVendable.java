@@ -4,6 +4,8 @@ public abstract class ObjetVendable {
     protected String nom;
     protected String reference;
     protected String marque;
+
+    //prix public
     protected double prix;
 
     public ObjetVendable(String nom, String reference) {
