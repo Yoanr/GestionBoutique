@@ -1,4 +1,4 @@
-package stock;
+package modele.stock;
 
 public class Stylo extends Article {
     public enum Couleur{

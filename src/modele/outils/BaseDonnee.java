@@ -1,4 +1,4 @@
-package outils;
+package modele.outils;
 
 public class BaseDonnee {
 	

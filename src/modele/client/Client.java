@@ -1,4 +1,4 @@
-package client;
+package modele.client;
 
 public class Client {
     private String nom;

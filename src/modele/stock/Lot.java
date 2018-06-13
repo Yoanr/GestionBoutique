@@ -1,9 +1,9 @@
-package stock;
+package modele.stock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lot extends Objet {
+public class Lot extends ObjetVendable {
     private Article type;
     private static int nbArticle;
     private int reduc;

@@ -1,4 +1,4 @@
-package stock;
+package modele.stock;
 
 public class Ramette extends Article {
     private String grammage;

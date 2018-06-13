@@ -1,6 +1,6 @@
-package stock;
+package modele.stock;
 
-public abstract class Article extends  Objet{
+public abstract class Article extends ObjetVendable {
 
     public Article(String nom, String reference, String marque, double prixUnitaire) {
         super(nom, reference);
