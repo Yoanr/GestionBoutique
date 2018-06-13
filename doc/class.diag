@@ -105,16 +105,12 @@ class Controlleur{
 +Controlleur(String s)
 }
 
-class ControlleurTerminal{
-}
-class ControlleurGraphique{
-}
-
 class VueTerminal{
 +afficherClient()
 +afficherCommande()
 +afficherStock()
 +afficherBoutique()
++afficherMenu()
 }
 
 
@@ -142,19 +138,16 @@ Modele  --  Article
 (Modele, Article) .. Stock
 Modele ..> ArticleFactory : "<< use >>"
 Modele ..> Boutique : "<< use >>"
-Modele ..> Client : << use >>
+Modele .up.> Client : << use >>
 Modele ..> Commande : << use >>
 Modele ..> DonneeManager : << use >>
 
 DonneeManager ..> DonneeConteneur : << read >>
 
-ControlleurGraphique -up-|> Controlleur
-ControlleurTerminal -up-|> Controlleur
-
 Controlleur ..> Modele : << uses >>
 
-ControlleurTerminal ..> VueTerminal : << use >>
-ControlleurGraphique ..> VueGraphique : << use >>
+Controlleur ..> VueTerminal : << use >>
+Controlleur ..> VueGraphique : << use >>
 VueGraphique -() javaFX
 
 
