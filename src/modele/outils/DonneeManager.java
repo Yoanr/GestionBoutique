@@ -59,7 +59,6 @@ public class DonneeManager {
             final Transformer transformer = transformerFactory.newTransformer();
             final DOMSource source = new DOMSource(document);
             final StreamResult sortie = new StreamResult(new File(XMLFILE));
-            //final StreamResult result = new StreamResult(System.out);
 
             //prologue
             transformer.setOutputProperty(OutputKeys.VERSION, "1.0");
@@ -82,6 +81,7 @@ public class DonneeManager {
     private static Element dataToXml(Document document){
         Element racine = document.createElement("boutique");
 
+        //Clients
         Element clients = document.createElement("clients");
         for (Client client : Boutique.getInstance().getClientList()){
             Element clientElement = document.createElement("client");
@@ -95,6 +95,8 @@ public class DonneeManager {
         }
         racine.appendChild(clients);
 
+
+        //Commandes
         Element commandes = document.createElement("commandes");
         for (Commande commande : Boutique.getInstance().getCommandeList()){
             Element commandeElement = document.createElement("commande");
@@ -120,23 +122,34 @@ public class DonneeManager {
         }
         racine.appendChild(commandes);
 
+        //Stocks
         Element stocks = document.createElement("stocks");
         for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocks().entrySet()) {
             int quantite = entry.getValue();
+            Article article = entry.getKey();
 
-            Class<?> c = entry.getKey().getClass();
-            Field[] fields = c.getDeclaredFields();
-            Element articleElement = document.createElement(c.getClass().getSimpleName().toLowerCase());
+            Class<?> currentClass = entry.getKey().getClass();
+            Field[] fields = currentClass.getDeclaredFields();
+            Element articleElement = document.createElement("Article");
+            articleElement.setAttribute("quantite", String.valueOf(quantite));
+            articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
 
+            //For a specific article
+            Element specificArticle = document.createElement(currentClass.getSimpleName().toLowerCase());
+            specificArticle.setAttribute("nom", article.getNom());
+            specificArticle.setAttribute("reference", article.getReference());
+            specificArticle.setAttribute("marque", article.getMarque());
+            specificArticle.setAttribute("prix", String.valueOf(article.getPrix()));
             for (Field field : fields) {
                 try {
                     field.setAccessible(true);
-                    System.out.println(field.getName().toString() + " " + field.get(entry.getKey()));
+                    specificArticle.setAttribute(field.getName().toString(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                stocks.appendChild(articleElement);
             }
+            articleElement.appendChild(specificArticle);
+            stocks.appendChild(articleElement);
         }
         racine.appendChild(stocks);
 
@@ -147,7 +160,106 @@ public class DonneeManager {
     private static void xmlToData(Document document){
         Element racine = document.getDocumentElement();
 
+        if (racine != null){
+           //Client
 
-        //TODO
+           for (int indexRacineChild = 0; indexRacineChild <= racine.getChildNodes().getLength(); indexRacineChild++){
+               Element currentElement =(Element) racine.getChildNodes().item(indexRacineChild);
+
+               switch (currentElement.getNodeName()){
+                   case "clients":{
+
+/*
+                       //Clients
+                       Element clients = document.createElement("clients");
+                       for (Client client : Boutique.getInstance().getClientList()){
+                           Element clientElement = document.createElement("client");
+
+                           clientElement.setAttribute("identifiant", String.valueOf(client.getId()));
+                           clientElement.setAttribute("nom", client.getNom());
+                           clientElement.setAttribute("prenom", client.getPrenom());
+                           clientElement.setAttribute("adresse", client.getAdresse());
+
+                           clients.appendChild(clientElement);
+                       }
+                       racine.appendChild(clients);*/
+
+
+                       break;
+                   }
+                   case "commandes":{
+
+                       break;
+                   }
+                   case "stocks" : {
+
+                       break;
+                   }
+               }
+           }
+
+
+
+        }
+
+
+
+        //Commandes
+        Element commandes = document.createElement("commandes");
+        for (Commande commande : Boutique.getInstance().getCommandeList()){
+            Element commandeElement = document.createElement("commande");
+
+            commandeElement.setAttribute("identifiant", String.valueOf(commande.getId()));
+            commandeElement.setAttribute("nomClient", commande.getNomClient());
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
+
+            for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
+                int cpt = 1;
+                Element ligneCommandeElement = document.createElement("ligneCommande"+cpt);
+
+                ligneCommandeElement.setAttribute("quantité", String.valueOf(ligneDeCommande.getQuantite()));
+                ligneCommandeElement.setTextContent(ligneDeCommande.getObjet().getNom());
+
+                commandeElement.appendChild(ligneCommandeElement);
+            }
+
+            commandeElement.setAttribute("prix", String.valueOf(commande.getPrixTotal()));
+            commandes.appendChild(commandeElement);
+        }
+        racine.appendChild(commandes);
+
+        //Stocks
+        Element stocks = document.createElement("stocks");
+        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocks().entrySet()) {
+            int quantite = entry.getValue();
+            Article article = entry.getKey();
+
+            Class<?> currentClass = entry.getKey().getClass();
+            Field[] fields = currentClass.getDeclaredFields();
+            Element articleElement = document.createElement("Article");
+            articleElement.setAttribute("quantite", String.valueOf(quantite));
+            articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
+
+            //For a specific article
+            Element specificArticle = document.createElement(currentClass.getSimpleName().toLowerCase());
+            specificArticle.setAttribute("nom", article.getNom());
+            specificArticle.setAttribute("reference", article.getReference());
+            specificArticle.setAttribute("marque", article.getMarque());
+            specificArticle.setAttribute("prix", String.valueOf(article.getPrix()));
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+                    specificArticle.setAttribute(field.getName().toString(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            articleElement.appendChild(specificArticle);
+            stocks.appendChild(articleElement);
+        }
+        racine.appendChild(stocks);
+               //TODO
     }
 }
