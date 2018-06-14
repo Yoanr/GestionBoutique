@@ -1,53 +1,43 @@
 package vue;
 
+import java.util.List;
+import java.util.Scanner;
+
+import modele.client.Client;
+
 public class VueTerminal implements Affichage{
 
-    private String[] arguments;
     private String[] commandes = {"afficher","ajouter","modifier","supprimer"};
-    private String[] commandes2 = {"clients","commandes"};
+    private String[] commandes2 = {"client","commande","article"};
 
-    public VueTerminal(String[] s) {
-        this.arguments = new String[s.length];
-        int indice = 0;
-
-        for (indice = 0; indice < s.length; indice++) {
-            this.arguments[indice] = s[indice];
-        }
+    public VueTerminal() {
+    	this.afficherMenu();
     }
 
-    public boolean interprete() {
-
-        if (this.arguments[0].equals(this.commandes[0])) {
-            System.out.println("afficher");
-            if(this.arguments[1].equals(this.commandes2[0])) {
-                System.out.println(" client");
-            }else if(this.arguments[1].equals(this.commandes2[1])) {
-                System.out.println(" commande");
-            }
-
-        } else if (this.arguments[0].equals(this.commandes[1])) {
-            System.out.println("ajouter");
-            if(this.arguments[1].equals(this.commandes2[0])) {
-                System.out.println(" client");
-            }else if(this.arguments[1].equals(this.commandes2[1])) {
-                System.out.println(" commande");
-            }
-
-
-        } else if (this.arguments[0].equals(this.commandes[2])) {
-            System.out.println("modifier");
-        } else if (this.arguments[0].equals(this.commandes[3])) {
-            System.out.println("supprimer");
-        }else if(this.arguments[0].equals("quitter")) {
-            return true;
-        }
-        return false;
-
+    public String[] utilisateurAction() {
+    	String[] arguments = new String[2]; 
+    	
+    	Scanner scanIn =new Scanner(System.in);
+    	System.out.println("Action ?");
+    	arguments[0] = scanIn.nextLine();
+    	if(!(arguments[0].equals("quitter"))) {
+    	 	System.out.println("Sur qui ?");
+        	arguments[1] = scanIn.nextLine();
+    	}else {
+    		arguments[1] = null;
+    		scanIn.close();
+    	}
+   
+   	
+		return arguments;
+    
     }
 
     @Override
-    public void afficherClient() {
-
+    public void afficherClient(List<Client> listeClient) {
+    	for(Client client : listeClient) {
+    		System.out.println(client.toString());
+    	}
     }
 
     @Override
@@ -58,6 +48,15 @@ public class VueTerminal implements Affichage{
     @Override
     public void afficherArticle() {
 
+    }
+    
+    public void afficherMenu() {
+    	System.out.println("***********                MENU                ***********");
+    	System.out.println("**     Action : afficher, ajouter, modifier, supprimer  **");                         
+    	System.out.println("**                 (ou quitter)                         **");
+    	System.out.println("**	   Sur quoi ? : client, commande, article       **");
+    	System.out.println("**                                                      **");
+    	System.out.println("**********************************************************");
     }
 
 /*

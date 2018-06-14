@@ -17,4 +17,9 @@ public class VueGraphique implements Affichage {
     public void afficherArticle() {
 
     }
+    
+    @Override
+    public String[] utilisateurAction() {
+
+    }
 }
