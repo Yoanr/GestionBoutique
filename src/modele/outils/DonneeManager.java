@@ -3,6 +3,9 @@ package modele.outils;
 import modele.boutique.Boutique;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,6 +16,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import modele.client.Client;
+import modele.commande.Commande;
+import modele.stock.Article;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,7 +54,7 @@ public class DonneeManager {
             final Document document= builder.newDocument();
 
             document.appendChild(dataToXml(document))
-;
+            ;
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();
             final Transformer transformer = transformerFactory.newTransformer();
             final DOMSource source = new DOMSource(document);
@@ -75,7 +82,64 @@ public class DonneeManager {
     private static Element dataToXml(Document document){
         Element racine = document.createElement("boutique");
 
-        //TODO
+        Element clients = document.createElement("clients");
+        for (Client client : Boutique.getInstance().getClientList()){
+            Element clientElement = document.createElement("client");
+
+            clientElement.setAttribute("identifiant", String.valueOf(client.getId()));
+            clientElement.setAttribute("nom", client.getNom());
+            clientElement.setAttribute("prenom", client.getPrenom());
+            clientElement.setAttribute("adresse", client.getAdresse());
+
+            clients.appendChild(clientElement);
+        }
+        racine.appendChild(clients);
+
+        Element commandes = document.createElement("commandes");
+        for (Commande commande : Boutique.getInstance().getCommandeList()){
+            Element commandeElement = document.createElement("commande");
+
+            commandeElement.setAttribute("identifiant", String.valueOf(commande.getId()));
+            commandeElement.setAttribute("nomClient", commande.getNomClient());
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
+
+            for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
+                int cpt = 1;
+                Element ligneCommandeElement = document.createElement("ligneCommande"+cpt);
+
+                ligneCommandeElement.setAttribute("quantité", String.valueOf(ligneDeCommande.getQuantite()));
+                ligneCommandeElement.setTextContent(ligneDeCommande.getObjet().getNom());
+
+                commandeElement.appendChild(ligneCommandeElement);
+            }
+
+            commandeElement.setAttribute("prix", String.valueOf(commande.getPrixTotal()));
+            commandes.appendChild(commandeElement);
+        }
+        racine.appendChild(commandes);
+
+        Element stocks = document.createElement("stocks");
+        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocks().entrySet()) {
+            int quantite = entry.getValue();
+
+            Class<?> c = entry.getKey().getClass();
+            Field[] fields = c.getDeclaredFields();
+            Element articleElement = document.createElement(c.getClass().getSimpleName().toLowerCase());
+
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+                    System.out.println(field.getName().toString() + " " + field.get(entry.getKey()));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                stocks.appendChild(articleElement);
+            }
+        }
+        racine.appendChild(stocks);
+
 
         return racine;
     }

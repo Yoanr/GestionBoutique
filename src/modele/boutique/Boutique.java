@@ -3,6 +3,7 @@ package modele.boutique;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
+import modele.stock.ObjetVendable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,8 +64,24 @@ public final class Boutique {
         return added;
     }
 
-    public void ajouterCommande(Commande c){
+    public boolean ajouterCommande(Commande c){
+        boolean added = false;
 
+        if (! commandeList.contains(c)) {
+            commandeList.add(c);
+            added = true;
+        }
+        return added;
+    }
+
+    public boolean ajouterArticle(Article article, int quantite){
+        boolean added = false;
+
+        if (! stocks.containsKey(article)) {
+            stocks.put(article, quantite  );
+            added = true;
+        }
+        return added;
     }
 
     public void getBoutiqueInfo (){

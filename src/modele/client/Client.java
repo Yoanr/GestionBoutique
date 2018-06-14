@@ -50,4 +50,12 @@ public class Client {
                 ", identifiant=" + identifiant +
                 '}';
     }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public int getIdentifiant() {
+        return identifiant;
+    }
 }

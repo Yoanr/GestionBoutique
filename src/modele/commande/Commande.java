@@ -4,7 +4,10 @@ import modele.stock.ObjetVendable;
 
 import java.util.ArrayList;
 
-public class Commande {private String nomClient;
+public class Commande {
+
+    //Todo plutot l id du client ?
+    private String nomClient;
     private String date;
     private  int id;
     private double prixTotal;
@@ -70,6 +73,31 @@ public class Commande {private String nomClient;
             prixTotal += LigneDeCommande.getObjet().getPrix() * LigneDeCommande.getQuantite();
         }
     }
+
+    public String getNomClient() {
+        return nomClient;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getPrixTotal() {
+        return prixTotal;
+    }
+
+    public ArrayList<LigneDeCommande> getLignes() {
+        return lignes;
+    }
+
+    public double getFraisDePort() {
+        return fraisDePort;
+    }
+
 
     @Override
     public String toString() {
