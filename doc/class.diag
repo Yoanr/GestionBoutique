@@ -3,74 +3,95 @@
 database "DonneeConteneur" {
 }
 
+enum Couleur{
++ROUGE
++BLEU
++VERT
++JAUNE
++NOIR
+}
+
 class Client {
-+Client()
--id
--nom
--prenom
--adresse
++Client(nom : String, prenom : String, adresse : String)
+-{static} cptId
+-id : int
+-nom : String
+-prenom : String
+-adresse : String
++toString() : String
+
 }
 
 class Commande {
-+Commande()
--id
--date
--reduction
--fraixdeport
--prixtotal
++Commande(nomClient : String, date : String, obj : ObjetVendable, quantite : int )
+-id : int 
+-{static} cptId
+-ligne : LigneDeCommande[]
+-date : String
+-reduction : doule
+-fraixdeport : double
+-prixtotal : double
++ajoutObjet(obj : ObjetVendable, quantite : int)
++removeLigne(reference : String)
++addLigne(ligne : LigneDeCommande)
++updatePrix();
++toString() : String
+}
+
+class LigneDeCommande{
++LigneDeCommande(obj : ObjetVendable, quantite : int)
+-quantite : int
+-prixLigne : double
 
 }
 
-class Boutique {
--LOYER
--SALAIRE
--CHARGE
--ca
--benefice
-
-}
 
 class Article {
-+Article()
--prixPublique
--cout
++Article(nom : String, reference : String, marque : String, prixUnitaire : double)
+-{abtract} calculCoutObtention() : double
+-prixPublique : double
+-coutObtention : double
 }
 
 
 class Main{
--coutFixe
--coutMobile
-<<static>> -Application()
 <<static>> +main(String[] args)
 }
 
 class Lot{
-+Lot()
--type
--nbArticle
--reduction
--articles
-}
-interface Objet{
--nom
--reference
--marque
--prix
++Lot(article : Article, reference : String)
+-type : Article
+-nbArticle : int
+-reduction : double
+-articles : Article[]
++addArticle(article : Article)
++removeArticle(reference : String)
+-updatePrix()
+toString() : String
 }
 
-class LigneDeCommande{
--quantite
--prixLigne
+abstract class ObjetVendable{
+#nom : String
+#reference : String
+#marque : String
+#prix : double
++ObjetVendable(nom : String, reference : String )
+
 }
+
+
 
 class Stylo{
-+Stylo()
--typeEncre
++Stylo(nom : String, ref : String, marque : String, prixUnitaire : double)
++Stylo(nom : String, ref : String, marque : String, prixUnitaire : double, couleur : Couleur)
+-{enum} couleur : Couleur
 }
 
 class Ramette{
--dimensionL
--dimensionH
+-grammage : String
+-dimensionL : int
+-dimensionH : int
+-{abtract} calculCoutObtention() : double
 }
 
 class "<< singleton >>\nArticleFactory" as ArticleFactory{
@@ -80,36 +101,44 @@ class "<< singleton >>\nArticleFactory" as ArticleFactory{
 }
 
 
-class Stock{
--quantite
-}
 
-class "<< singleton >>\nModele" as Modele{
--Modele()
+class "<< singleton >>\nBoutique" as Boutique{
+-Boutique()
 +getInstance()
--clients
--commandes
--stocks
+-clients : Client[]
+-commandes : Commande[]
+-stocks : map[Article,quantite]
 
-+getCommandesBoutique()
-+getCommandesClient()
-+getClients()
-+getStock()
-+addClient()
+-LOYER
+-SALAIRE
+-CHARGE
+-ca
+-benefice
+
++getCommandesBoutique() : Commande[]
++getCommandesClient() : Commande[]
++getClients() : Client[]
++getStock() : map[Article,quantite]
++addClient() 
 +addCommande()
 +modifierStock()
-+getBoutiqueInfo()
++getBoutiqueInfo() : String
 
 }
 class Controlleur{
 +Controlleur(String s)
 }
 
-class VueTerminal{
+Interface Affichage{
 +afficherClient()
 +afficherCommande()
 +afficherStock()
 +afficherBoutique()
+}
+
+class VueGraphique{
+}
+class VueTerminal{
 +afficherMenu()
 }
 
@@ -124,32 +153,34 @@ class DonneeManager{
 
 
 Client "1" -- "1..*" Commande 
-Article -up-|> Objet
-Lot -up-|> Objet
-Lot --* "2..*" Article
+Article  -up-|> ObjetVendable
+Lot -up-|> ObjetVendable
+Lot "0..*" --* "2..*" Article
 Stylo -up-|> Article
+Couleur -down- Stylo
 Ramette -up-|> Article
-Objet "1..*" *-left- Commande
-(Objet, Commande) .. LigneDeCommande
+Commande "1" +..* "1..*" LigneDeCommande
+LigneDeCommande "0..*" -->  "1" ObjetVendable
 
 ArticleFactory ..> Article : "<< create >>"
 
-Modele  --  Article
-(Modele, Article) .. Stock
-Modele ..> ArticleFactory : "<< use >>"
-Modele ..> Boutique : "<< use >>"
-Modele .up.> Client : << use >>
-Modele ..> Commande : << use >>
-Modele ..> DonneeManager : << use >>
+Boutique "1"  -- "0..*"  Article
+Boutique ..> ArticleFactory : "<< use >>"
+Boutique "1" .up.> "0..*" Client : << use >>
+Boutique "1" ..> "0..*" Commande : << use >>
+Boutique ..> DonneeManager : << use >>
 
 DonneeManager ..> DonneeConteneur : << read >>
 
-Controlleur ..> Modele : << uses >>
+Controlleur ..> Boutique : << uses >>
 
-Controlleur ..> VueTerminal : << use >>
-Controlleur ..> VueGraphique : << use >>
-VueGraphique -() javaFX
+Controlleur .up.> VueTerminal : << use >>
+Controlleur .up.> VueGraphique : << use >>
+ javaFX ()-- VueGraphique
+
+VueTerminal -up|> Affichage
+VueGraphique -up|> Affichage
 
 
-Main ..> Controlleur : << use >>
+Main .right.> Controlleur : << use >>
 @enduml
