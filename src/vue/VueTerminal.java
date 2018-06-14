@@ -1,5 +1,6 @@
 package vue;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,8 +8,8 @@ import modele.client.Client;
 
 public class VueTerminal implements Affichage{
 
-    private String[] commandes = {"afficher","ajouter","modifier","supprimer"};
-    private String[] commandes2 = {"client","commande","article"};
+    private List<String> commandes = Arrays.asList("afficher","ajouter","modifier","supprimer");
+    private List<String> commandes2 = Arrays.asList("client","commande","article");
 
     public VueTerminal() {
     	this.afficherMenu();
@@ -19,10 +20,18 @@ public class VueTerminal implements Affichage{
     	
     	Scanner scanIn =new Scanner(System.in);
     	System.out.println("Action ?");
-    	arguments[0] = scanIn.nextLine();
+    	
+    	do{
+    		arguments[0] = scanIn.nextLine();
+    	}while(!commandes.contains(arguments[0]));
+    	
     	if(!(arguments[0].equals("quitter"))) {
+    		
     	 	System.out.println("Sur qui ?");
-        	arguments[1] = scanIn.nextLine();
+    	 	do {
+    	 		arguments[1] = scanIn.nextLine();
+    	 	}while(!commandes2.contains(arguments[1]));
+        	
     	}else {
     		arguments[1] = null;
     		scanIn.close();
