@@ -49,7 +49,7 @@ public class Lot extends ObjetVendable {
         prix = 0;
         for (Article article : articles)
         {
-            this.prix += article.getPrixUnitaire();
+            this.prix += article.getPrix();
         }
         prix = prix * (100-reduc)/100;
     }

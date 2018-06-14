@@ -2,12 +2,15 @@ package modele.client;
 
 public class Client {
     private String nom;
+    private String prenom;
     private String adresse;
     private int identifiant;
     private static int cptId = 1;
 
-    public Client(String nom) {
+    public Client(String nom, String prenom, String adresse) {
         this.nom = nom;
+        this.prenom =prenom;
+        this.adresse = adresse;
         this.identifiant = cptId++;
     }
 

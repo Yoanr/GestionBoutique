@@ -1,8 +1,20 @@
 package vue;
 
-public class VueGraphique {
+public class VueGraphique implements Affichage {
 
-    public VueGraphique() {
+
+    @Override
+    public void afficherClient() {
+
+    }
+
+    @Override
+    public void afficherCommande() {
+
+    }
+
+    @Override
+    public void afficherArticle() {
 
     }
 }

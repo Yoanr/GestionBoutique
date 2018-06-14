@@ -24,8 +24,10 @@ public class Ramette extends Article {
         this.grammage = grammage;
     }
 
+
+
     @Override
-    public String toString() {
+    public String descriptionArticle() {
         return "Ramette " + grammage + " " + reference;
     }
 

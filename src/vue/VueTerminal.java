@@ -1,16 +1,10 @@
 package vue;
-import modele.outils.BaseDonnee;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-public class VueTerminal {
+public class VueTerminal implements Affichage{
 
     private String[] arguments;
     private String[] commandes = {"afficher","ajouter","modifier","supprimer"};
     private String[] commandes2 = {"clients","commandes"};
-    private BaseDonnee baseDonnee;
 
     public VueTerminal(String[] s) {
         this.arguments = new String[s.length];
@@ -19,9 +13,6 @@ public class VueTerminal {
         for (indice = 0; indice < s.length; indice++) {
             this.arguments[indice] = s[indice];
         }
-        this.baseDonnee = BaseDonnee.getInstance();
-
-
     }
 
     public boolean interprete() {
@@ -51,6 +42,21 @@ public class VueTerminal {
             return true;
         }
         return false;
+
+    }
+
+    @Override
+    public void afficherClient() {
+
+    }
+
+    @Override
+    public void afficherCommande() {
+
+    }
+
+    @Override
+    public void afficherArticle() {
 
     }
 

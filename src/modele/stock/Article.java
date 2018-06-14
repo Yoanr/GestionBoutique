@@ -10,11 +10,14 @@ public abstract class Article extends ObjetVendable {
         this.prix = prixUnitaire;
     }
 
-    public String getMarque() {
-        return marque;
+    public double getCoutObtention() {
+        return coutObtention;
     }
 
-    public double getPrixUnitaire() {
-        return prix;
+    public abstract String descriptionArticle();
+
+    @Override
+    public String toString() {
+        return descriptionArticle();
     }
 }
