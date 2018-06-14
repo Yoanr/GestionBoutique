@@ -35,7 +35,7 @@ public class Controleur {
             if(arguments[1].equals(commandes2[0])) {
             	
                 List<Client> listeClient = boutique.getClientList();
-                this.affichage.afficherClient(listeClient);
+                this.affichage.afficher(listeClient);
                 
             }else if(arguments[1].equals(commandes2[1])) {
                 System.out.println(" commande");

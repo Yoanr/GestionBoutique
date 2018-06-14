@@ -1,12 +1,10 @@
 package vue;
 
+import modele.client.Client;
+
+import java.util.List;
+
 public class VueGraphique implements Affichage {
-
-
-    @Override
-    public void afficherClient() {
-
-    }
 
     @Override
     public void afficherCommande() {
@@ -20,6 +18,16 @@ public class VueGraphique implements Affichage {
     
     @Override
     public String[] utilisateurAction() {
+        return null;
+    }
+
+    @Override
+    public <T> void afficher(List<T> listClient) {
+
+    }
+
+    @Override
+    public void afficherClient(List<Client> listeClient) {
 
     }
 }

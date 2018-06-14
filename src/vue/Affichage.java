@@ -9,5 +9,8 @@ public interface Affichage {
     void afficherClient(List<Client> listeClient);
     void afficherCommande();
     void afficherArticle();
+
+    <T> void afficher (List<T> listClient);
+
     String[] utilisateurAction();
 }

@@ -59,7 +59,14 @@ public class VueTerminal implements Affichage{
     	System.out.println("**********************************************************");
     }
 
-/*
+    @Override
+    public <T> void afficher(List<T> listClient) {
+        for (T element : listClient){
+            System.out.println(element.toString());
+        }
+    }
+
+    /*
     private static void application() {
         String s = "";
         boolean stop = false;
