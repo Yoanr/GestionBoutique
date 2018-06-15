@@ -43,6 +43,24 @@ public class Client {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+
+        Client client = (Client) o;
+
+        if (!getNom().equals(client.getNom())) return false;
+        return getPrenom().equals(client.getPrenom());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getNom().hashCode();
+        result = 31 * result + getPrenom().hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Client{" +
                 "nom='" + nom + '\'' +
