@@ -1,6 +1,8 @@
 package vue;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,8 +10,8 @@ import modele.client.Client;
 
 public class VueTerminal implements Affichage{
 
-    private List<String> commandes = Arrays.asList("afficher","ajouter","modifier","supprimer");
-    private List<String> commandes2 = Arrays.asList("client","commande","article");
+    public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer"));
+    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","stock"));
 
     public VueTerminal() {
     	this.afficherMenu();
