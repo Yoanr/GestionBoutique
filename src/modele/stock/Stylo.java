@@ -7,16 +7,14 @@ public class Stylo extends Article {
 
     private Couleur couleur;
 
-    public Stylo(String nom, String reference, String marque, double prixUnitaire) {
-        super(reference,nom, marque, prixUnitaire);
+    public Stylo(String reference, String marque, double prixUnitaire) {
+        super(reference, marque, prixUnitaire);
     }
 
 
     public Stylo(String nom, String reference, String marque, double prixUnitaire, Couleur couleur) {
-        super(nom, reference, marque, prixUnitaire);
+        super(reference, marque, prixUnitaire);
         this.couleur = couleur;
-        System.out.
-                println(nom.toString());
     }
 
     public Couleur getCouleur() {

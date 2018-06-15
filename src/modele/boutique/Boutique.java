@@ -3,6 +3,7 @@ package modele.boutique;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
+import modele.stock.ArticleFactory;
 import modele.stock.ObjetVendable;
 
 import java.util.ArrayList;
@@ -98,9 +99,15 @@ public final class Boutique {
         return AJOUTE_ERROR;
     }
 
+
+    public String ajouterArticle(String [] articleTab){
+
+        return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab[0], articleTab[1], articleTab[2], Double.parseDouble(articleTab[3])), Integer.parseInt(articleTab[4]));
+    }
+
     public String ajouterArticle(Article article, int quantite){
        if (! stocks.containsKey(article)) {
-            stocks.put(article, quantite  );
+            stocks.put(article, quantite );
             return AJOUTE;
         }
         return AJOUTE_ERROR;

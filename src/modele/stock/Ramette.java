@@ -5,12 +5,12 @@ public class Ramette extends Article {
     private double dimL;
     private double dimH;
 
-    public Ramette(String nom, String reference, String marque, double prixUnitaire) {
-        super(reference, nom, marque, prixUnitaire);
+    public Ramette(String reference, String marque, double prixUnitaire) {
+        super(reference, marque, prixUnitaire);
     }
 
-    public Ramette(String nom, String reference, String marque, double prixUnitaire, String grammage, double dimH, double dimL) {
-        super(nom, reference, marque, prixUnitaire);
+    public Ramette(String reference, String marque, double prixUnitaire, String grammage, double dimH, double dimL) {
+        super(reference, marque, prixUnitaire);
         this.grammage = grammage;
         this.dimH = dimH;
         this.dimL = dimL;

@@ -20,6 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
+import modele.stock.ObjetVendable;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -36,6 +37,11 @@ public class DonneeManager {
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
             final Document document = builder.parse(new File(XMLFILE));
+
+            Boutique.getInstance().getStocksList().clear();
+            Boutique.getInstance().getStocksMap().clear();
+            Boutique.getInstance().getClientList().clear();
+            Boutique.getInstance().getCommandeList().clear();
 
             xmlToData(document.getDocumentElement());
 
@@ -107,11 +113,10 @@ public class DonneeManager {
             commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
 
             for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
-                int cpt = 1;
-                Element ligneCommandeElement = document.createElement("ligneCommande"+cpt);
+                Element ligneCommandeElement = document.createElement("ligneCommande");
 
                 ligneCommandeElement.setAttribute("quantité", String.valueOf(ligneDeCommande.getQuantite()));
-                ligneCommandeElement.setTextContent(ligneDeCommande.getObjet().getNom());
+                ligneCommandeElement.setAttribute("referenceArticle", ligneDeCommande.getObjet().getReference());
 
                 commandeElement.appendChild(ligneCommandeElement);
             }
@@ -157,24 +162,35 @@ public class DonneeManager {
     }
 
     private static void xmlToData(Element element){
-        // do something with the current node instead of System.out
+/*        // do something with the current node instead of System.out
         System.out.println(element.getNodeName());
 
         switch (element.getNodeName()){
             case "client":{
                 Boutique.getInstance().ajouterClient(
                         new Client(element.getAttribute("nom"),
-                                    element.getAttribute("prenom"),
-                                    element.getAttribute("adresse")));
+                                element.getAttribute("prenom"),
+                                element.getAttribute("adresse")));
 
-                //todo check l id ajouté
                 break;
             }
             case "commandes":{
+                Commande newCommande = new Commande(element.getAttribute("nomClient"),
+                        element.getAttribute("date"),
+                        Double.parseDouble(element.getAttribute("fraisDePort")));
 
-                break;
+                for (int indexLigneElement = 0; indexLigneElement < element.getElementsByTagName("ligneDeCommande").getLength(); indexLigneElement++){
+                    Element currentElement=(Element) element.getElementsByTagName("ligneDeCommande").item(indexLigneElement);
+                    newCommande.ajoutObjet(Boutique.getInstance().getArticleByReference(currentElement.getAttribute("reference")) == null? currentElement.getAttribute("reference"): Boutique.getInstance().getArticleByReference(currentElement.getAttribute("reference")),currentElement.getAttribute("quantite"));
+
+
+                }
+
+                return;
             }
             case "stocks" : {
+
+
 
                 break;
             }
@@ -189,7 +205,7 @@ public class DonneeManager {
                 Element currentElement = (Element) currentNode;
                 xmlToData(currentElement);
             }
-        }
+        }*/
     }
 /*
         if (racine != null){
