@@ -45,15 +45,13 @@ public final class Boutique {
         List<String> stockList = new ArrayList<>();
 
         for (Map.Entry<Article, Integer> entry : stocks.entrySet()) {
-            int quantite = entry.getValue();System.out.println(quantite);
+            int quantite = entry.getValue();
             Article article = entry.getKey();
 
             StringBuilder stringBuilder = new StringBuilder(String.valueOf(quantite));
             stringBuilder.append(" - ");
             stringBuilder.append(article.toString());
             stockList.add(stringBuilder.toString());
-            System.out.println(stringBuilder);
-
         }
         return stockList;
     }
