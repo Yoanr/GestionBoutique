@@ -18,6 +18,7 @@ public final class Boutique {
     private double  ca;
     private double benefice;
 
+    public static final String DEFAULT = "";
     public static final String ARGS_ERROR = "Nombre d'arguments incorrect";
     public static final String AJOUTE = "Elément ajouté";
     public static final String SUPPRIME = "Elément supprimé";
