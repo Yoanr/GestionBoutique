@@ -18,11 +18,11 @@ public final class Boutique {
     private double  ca;
     private double benefice;
 
-    private static final String ARGS_ERROR = "Nombre d'arguments incorrect";
-    private static final String AJOUTE = "Elément ajouté";
-    private static final String SUPPRIME = "Elément supprimé";
-    private static final String AJOUTE_ERROR = "Elément non ajouté";
-    private static final String SUPPRIME_ERROR = "Elément non supprimé";
+    public static final String ARGS_ERROR = "Nombre d'arguments incorrect";
+    public static final String AJOUTE = "Elément ajouté";
+    public static final String SUPPRIME = "Elément supprimé";
+    public static final String AJOUTE_ERROR = "Elément non ajouté";
+    public static final String SUPPRIME_ERROR = "Elément non supprimé";
 
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
