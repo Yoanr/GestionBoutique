@@ -8,7 +8,7 @@ public abstract class ObjetVendable {
     //prix public
     protected double prix;
 
-    public ObjetVendable(String nom, String reference) {
+    public ObjetVendable(String reference, String nom) {
         this.nom = nom;
         this.reference = reference;
 

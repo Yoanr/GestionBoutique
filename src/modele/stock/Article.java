@@ -4,7 +4,7 @@ public abstract class Article extends ObjetVendable {
 
     private double coutObtention;
 
-    public Article(String nom, String reference, String marque, double prixUnitaire) {
+    public Article(String reference, String nom , String marque, double prixUnitaire) {
         super(nom, reference);
         this.marque = marque;
         this.prix = prixUnitaire;

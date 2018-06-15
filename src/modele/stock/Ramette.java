@@ -6,7 +6,7 @@ public class Ramette extends Article {
     private double dimH;
 
     public Ramette(String nom, String reference, String marque, double prixUnitaire) {
-        super(nom, reference, marque, prixUnitaire);
+        super(reference, nom, marque, prixUnitaire);
     }
 
     public Ramette(String nom, String reference, String marque, double prixUnitaire, String grammage, double dimH, double dimL) {

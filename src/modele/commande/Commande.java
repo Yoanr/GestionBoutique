@@ -15,7 +15,7 @@ public class Commande {
     private double fraisDePort;
     private static int cptId = 1;
 
-    public Commande(String nomClient, String date, ObjetVendable ObjetVendable, int quantite) {
+    public Commande(String nomClient, String date,double fraisDePort, ObjetVendable ObjetVendable, int quantite) {
         this.nomClient = nomClient;
         this.date = date;
         lignes = new ArrayList<>();
@@ -24,10 +24,17 @@ public class Commande {
         this.id = cptId++;
     }
 
+    public Commande(String nomClient, String date, double fraisDePort) {
+        this.nomClient = nomClient;
+        this.date = date;
+        lignes = new ArrayList<>();
+        updatePrix();
+        this.id = 0;
+    }
+
     public class  LigneDeCommande {
         private ObjetVendable ObjetVendable;
         private int quantite;
-
 
         public LigneDeCommande(ObjetVendable ObjetVendable, int quantite) {
             this.ObjetVendable = ObjetVendable;

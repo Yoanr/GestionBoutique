@@ -11,7 +11,7 @@ public class Lot extends ObjetVendable {
     private List<Article> articles;
 
     public Lot(String reference, Article article) {
-        super(article.toString(), reference);
+        super(reference, article.toString());
         this.type = article;
         marque = type.getMarque();
 

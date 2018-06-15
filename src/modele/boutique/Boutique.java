@@ -18,6 +18,12 @@ public final class Boutique {
     private double  ca;
     private double benefice;
 
+    private static final String ARGS_ERROR = "Nombre d'arguments incorrect";
+    private static final String AJOUTE = "Elément ajouté";
+    private static final String SUPPRIME = "Elément supprimé";
+    private static final String AJOUTE_ERROR = "Elément non ajouté";
+    private static final String SUPPRIME_ERROR = "Elément non supprimé";
+
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
     private HashMap<Article, Integer > stocks = new HashMap<>();
@@ -57,50 +63,57 @@ public final class Boutique {
     }
 
 
-    public boolean supprimerClient(int idClient){
-        boolean deleted = false;
-
+    public String supprimerClient(int idClient){
         for (Client client : clientList){
             if (client.getId() == idClient){
                 clientList.remove(client);
-                deleted = true;
-                break;
+                return SUPPRIME;
             }
         }
-        return deleted;
+        return SUPPRIME_ERROR;
     }
 
-    public boolean ajouterClient(Client newClient) {
-        boolean added = false;
+    public String ajouterClient(String [] clientArgs) {
+        return ajouterClient(new Client(clientArgs[0], clientArgs[1], clientArgs[2]));
+    }
 
-        if (! clientList.contains(newClient)) {
+    public String ajouterClient(Client newClient) {
+         if (! clientList.contains(newClient)) {
             clientList.add(newClient);
-            added = true;
+           return AJOUTE;
         }
-        return added;
+        return AJOUTE_ERROR;
     }
 
-    public boolean ajouterCommande(Commande c){
-        boolean added = false;
+    public String ajouterCommande(){
+        return AJOUTE;
+    }
 
+    public String ajouterCommande(Commande c){
         if (! commandeList.contains(c)) {
             commandeList.add(c);
-            added = true;
+            return AJOUTE;
         }
-        return added;
+        return AJOUTE_ERROR;
     }
 
-    public boolean ajouterArticle(Article article, int quantite){
-        boolean added = false;
-
-        if (! stocks.containsKey(article)) {
+    public String ajouterArticle(Article article, int quantite){
+       if (! stocks.containsKey(article)) {
             stocks.put(article, quantite  );
-            added = true;
+            return AJOUTE;
         }
-        return added;
+        return AJOUTE_ERROR;
     }
 
-    public void getBoutiqueInfo (){
+    public Article getArticleByReference(String reference){
+        for (Article article : stocks.keySet()) {
+            if(article.getReference().equals(reference))
+                return article;
+        }
+        return null;
+    }
 
+    public String getBoutiqueInfo (){
+        return null;
     }
 }
