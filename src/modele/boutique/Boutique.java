@@ -8,6 +8,7 @@ import modele.stock.ObjetVendable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Boutique {
 
@@ -38,6 +39,22 @@ public final class Boutique {
 
     public HashMap<Article, Integer> getStocks() {
         return stocks;
+    }
+
+    public List<String> getStringListStocks() {
+        List<String> stockList = new ArrayList<>();
+
+        for (Map.Entry<Article, Integer> entry : stocks.entrySet()) {
+            int quantite = entry.getValue();
+            Article article = entry.getKey();
+
+            StringBuilder stringBuilder = new StringBuilder(quantite);
+            stringBuilder.append(" - ");
+            stringBuilder.append(article.toString());
+            stockList.add(stringBuilder.toString());
+
+        }
+        return stockList;
     }
 
 
