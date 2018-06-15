@@ -6,11 +6,12 @@ import modele.client.Client;
 
 public interface Affichage {
 
-    void afficherClient(List<Client> listeClient);
-    void afficherCommande();
-    void afficherArticle();
+ 
+    String[] ajouter(String type);
+    
+    void aFonctionne(boolean b);
 
-    <T> void afficher (List<T> listClient);
+    <T> void afficher (List<T> list);
 
     String[] utilisateurAction();
 }
