@@ -37,21 +37,22 @@ public final class Boutique {
         return commandeList;
     }
 
-    public HashMap<Article, Integer> getStocks() {
+    public HashMap<Article, Integer> getStocksMap() {
         return stocks;
     }
 
-    public List<String> getStringListStocks() {
+    public List<String> getStocksList() {
         List<String> stockList = new ArrayList<>();
 
         for (Map.Entry<Article, Integer> entry : stocks.entrySet()) {
-            int quantite = entry.getValue();
+            int quantite = entry.getValue();System.out.println(quantite);
             Article article = entry.getKey();
 
-            StringBuilder stringBuilder = new StringBuilder(quantite);
+            StringBuilder stringBuilder = new StringBuilder(String.valueOf(quantite));
             stringBuilder.append(" - ");
             stringBuilder.append(article.toString());
             stockList.add(stringBuilder.toString());
+            System.out.println(stringBuilder);
 
         }
         return stockList;
