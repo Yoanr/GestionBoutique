@@ -172,7 +172,7 @@ Boutique ..> DonneeManager : << use >>
 
 DonneeManager ..> DonneeConteneur : << read >>
 
-Controlleur ..> Boutique : << uses >>
+Controlleur ..> Boutique : << use >>
 
 Controlleur .up.> VueTerminal : << use >>
 Controlleur .up.> VueGraphique : << use >>
