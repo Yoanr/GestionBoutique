@@ -21,16 +21,16 @@ public class VueTerminal implements Affichage{
     	String[] arguments = new String[2]; 
     	
     	Scanner scanIn =new Scanner(System.in);
-    	System.out.println("Action ?");
     	
     	do{
+    		System.out.println("Action ?");
     		arguments[0] = scanIn.nextLine();
     	}while(!commandes.contains(arguments[0]));
     	
     	if(!(arguments[0].equals("quitter"))) {
     		
-    	 	System.out.println("Sur qui ?");
     	 	do {
+    	 		System.out.println("Sur qui ?");
     	 		arguments[1] = scanIn.nextLine();
     	 	}while(!commandes2.contains(arguments[1]));
         	
@@ -39,29 +39,39 @@ public class VueTerminal implements Affichage{
     		scanIn.close();
     	}
    
-   	
 		return arguments;
-    
     }
 
+    
     @Override
-    public void afficherClient(List<Client> listeClient) {
-    	for(Client client : listeClient) {
-    		System.out.println(client.toString());
+    public String[] ajouter(String type) {
+    	afficherAide(type);
+    	Scanner scanInn =new Scanner(System.in);
+    	String s = scanInn.nextLine();
+    	return s.split(" ");
+    }
+    
+    @Override
+    public void aFonctionne(boolean b) {
+    	if(b) {
+    		System.out.println("Element ajouté");
+    	}else {
+    		System.out.println("Element non ajouté");
     	}
     }
-
-    @Override
-    public void afficherCommande() {
-
-    }
-
-    @Override
-    public void afficherArticle() {
-
-    }
     
-    public void afficherMenu() {
+    private void afficherAide(String type) {
+    	if(type.equals(commandes2.get(0))) {
+    		System.out.println("exemple : <nom> <prenom> <adresse>");
+    	}else if(type.equals(commandes2.get(1))) {
+    		System.out.println("exemple : <nomClient> <date> <reference objet vendable> <quantite>");
+    	}else if(type.equals(commandes2.get(2))) {
+    		System.out.println("exemple : <ref article> <marque> <prixUnitaire> <quantite>");
+    	}
+		
+	}
+
+	public void afficherMenu() {
     	System.out.println("***********                MENU                ***********");
     	System.out.println("**     Action : afficher, ajouter, modifier, supprimer  **");                         
     	System.out.println("**                 (ou quitter)                         **");

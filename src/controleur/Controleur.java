@@ -9,6 +9,7 @@ import modele.commande.Commande;
 import modele.outils.DonneeManager;
 import modele.stock.Article;
 import modele.stock.Stylo;
+import modele.stock.Stylo.Couleur;
 import vue.Affichage;
 import vue.VueGraphique;
 import vue.VueTerminal;
@@ -22,8 +23,8 @@ public class Controleur {
     	
     	boutique.ajouterClient(new Client("toto","tata","titi"));
     	boutique.ajouterCommande(new Commande("toto","tata",new Stylo("lol","lol","lol",2.2),2));;
+    	boutique.ajouterArticle(new Stylo("lol","lol","lol",2.2,Couleur.BLEU),2);
     	DonneeManager.ecrire();
-    	
          if("commandLine".equals(arg)) {
         	 this.affichage = new VueTerminal();
         	 controllerCommandLine();
@@ -35,26 +36,35 @@ public class Controleur {
     }
     
     private boolean interpreter(String[] arguments) {
+    	List<?> liste = null;
+    	
     	if (arguments[0].equals(VueTerminal.commandes.get(0))) {
             if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-            	
-                List<Client> listeClient = boutique.getClientList();
-                this.affichage.afficher(listeClient);
-                
+                liste = boutique.getClientList();
             }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
-                
-            	List<Commande> listeCommande = boutique.getCommandeList();
-                this.affichage.afficher(listeCommande);
-            	
+            	liste = boutique.getCommandeList();
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
-            	//HashMap<Article,Integer> stocks = boutique.getStockList();
-                //this.affichage.afficher(listeCommande);
+            	liste = boutique.getStocksList();
             }
-
+            this.affichage.afficher(liste);
+            
         } else if (arguments[0].equals(VueTerminal.commandes.get(1))) {
-            System.out.println("ajouter");
             if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-                System.out.println(" client");
+                String[] s = this.affichage.ajouter(VueTerminal.commandes2.get(0));
+                Boolean b = false;
+                if(s.length == 3) {
+                	Client c = new Client(s[0],s[1],s[2]);
+                	 b = boutique.ajouterClient(c);
+                }else {
+                	System.out.println("error");
+                }
+                
+            	this.affichage.aFonctionne(b);
+            	if(b) {
+            		DonneeManager.ecrire();
+            	}
+            	
+            	
             }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
                 System.out.println(" commande");
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
