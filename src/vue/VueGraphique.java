@@ -6,15 +6,6 @@ import java.util.List;
 
 public class VueGraphique implements Affichage {
 
-    @Override
-    public void afficherCommande() {
-
-    }
-
-    @Override
-    public void afficherArticle() {
-
-    }
     
     @Override
     public String[] utilisateurAction() {
@@ -22,12 +13,22 @@ public class VueGraphique implements Affichage {
     }
 
     @Override
-    public <T> void afficher(List<T> listClient) {
+    public String[] ajouter() {
+        return new String[0];
+    }
+
+    @Override
+    public void afficherAide(String s) {
 
     }
 
     @Override
-    public void afficherClient(List<Client> listeClient) {
+    public void msgModele(String msg) {
+
+    }
+
+    @Override
+    public <T> void afficher(List<T> listClient) {
 
     }
 }
