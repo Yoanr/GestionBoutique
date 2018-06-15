@@ -3,6 +3,10 @@
   <clients>
     <client adresse="titi" identifiant="1" nom="toto" prenom="tata"/>
   </clients>
-  <commandes/>
+  <commandes>
+    <commande date="tata" fraisDePort="0.0" identifiant="1" nomClient="toto" prix="4.4">
+      <ligneCommande1 quantité="2">lol</ligneCommande1>
+    </commande>
+  </commandes>
   <stocks/>
 </boutique>
