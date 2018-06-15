@@ -1,6 +1,6 @@
 @startuml
 
-database "DonneeConteneur" {
+database "DonneeConteneur(xml)" as DonneeConteneur {
 }
 
 enum Couleur{
@@ -95,6 +95,7 @@ class Ramette{
 }
 
 class "<< singleton >>\nArticleFactory" as ArticleFactory{
+-instance
 +creerArticle(TypeArticle)
 -ArticleFactory()
 +getInstance()
@@ -144,15 +145,15 @@ class VueTerminal{
 
 
 class DonneeManager{
--lire()
--ecrire()
++lire()
++ecrire()
 }
 
 
 
 
 
-Client "1" -- "1..*" Commande 
+Client "1" --* "1..*" Commande 
 Article  -up-|> ObjetVendable
 Lot -up-|> ObjetVendable
 Lot "0..*" --* "2..*" Article
@@ -164,18 +165,20 @@ LigneDeCommande "0..*" -->  "1" ObjetVendable
 
 ArticleFactory ..> Article : "<< create >>"
 
-Boutique "1"  -- "0..*"  Article
-Boutique ..> ArticleFactory : "<< use >>"
-Boutique "1" .up.> "0..*" Client : << use >>
-Boutique "1" ..> "0..*" Commande : << use >>
-Boutique ..> DonneeManager : << use >>
+Boutique "1" --> "1" ArticleFactory : "<< use >>"
+Boutique "1" ..> "1" DonneeManager :  "<< use >>"
+
+Boutique "1"  --> "0..*"  Article : "stock"
+Boutique "1" -up-> "0..*" Client 
+Boutique "1" --> "0..*" Commande 
+
 
 DonneeManager ..> DonneeConteneur : << read >>
 
-Controlleur ..> Boutique : << use >>
+Controlleur "1" --> "1" Boutique : << use >>
 
-Controlleur .up.> VueTerminal : << use >>
-Controlleur .up.> VueGraphique : << use >>
+Controlleur "1" .up.> "1" VueTerminal : << use >>
+Controlleur "1" .up.> "1" VueGraphique : << use >>
  javaFX ()-- VueGraphique
 
 VueTerminal -up|> Affichage
