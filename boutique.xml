@@ -2,16 +2,15 @@
 <boutique>
   <clients>
     <client adresse="titi" id="1" nom="toto" prenom="tata"/>
-    <client adresse="l" id="2" nom="l" prenom="l"/>
   </clients>
   <commandes>
     <commande date="tata" fraisDePort="0.0" id="1" nomClient="toto" prix="4.4">
-      <ligneCommande1 quantité="2">lol</ligneCommande1>
+      <ligneCommande quantité="2" referenceArticle="lol"/>
     </commande>
   </commandes>
   <stocks>
     <Article quantite="2" type="stylo">
-      <stylo couleur="BLEU" marque="lol" nom="lol" prix="2.2" reference="lol"/>
+      <stylo couleur="BLEU" marque="lol" nom="" prix="2.2" reference="lol"/>
     </Article>
   </stocks>
 </boutique>

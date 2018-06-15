@@ -22,7 +22,7 @@ public class Controleur {
     public Controleur(String arg) {
     	
     	boutique.ajouterClient(new Client("toto","tata","titi"));
-    	boutique.ajouterCommande(new Commande("toto","tata",new Stylo("lol","lol","lol",2.2),2));;
+    	boutique.ajouterCommande(new Commande("toto","tata",2,new Stylo("lol","lol",2.2),2));;
     	boutique.ajouterArticle(new Stylo("lol","lol","lol",2.2,Couleur.BLEU),2);
     	DonneeManager.ecrire();
          if("commandLine".equals(arg)) {
@@ -49,27 +49,29 @@ public class Controleur {
             this.affichage.afficher(liste);
             
         } else if (arguments[0].equals(VueTerminal.commandes.get(1))) {
+        	String[] s;
+        	String msg=Boutique.DEFAULT;
+        	try {
+        		
             if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-                String[] s = this.affichage.ajouter(VueTerminal.commandes2.get(0));
-                Boolean b = false;
-                if(s.length == 3) {
-                	Client c = new Client(s[0],s[1],s[2]);
-                	 b = boutique.ajouterClient(c);
-                }else {
-                	System.out.println("error");
-                }
-                
-            	this.affichage.aFonctionne(b);
-            	if(b) {
-            		DonneeManager.ecrire();
-            	}
-            	
+            	this.affichage.afficherAide(VueTerminal.commandes2.get(0));
+            	s = this.affichage.ajouter();
+            		msg = boutique.ajouterClient(s);
             	
             }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
+            	this.affichage.afficherAide(VueTerminal.commandes2.get(1));
+            	s = this.affichage.ajouter();
                 System.out.println(" commande");
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
-                System.out.println(" article");
+            	this.affichage.afficherAide(VueTerminal.commandes2.get(2));
+            	s = this.affichage.ajouter();
+            	msg = boutique.ajouterArticle(s);
             }
+            
+            }catch(Exception ArrayIndexOutOfBoundsException) {
+        		msg = Boutique.ARGS_ERROR;
+        	}
+        	  this.affichage.msgModele(msg);
 
 
         } else if (arguments[0].equals(VueTerminal.commandes.get(2))) {

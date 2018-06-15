@@ -7,9 +7,11 @@ import modele.client.Client;
 public interface Affichage {
 
  
-    String[] ajouter(String type);
+    String[] ajouter();
     
-    void aFonctionne(boolean b);
+    void afficherAide(String s);
+    
+    void msgModele(String msg);
 
     <T> void afficher (List<T> list);
 

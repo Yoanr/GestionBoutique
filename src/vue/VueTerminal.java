@@ -11,7 +11,7 @@ import modele.client.Client;
 public class VueTerminal implements Affichage{
 
     public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer"));
-    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","stock"));
+    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article"));
 
     public VueTerminal() {
     	this.afficherMenu();
@@ -44,29 +44,24 @@ public class VueTerminal implements Affichage{
 
     
     @Override
-    public String[] ajouter(String type) {
-    	afficherAide(type);
+    public String[] ajouter() {
     	Scanner scanInn =new Scanner(System.in);
     	String s = scanInn.nextLine();
     	return s.split(" ");
     }
     
     @Override
-    public void aFonctionne(boolean b) {
-    	if(b) {
-    		System.out.println("Element ajouté");
-    	}else {
-    		System.out.println("Element non ajouté");
-    	}
+    public void msgModele(String msg) {
+    		System.out.println(msg);
     }
     
-    private void afficherAide(String type) {
+    public void afficherAide(String type) {
     	if(type.equals(commandes2.get(0))) {
     		System.out.println("exemple : <nom> <prenom> <adresse>");
     	}else if(type.equals(commandes2.get(1))) {
     		System.out.println("exemple : <nomClient> <date> <reference objet vendable> <quantite>");
     	}else if(type.equals(commandes2.get(2))) {
-    		System.out.println("exemple : <ref article> <marque> <prixUnitaire> <quantite>");
+    		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
     	}
 		
 	}
