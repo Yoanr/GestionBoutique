@@ -20,9 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,6 +37,7 @@ public class DonneeManager {
             final DocumentBuilder builder = factory.newDocumentBuilder();
             final Document document = builder.parse(new File(XMLFILE));
 
+            xmlToData(document.getDocumentElement());
 
 
 
@@ -86,7 +85,7 @@ public class DonneeManager {
         for (Client client : Boutique.getInstance().getClientList()){
             Element clientElement = document.createElement("client");
 
-            clientElement.setAttribute("identifiant", String.valueOf(client.getId()));
+            clientElement.setAttribute("id", String.valueOf(client.getId()));
             clientElement.setAttribute("nom", client.getNom());
             clientElement.setAttribute("prenom", client.getPrenom());
             clientElement.setAttribute("adresse", client.getAdresse());
@@ -101,7 +100,7 @@ public class DonneeManager {
         for (Commande commande : Boutique.getInstance().getCommandeList()){
             Element commandeElement = document.createElement("commande");
 
-            commandeElement.setAttribute("identifiant", String.valueOf(commande.getId()));
+            commandeElement.setAttribute("id", String.valueOf(commande.getId()));
             commandeElement.setAttribute("nomClient", commande.getNomClient());
             commandeElement.setAttribute("date", commande.getDate());
             commandeElement.setAttribute("date", commande.getDate());
@@ -124,7 +123,7 @@ public class DonneeManager {
 
         //Stocks
         Element stocks = document.createElement("stocks");
-        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocks().entrySet()) {
+        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocksMap().entrySet()) {
             int quantite = entry.getValue();
             Article article = entry.getKey();
 
@@ -157,109 +156,52 @@ public class DonneeManager {
         return racine;
     }
 
-    private static void xmlToData(Document document){
-        Element racine = document.getDocumentElement();
+    private static void xmlToData(Element element){
+        // do something with the current node instead of System.out
+        System.out.println(element.getNodeName());
 
+        switch (element.getNodeName()){
+            case "client":{
+                Boutique.getInstance().ajouterClient(
+                        new Client(element.getAttribute("nom"),
+                                    element.getAttribute("prenom"),
+                                    element.getAttribute("adresse")));
+
+                //todo check l id ajouté
+                break;
+            }
+            case "commandes":{
+
+                break;
+            }
+            case "stocks" : {
+
+                break;
+            }
+        }
+
+
+        NodeList nodeList = element.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node currentNode = nodeList.item(i);
+            if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+                //calls this method for all the children which is Element
+                Element currentElement = (Element) currentNode;
+                xmlToData(currentElement);
+            }
+        }
+    }
+/*
         if (racine != null){
            //Client
 
            for (int indexRacineChild = 0; indexRacineChild <= racine.getChildNodes().getLength(); indexRacineChild++){
                Element currentElement =(Element) racine.getChildNodes().item(indexRacineChild);
 
-               switch (currentElement.getNodeName()){
-                   case "clients":{
-
-/*
-                       //Clients
-                       Element clients = document.createElement("clients");
-                       for (Client client : Boutique.getInstance().getClientList()){
-                           Element clientElement = document.createElement("client");
-
-                           clientElement.setAttribute("identifiant", String.valueOf(client.getId()));
-                           clientElement.setAttribute("nom", client.getNom());
-                           clientElement.setAttribute("prenom", client.getPrenom());
-                           clientElement.setAttribute("adresse", client.getAdresse());
-
-                           clients.appendChild(clientElement);
-                       }
-                       racine.appendChild(clients);*/
-
-
-                       break;
-                   }
-                   case "commandes":{
-
-                       break;
-                   }
-                   case "stocks" : {
-
-                       break;
-                   }
-               }
-           }
 
 
 
-        }
 
+        }*/
 
-
-        //Commandes
-        Element commandes = document.createElement("commandes");
-        for (Commande commande : Boutique.getInstance().getCommandeList()){
-            Element commandeElement = document.createElement("commande");
-
-            commandeElement.setAttribute("identifiant", String.valueOf(commande.getId()));
-            commandeElement.setAttribute("nomClient", commande.getNomClient());
-            commandeElement.setAttribute("date", commande.getDate());
-            commandeElement.setAttribute("date", commande.getDate());
-            commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
-
-            for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
-                int cpt = 1;
-                Element ligneCommandeElement = document.createElement("ligneCommande"+cpt);
-
-                ligneCommandeElement.setAttribute("quantité", String.valueOf(ligneDeCommande.getQuantite()));
-                ligneCommandeElement.setTextContent(ligneDeCommande.getObjet().getNom());
-
-                commandeElement.appendChild(ligneCommandeElement);
-            }
-
-            commandeElement.setAttribute("prix", String.valueOf(commande.getPrixTotal()));
-            commandes.appendChild(commandeElement);
-        }
-        racine.appendChild(commandes);
-
-        //Stocks
-        Element stocks = document.createElement("stocks");
-        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocks().entrySet()) {
-            int quantite = entry.getValue();
-            Article article = entry.getKey();
-
-            Class<?> currentClass = entry.getKey().getClass();
-            Field[] fields = currentClass.getDeclaredFields();
-            Element articleElement = document.createElement("Article");
-            articleElement.setAttribute("quantite", String.valueOf(quantite));
-            articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
-
-            //For a specific article
-            Element specificArticle = document.createElement(currentClass.getSimpleName().toLowerCase());
-            specificArticle.setAttribute("nom", article.getNom());
-            specificArticle.setAttribute("reference", article.getReference());
-            specificArticle.setAttribute("marque", article.getMarque());
-            specificArticle.setAttribute("prix", String.valueOf(article.getPrix()));
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-                    specificArticle.setAttribute(field.getName().toString(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-            articleElement.appendChild(specificArticle);
-            stocks.appendChild(articleElement);
-        }
-        racine.appendChild(stocks);
-               //TODO
-    }
 }
