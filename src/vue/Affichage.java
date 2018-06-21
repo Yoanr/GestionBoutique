@@ -11,6 +11,8 @@ public interface Affichage {
     
     void afficherAide(String s);
     
+    void afficherMenu();
+    
     void msgModele(String msg);
 
     <T> void afficher (List<T> list);

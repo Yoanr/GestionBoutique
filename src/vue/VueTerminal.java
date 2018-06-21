@@ -10,34 +10,30 @@ import modele.client.Client;
 
 public class VueTerminal implements Affichage{
 
-    public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer"));
-    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article"));
+    public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer","quitter"));
+    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article","menu"));
 
     public VueTerminal() {
     	this.afficherMenu();
     }
 
     public String[] utilisateurAction() {
-    	String[] arguments = new String[2]; 
+    	String argument = new String(); 
+    	String arguments[] = new String[2];
     	
     	Scanner scanIn =new Scanner(System.in);
     	
-    	do{
-    		System.out.println("Action ?");
-    		arguments[0] = scanIn.nextLine();
-    	}while(!commandes.contains(arguments[0]));
-    	
-    	if(!(arguments[0].equals("quitter"))) {
+    	try {
+    		do {
+        		System.out.println("exemple : <afficher> <client> / <quitter> ");
+        		argument = scanIn.nextLine();
+        		arguments = argument.split(" ");
+        	}while(!commandes.contains(arguments[0]) || !commandes2.contains(arguments[1]) );
     		
-    	 	do {
-    	 		System.out.println("Sur qui ?");
-    	 		arguments[1] = scanIn.nextLine();
-    	 	}while(!commandes2.contains(arguments[1]));
-        	
-    	}else {
-    		arguments[1] = null;
+    	}catch(ArrayIndexOutOfBoundsException e) {
     		scanIn.close();
     	}
+    	
    
 		return arguments;
     }
@@ -70,7 +66,7 @@ public class VueTerminal implements Affichage{
     	System.out.println("***********                MENU                ***********");
     	System.out.println("**     Action : afficher, ajouter, modifier, supprimer  **");                         
     	System.out.println("**                 (ou quitter)                         **");
-    	System.out.println("**	   Sur quoi ? : client, commande, article       **");
+    	System.out.println("**	   Sur quoi ? : client, commande, article,menu  **");
     	System.out.println("**                                                      **");
     	System.out.println("**********************************************************");
     }

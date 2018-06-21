@@ -45,8 +45,12 @@ public class Controleur {
             	liste = boutique.getCommandeList();
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
             	liste = boutique.getStocksList();
+            }else if(arguments[1].equals(VueTerminal.commandes2.get(3))) {
+            	this.affichage.afficherMenu();
+            	return false;
             }
-            this.affichage.afficher(liste);
+               	this.affichage.afficher(liste);
+            
             
         } else if (arguments[0].equals(VueTerminal.commandes.get(1))) {
         	String[] s;
