@@ -65,7 +65,8 @@ public final class Boutique {
     }
 
 
-    public String supprimerClient(int idClient){
+    public String supprimerClient(String clientId){
+        int idClient = Integer.parseInt(clientId);
         for (Client client : clientList){
             if (client.getId() == idClient){
                 clientList.remove(client);
@@ -124,6 +125,27 @@ public final class Boutique {
                 return article;
         }
         return null;
+    }
+
+    public String supprimerCommande(String commandeID){
+        int idCommande =  Integer.parseInt(commandeID);
+        for (Commande commande : commandeList){
+            if (commande.getId() == idCommande){
+                commandeList.remove(commande);
+                return SUPPRIME;
+            }
+        }
+        return SUPPRIME_ERROR;
+    }
+
+    public String supprimerArticle(String articleReference){
+        Article  article = getArticleByReference(articleReference);
+        if (article != null) {
+            int oldQuantite = stocks.get(article);
+            stocks.put(article, oldQuantite -1);
+            return SUPPRIME;
+        }
+        return SUPPRIME_ERROR;
     }
 
     public String getBoutiqueInfo (){
