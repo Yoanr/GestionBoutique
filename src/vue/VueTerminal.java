@@ -21,12 +21,26 @@ public class VueTerminal implements Affichage{
     	String argument = new String(); 
     	String arguments[] = new String[2];
     	Scanner scanIn =new Scanner(System.in);
-    	
     	try {
     		do {
+    	    	System.out.println("Que souhaitez-vous ?");
         		argument = scanIn.nextLine();
-        		arguments = argument.split(" ");
-        	}while(!commandes.contains(arguments[0]) || !commandes2.contains(arguments[1]) );
+        		String arg[] = argument.split(" ");
+        		
+        		if(arg.length < 2) {
+        			arguments[0] = arg[0];
+        			arguments[1] = "";
+        			System.out.println("exemple : <afficher/ajouter/..> <client/commande/..> ou seulement : quitter ");
+        			
+        		}else {
+        			arguments[0] = arg[0];
+        			arguments[1] = arg[1];
+        		}
+        		
+        		if(arguments[0].equals("quitter")) {
+        			arguments[1] = "menu";	
+        		}
+        	}while(!commandes.contains(arguments[0]) || !commandes2.contains(arguments[1])  );
     		
     	}catch(ArrayIndexOutOfBoundsException e) {
     		scanIn.close();

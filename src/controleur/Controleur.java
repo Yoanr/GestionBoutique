@@ -35,56 +35,27 @@ public class Controleur {
             controllerGraphique();
     }
     
-    private boolean interpreter(String[] arguments) {
-    	List<?> liste = null;
+	private boolean interpreter(String[] arguments) {
     	
     	if (arguments[0].equals(VueTerminal.commandes.get(0))) {
-            if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-                liste = boutique.getClientList();
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
-            	liste = boutique.getCommandeList();
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
-            	liste = boutique.getStocksList();
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(3))) {
-            	this.affichage.afficherMenu();
-            	return false;
-            }
-               	this.affichage.afficher(liste);
-            
+    		
+    		controllerAfficher(arguments[1]);
             
         } else if (arguments[0].equals(VueTerminal.commandes.get(1))) {
-        	String[] s;
-        	String msg=Boutique.DEFAULT;
-        	try {
-        		
-            if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-            	this.affichage.afficherAide(VueTerminal.commandes2.get(0));
-            	s = this.affichage.ajouter();
-            		msg = boutique.ajouterClient(s);
-            	
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
-            	this.affichage.afficherAide(VueTerminal.commandes2.get(1));
-            	s = this.affichage.ajouter();
-                System.out.println(" commande");
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
-            	this.affichage.afficherAide(VueTerminal.commandes2.get(2));
-            	s = this.affichage.ajouter();
-            	msg = boutique.ajouterArticle(s);
-            }
-            
-            }catch(Exception ArrayIndexOutOfBoundsException) {
-        		msg = Boutique.ARGS_ERROR;
-        	}
-        	  this.affichage.msgModele(msg);
-
+        	
+        	controllerAjouter(arguments[1]);
 
         } else if (arguments[0].equals(VueTerminal.commandes.get(2))) {
-            System.out.println("modifier");
+        	
+        	controllerModifier(arguments[1]);
+
         } else if (arguments[0].equals(VueTerminal.commandes.get(3))) {
-            System.out.println("supprimer");
+        	controllerSupprimer(arguments[1]);
+
         }else if(arguments[0].equals("quitter")) {
             return true;
         }
+    	
     	return false;
     }
 
@@ -101,5 +72,56 @@ public class Controleur {
 
     private void controllerGraphique(){
 
+    }
+    
+    private void controllerAjouter(String argument) {
+    	String[] s;
+    	String msg=Boutique.DEFAULT;
+    	try {
+    		
+        if(argument.equals(VueTerminal.commandes2.get(0))) {
+        	this.affichage.afficherAide(VueTerminal.commandes2.get(0));
+        	s = this.affichage.ajouter();
+        		msg = boutique.ajouterClient(s);
+        	
+        }else if(argument.equals(VueTerminal.commandes2.get(1))) {
+        	this.affichage.afficherAide(VueTerminal.commandes2.get(1));
+        	s = this.affichage.ajouter();
+            System.out.println(" commande");
+        }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+        	this.affichage.afficherAide(VueTerminal.commandes2.get(2));
+        	s = this.affichage.ajouter();
+        	msg = boutique.ajouterArticle(s);
+        }
+        
+        }catch(Exception ArrayIndexOutOfBoundsException) {
+    		msg = Boutique.ARGS_ERROR;
+    	}
+    	  DonneeManager.ecrire();
+    	  this.affichage.msgModele(msg);
+    	
+    }
+    
+    private void controllerAfficher(String argument) {
+    	List<?> liste = null;
+    	if(argument.equals(VueTerminal.commandes2.get(0))) {
+            liste = boutique.getClientList();
+        }else if(argument.equals(VueTerminal.commandes2.get(1))) {
+        	liste = boutique.getCommandeList();
+        }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+        	liste = boutique.getStocksList();
+        }else if(argument.equals(VueTerminal.commandes2.get(3))) {
+        	this.affichage.afficherMenu();
+        	return;
+        }
+           	this.affichage.afficher(liste);
+    }
+    
+    private void controllerModifier(String argument) {
+    	
+    }
+    
+    private void controllerSupprimer(String argument) {
+    	
     }
 }
