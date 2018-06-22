@@ -49,13 +49,21 @@ public class Client {
 
         Client client = (Client) o;
 
-        if (!getNom().equals(client.getNom())) return false;
-        return getPrenom().equals(client.getPrenom());
+        return getIdentifiant() == client.getIdentifiant();
     }
 
     @Override
     public int hashCode() {
         return getIdentifiant();
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", identifiant=" + identifiant +
+                '}';
     }
 
     public String getPrenom() {

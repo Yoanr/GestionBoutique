@@ -4,7 +4,6 @@ import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
 import modele.stock.ArticleFactory;
-import modele.stock.ObjetVendable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import java.util.Map;
 
 public final class Boutique {
 
+    private String nom;
     private double loyer;
     private double salaire;
     private double charge;
@@ -168,7 +168,62 @@ public final class Boutique {
         c.ajoutObjet(getArticleByReference(reference), quantite);
     }
 
-    public String getBoutiqueInfo (){
-        return null;
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public double getLoyer() {
+        return loyer;
+    }
+
+    public void setLoyer(double loyer) {
+        this.loyer = loyer;
+    }
+
+    public double getSalaire() {
+        return salaire;
+    }
+
+    public void setSalaire(double salaire) {
+        this.salaire = salaire;
+    }
+
+    public double getCharge() {
+        return charge;
+    }
+
+    public void setCharge(double charge) {
+        this.charge = charge;
+    }
+
+    public double getCa() {
+        return ca;
+    }
+
+    public void setCa(double ca) {
+        this.ca = ca;
+    }
+
+    public double getBenefice() {
+        return benefice;
+    }
+
+    public void setBenefice(double benefice) {
+        this.benefice = benefice;
+    }
+
+    @Override
+    public String toString() {
+        return "Boutique{" +
+                "loyer=" + loyer +
+                ", salaire=" + salaire +
+                ", charge=" + charge +
+                ", ca=" + ca +
+                ", benefice=" + benefice +
+                '}';
     }
 }
