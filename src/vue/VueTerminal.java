@@ -91,6 +91,13 @@ public class VueTerminal implements Affichage{
         }
     }
 
+	@Override
+	public String supprimer() {
+		Scanner scanInn =new Scanner(System.in);
+    	String s = scanInn.nextLine();
+    	return s;
+	}
+
     /*
     private static void application() {
         String s = "";

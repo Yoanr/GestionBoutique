@@ -18,4 +18,6 @@ public interface Affichage {
     <T> void afficher (List<T> list);
 
     String[] utilisateurAction();
+
+	String supprimer();
 }

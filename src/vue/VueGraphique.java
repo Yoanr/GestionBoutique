@@ -37,4 +37,10 @@ public class VueGraphique implements Affichage {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String supprimer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -118,6 +118,18 @@ public class Controleur {
     }
 
     private void controllerSupprimer(String argument) {
-
+    	String s = this.affichage.supprimer();
+    	String msg=Boutique.DEFAULT;
+    	if(argument.equals(VueTerminal.commandes2.get(0))) {
+        	msg = boutique.supprimerClient(s); 
+        	
+        }else if(argument.equals(VueTerminal.commandes2.get(1))) {
+        	msg = boutique.supprimerCommande(s);
+        	
+        }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+        	msg = boutique.supprimerArticle(s);
+        }
+    	 this.affichage.msgModele(msg);
+    	
     }
 }
