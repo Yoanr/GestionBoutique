@@ -88,21 +88,21 @@ public final class Boutique {
         return AJOUTE_ERROR;
     }
 
-    public String ajouterCommande(String [] commandeArgs){
+    public Commande ajouterCommande(String [] commandeArgs){
         switch (commandeArgs.length) {
             case 3:
                 return ajouterCommande(new Commande(Integer.parseInt(commandeArgs[0]), commandeArgs[1], Double.parseDouble(commandeArgs[2])));
 
         }
-        return AJOUTE_ERROR;
-}
+        return null;
+    }
 
-    public String ajouterCommande(Commande c){
+    public Commande ajouterCommande(Commande c){
         if (! commandeList.contains(c)) {
             commandeList.add(c);
-            return AJOUTE;
+            return c;
         }
-        return AJOUTE_ERROR;
+        return null;
     }
 
 
@@ -138,6 +138,14 @@ public final class Boutique {
         return SUPPRIME_ERROR;
     }
 
+    public boolean verifClient(int idClient){
+        for (Client client : clientList){
+            if(client.getId() == idClient)
+                return true;
+        }
+        return false;
+    }
+
     public String supprimerArticle(String articleReference){
         Article  article = getArticleByReference(articleReference);
         if (article != null) {
@@ -146,6 +154,18 @@ public final class Boutique {
             return SUPPRIME;
         }
         return SUPPRIME_ERROR;
+    }
+
+    public boolean verifStock(String referenceArticle, int quantite){
+        Article  article = getArticleByReference(referenceArticle);
+        if (article == null) return false;
+        if (stocks.get(article) < quantite) return false;
+
+        return true;
+    }
+
+    public void ajouterLigne(Commande c, String reference, int quantite){
+        c.ajoutObjet(getArticleByReference(reference), quantite);
     }
 
     public String getBoutiqueInfo (){

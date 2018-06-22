@@ -55,18 +55,7 @@ public class Client {
 
     @Override
     public int hashCode() {
-        int result = getNom().hashCode();
-        result = 31 * result + getPrenom().hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "nom='" + nom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", identifiant=" + identifiant +
-                '}';
+        return getIdentifiant();
     }
 
     public String getPrenom() {
