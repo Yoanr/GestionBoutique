@@ -1,9 +1,11 @@
 package vue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import modele.client.Client;
@@ -30,7 +32,6 @@ public class VueTerminal implements Affichage{
         		if(arg.length < 2) {
         			arguments[0] = arg[0];
         			arguments[1] = "";
-        			System.out.println("exemple : <afficher/ajouter/..> <client/commande/..> ou seulement : quitter ");
         			
         		}else {
         			arguments[0] = arg[0];
@@ -46,7 +47,7 @@ public class VueTerminal implements Affichage{
     		scanIn.close();
     	}
     	
-   
+    	
 		return arguments;
     }
 
@@ -67,7 +68,7 @@ public class VueTerminal implements Affichage{
     	if(type.equals(commandes2.get(0))) {
     		System.out.println("exemple : <nom> <prenom> <adresse>");
     	}else if(type.equals(commandes2.get(1))) {
-    		System.out.println("exemple : <nomClient> <date> <reference objet vendable> <quantite>");
+    		System.out.println("exemple commande : <idClient> <date> <port>");
     	}else if(type.equals(commandes2.get(2))) {
     		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
     	}
@@ -96,6 +97,30 @@ public class VueTerminal implements Affichage{
 		Scanner scanInn =new Scanner(System.in);
     	String s = scanInn.nextLine();
     	return s;
+	}
+
+	@Override
+	public List<String[]> getLignesCommande() {
+		System.out.println("Ajout de ligne :");
+		System.out.println("exemple : <item> <quantite>");
+		Scanner scanInn =new Scanner(System.in);
+    	List<String[]> lignes = new ArrayList<>();
+    	boolean ajouter = true;
+    	int indice_ligne=1;
+    	while(ajouter) {
+    		
+    		System.out.print(indice_ligne+" ) ");
+        	String ligne = scanInn.nextLine();
+        	
+    		if(ligne.equals("fin")) {
+    			ajouter = false;
+    		}else {
+    			
+    			lignes.add(ligne.split(" "));
+    		}
+    		indice_ligne++;
+    	}
+		return lignes;
 	}
 
     /*

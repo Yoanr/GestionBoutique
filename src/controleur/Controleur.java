@@ -83,6 +83,29 @@ public class Controleur {
             }else if(argument.equals(VueTerminal.commandes2.get(1))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(1));
                 s = this.affichage.ajouter();
+                
+                if(!boutique.verifClient(Integer.parseInt(s[0]))) {
+                	 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
+                	return;
+                }
+                Commande c = boutique.ajouterCommande(s);
+                List<String[]> lignesCommande;
+                lignesCommande = this.affichage.getLignesCommande();
+                for(int i=0;i<lignesCommande.size();i++) {
+                	String reference = lignesCommande.get(i)[0];
+                	int quantite = Integer.parseInt(lignesCommande.get(i)[1]);
+                	if(!boutique.verifStock(reference,quantite)) {
+                		boutique.supprimerCommande(String.valueOf(c.getId()));
+                		 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
+                		return;
+                	}else {
+                		boutique.ajouterLigne(c,reference,quantite);
+                	}
+                	
+                }
+                
+                
+                //<reference objet vendable> <quantite>
                 System.out.println(" commande");
             }else if(argument.equals(VueTerminal.commandes2.get(2))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));

@@ -43,4 +43,10 @@ public class VueGraphique implements Affichage {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<String[]> getLignesCommande() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

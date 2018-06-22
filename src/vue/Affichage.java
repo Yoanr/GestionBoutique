@@ -20,4 +20,6 @@ public interface Affichage {
     String[] utilisateurAction();
 
 	String supprimer();
+	
+	List<String[]> getLignesCommande();
 }
