@@ -20,12 +20,10 @@ public class VueTerminal implements Affichage{
     public String[] utilisateurAction() {
     	String argument = new String(); 
     	String arguments[] = new String[2];
-    	
     	Scanner scanIn =new Scanner(System.in);
     	
     	try {
     		do {
-        		System.out.println("exemple : <afficher> <client> / <quitter> ");
         		argument = scanIn.nextLine();
         		arguments = argument.split(" ");
         	}while(!commandes.contains(arguments[0]) || !commandes2.contains(arguments[1]) );
@@ -68,6 +66,7 @@ public class VueTerminal implements Affichage{
     	System.out.println("**                 (ou quitter)                         **");
     	System.out.println("**	   Sur quoi ? : client, commande, article,menu  **");
     	System.out.println("**                                                      **");
+    	System.out.println("** exemple : <afficher> <client> / <quitter>            **");
     	System.out.println("**********************************************************");
     }
 

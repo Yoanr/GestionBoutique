@@ -31,4 +31,10 @@ public class VueGraphique implements Affichage {
     public <T> void afficher(List<T> listClient) {
 
     }
+
+	@Override
+	public void afficherMenu() {
+		// TODO Auto-generated method stub
+		
+	}
 }
