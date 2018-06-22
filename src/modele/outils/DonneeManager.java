@@ -24,6 +24,8 @@ import org.xml.sax.SAXException;
 
 public class DonneeManager {
     private static final String XMLFILE = "boutique.xml";
+    
+    private static final Boutique boutiqueInstance =  Boutique.getInstance();
 
     public static void lire() {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -32,10 +34,10 @@ public class DonneeManager {
             final DocumentBuilder builder = factory.newDocumentBuilder();
             final Document document = builder.parse(new File(XMLFILE));
 
-            Boutique.getInstance().getStocksList().clear();
-            Boutique.getInstance().getStocksMap().clear();
-            Boutique.getInstance().getClientList().clear();
-            Boutique.getInstance().getCommandeList().clear();
+            boutiqueInstance.getStocksList().clear();
+            boutiqueInstance.getStocksMap().clear();
+            boutiqueInstance.getClientList().clear();
+            boutiqueInstance.getCommandeList().clear();
 
             xmlToData(document);
 
@@ -82,7 +84,7 @@ public class DonneeManager {
 
         //Clients
         Element clients = document.createElement("clients");
-        for (Client client : Boutique.getInstance().getClientList()){
+        for (Client client : boutiqueInstance.getClientList()){
             Element clientElement = document.createElement("client");
 
             clientElement.setAttribute("id", String.valueOf(client.getId()));
@@ -97,7 +99,7 @@ public class DonneeManager {
 
         //Commandes
         Element commandes = document.createElement("commandes");
-        for (Commande commande : Boutique.getInstance().getCommandeList()){
+        for (Commande commande : boutiqueInstance.getCommandeList()){
             Element commandeElement = document.createElement("commande");
 
             commandeElement.setAttribute("id", String.valueOf(commande.getId()));
@@ -122,7 +124,7 @@ public class DonneeManager {
 
         //Stocks
         Element stocks = document.createElement("stocks");
-        for(Map.Entry<Article, Integer> entry : Boutique.getInstance().getStocksMap().entrySet()) {
+        for(Map.Entry<Article, Integer> entry : boutiqueInstance.getStocksMap().entrySet()) {
             int quantite = entry.getValue();
             Article article = entry.getKey();
 
@@ -169,7 +171,7 @@ public class DonneeManager {
                     currentElementClient.getAttribute("prenom"),
                     currentElementClient.getAttribute("adresse")};
 
-            Boutique.getInstance().ajouterClient(clientAttributes);
+            boutiqueInstance.ajouterClient(clientAttributes);
         }
 
         //Articles
@@ -193,7 +195,7 @@ public class DonneeManager {
                     typeArticle.getAttribute("prix"),
                     currentElementArticle.getAttribute("quantite")};
 
-            Boutique.getInstance().ajouterArticle(attributeArticle);
+            boutiqueInstance.ajouterArticle(attributeArticle);
         }
 
         //Commandes
@@ -216,11 +218,11 @@ public class DonneeManager {
 
                 Element currentLigneCommande = (Element) currentElementCommande.getChildNodes().item(indexLigne);
                 System.out.println(currentLigneCommande.getNodeName());
-                Article articleCmd = Boutique.getInstance().getArticleByReference(currentLigneCommande.getAttribute("referenceArticle"));
+                Article articleCmd = boutiqueInstance.getArticleByReference(currentLigneCommande.getAttribute("referenceArticle"));
                 currentCommand.ajoutObjet(articleCmd, Integer.parseInt(currentLigneCommande.getAttribute("quantite")));
             }
 
-            Boutique.getInstance().ajouterCommande(currentCommand);
+            boutiqueInstance.ajouterCommande(currentCommand);
         }
 
     }
