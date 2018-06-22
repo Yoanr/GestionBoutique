@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class Commande {
 
-    //Todo plutot l id du client ?
-    private String nomClient;
+    private int idClient;
     private String date;
     private  int id;
     private double prixTotal;
@@ -15,21 +14,19 @@ public class Commande {
     private double fraisDePort;
     private static int cptId = 1;
 
-    public Commande(String nomClient, String date,double fraisDePort, ObjetVendable ObjetVendable, int quantite) {
-        this.nomClient = nomClient;
+
+    public Commande(int idClient, String date, double fraisDePort) {
+        this.idClient = idClient;
         this.date = date;
+        this.fraisDePort = fraisDePort;
         lignes = new ArrayList<>();
-        addLigne(new LigneDeCommande(ObjetVendable, quantite));
         updatePrix();
         this.id = cptId++;
     }
 
-    public Commande(String nomClient, String date, double fraisDePort) {
-        this.nomClient = nomClient;
-        this.date = date;
-        lignes = new ArrayList<>();
-        updatePrix();
-        this.id = 0;
+    public Commande(int idClient, String date,double fraisDePort, ObjetVendable ObjetVendable, int quantite) {
+        this(idClient,date,fraisDePort);
+        addLigne(new LigneDeCommande(ObjetVendable, quantite));
     }
 
     public class  LigneDeCommande {
@@ -81,8 +78,8 @@ public class Commande {
         }
     }
 
-    public String getNomClient() {
-        return nomClient;
+    public int getIdClient() {
+        return idClient;
     }
 
     public String getDate() {
@@ -108,7 +105,7 @@ public class Commande {
 
     @Override
     public String toString() {
-        String facture =  "Facture n° " + id + "\tNom du client= " + nomClient + "\tDate= " + date + "\n\n";
+        String facture =  "Facture n° " + id + "\tNom du client= " + idClient + "\tDate= " + date + "\n\n";
 
         facture += String.format("%10s\t%10s\t%20s\t%10s\t%10s\t%10s","Quant." , "Ref." ,  "Nom" , "Marque" , "PU (€)", "PT (€)\n");
         for (LigneDeCommande LigneDeCommande : lignes){

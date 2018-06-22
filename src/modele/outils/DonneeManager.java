@@ -4,14 +4,12 @@ import modele.boutique.Boutique;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -20,12 +18,8 @@ import javax.xml.transform.stream.StreamResult;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
-import modele.stock.ObjetVendable;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 
 public class DonneeManager {
@@ -43,7 +37,7 @@ public class DonneeManager {
             Boutique.getInstance().getClientList().clear();
             Boutique.getInstance().getCommandeList().clear();
 
-            xmlToData(document.getDocumentElement());
+            xmlToData(document);
 
 
 
@@ -107,7 +101,7 @@ public class DonneeManager {
             Element commandeElement = document.createElement("commande");
 
             commandeElement.setAttribute("id", String.valueOf(commande.getId()));
-            commandeElement.setAttribute("nomClient", commande.getNomClient());
+            commandeElement.setAttribute("idClient", String.valueOf(commande.getIdClient()));
             commandeElement.setAttribute("date", commande.getDate());
             commandeElement.setAttribute("date", commande.getDate());
             commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
@@ -115,7 +109,7 @@ public class DonneeManager {
             for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
                 Element ligneCommandeElement = document.createElement("ligneCommande");
 
-                ligneCommandeElement.setAttribute("quantité", String.valueOf(ligneDeCommande.getQuantite()));
+                ligneCommandeElement.setAttribute("quantite", String.valueOf(ligneDeCommande.getQuantite()));
                 ligneCommandeElement.setAttribute("referenceArticle", ligneDeCommande.getObjet().getReference());
 
                 commandeElement.appendChild(ligneCommandeElement);
@@ -134,7 +128,7 @@ public class DonneeManager {
 
             Class<?> currentClass = entry.getKey().getClass();
             Field[] fields = currentClass.getDeclaredFields();
-            Element articleElement = document.createElement("Article");
+            Element articleElement = document.createElement("article");
             articleElement.setAttribute("quantite", String.valueOf(quantite));
             articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
 
@@ -161,63 +155,74 @@ public class DonneeManager {
         return racine;
     }
 
-    private static void xmlToData(Element element){
-/*        // do something with the current node instead of System.out
-        System.out.println(element.getNodeName());
+    private static void xmlToData(Document document) {
+        Element racine = document.getDocumentElement();
 
-        switch (element.getNodeName()){
-            case "client":{
-                Boutique.getInstance().ajouterClient(
-                        new Client(element.getAttribute("nom"),
-                                element.getAttribute("prenom"),
-                                element.getAttribute("adresse")));
+        //Clients
+        NodeList nodeListClient = racine.getElementsByTagName("client");
+        for (int index = 0; index < nodeListClient.getLength(); index++) {
 
-                break;
-            }
-            case "commandes":{
-                Commande newCommande = new Commande(element.getAttribute("nomClient"),
-                        element.getAttribute("date"),
-                        Double.parseDouble(element.getAttribute("fraisDePort")));
+            if (!"clients".equals(nodeListClient.item(index).getParentNode().getNodeName())) continue;
 
-                for (int indexLigneElement = 0; indexLigneElement < element.getElementsByTagName("ligneDeCommande").getLength(); indexLigneElement++){
-                    Element currentElement=(Element) element.getElementsByTagName("ligneDeCommande").item(indexLigneElement);
-                    newCommande.ajoutObjet(Boutique.getInstance().getArticleByReference(currentElement.getAttribute("reference")) == null? currentElement.getAttribute("reference"): Boutique.getInstance().getArticleByReference(currentElement.getAttribute("reference")),currentElement.getAttribute("quantite"));
+            Element currentElementClient = (Element) nodeListClient.item(index);
+            String [] clientAttributes = {currentElementClient.getAttribute("nom"),
+                    currentElementClient.getAttribute("prenom"),
+                    currentElementClient.getAttribute("adresse")};
 
-
-                }
-
-                return;
-            }
-            case "stocks" : {
-
-
-
-                break;
-            }
+            Boutique.getInstance().ajouterClient(clientAttributes);
         }
 
+        //Articles
+        NodeList nodeListArticle = racine.getElementsByTagName("article");
+        for (int index = 0; index < nodeListArticle.getLength(); index++) {
 
-        NodeList nodeList = element.getChildNodes();
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node currentNode = nodeList.item(i);
-            if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-                //calls this method for all the children which is Element
-                Element currentElement = (Element) currentNode;
-                xmlToData(currentElement);
+            if (!"stocks".equals(nodeListArticle.item(index).getParentNode().getNodeName()))
+                continue;
+
+            Element currentElementArticle = (Element) nodeListArticle.item(index);
+            Element typeArticle = null;
+
+            for (int indexTypeArticle = 0; indexTypeArticle < currentElementArticle.getChildNodes().getLength(); indexTypeArticle++){
+                if (currentElementArticle.getChildNodes().item(indexTypeArticle).getNodeType() != Node.ELEMENT_NODE) continue;
+                typeArticle = (Element) currentElementArticle.getChildNodes().item(indexTypeArticle);
             }
-        }*/
+
+            String attributeArticle [] = {typeArticle.getNodeName(),
+                    typeArticle.getAttribute("reference"),
+                    typeArticle.getAttribute("marque"),
+                    typeArticle.getAttribute("prix"),
+                    currentElementArticle.getAttribute("quantite")};
+
+            Boutique.getInstance().ajouterArticle(attributeArticle);
+        }
+
+        //Commandes
+        NodeList nodeListCommande = racine.getElementsByTagName("commande");
+        for (int index = 0; index < nodeListCommande.getLength(); index++) {
+
+            if (!"commandes".equals(nodeListCommande.item(index).getParentNode().getNodeName())) continue;
+
+            Element currentElementCommande = (Element) nodeListCommande.item(index);
+
+            if(currentElementCommande.getChildNodes().getLength() <= 0) continue;
+
+            Commande currentCommand = new Commande(Integer.parseInt(currentElementCommande.getAttribute("idClient")),
+                    currentElementCommande.getAttribute("date"),
+                    Double.parseDouble(currentElementCommande.getAttribute("fraisDePort")));
+
+            for (int indexLigne = 0; indexLigne < currentElementCommande.getChildNodes().getLength(); indexLigne++) {
+
+                if ((currentElementCommande.getChildNodes().item(indexLigne).getNodeType() != Node.ELEMENT_NODE)) continue;
+
+                Element currentLigneCommande = (Element) currentElementCommande.getChildNodes().item(indexLigne);
+                System.out.println(currentLigneCommande.getNodeName());
+                Article articleCmd = Boutique.getInstance().getArticleByReference(currentLigneCommande.getAttribute("referenceArticle"));
+                currentCommand.ajoutObjet(articleCmd, Integer.parseInt(currentLigneCommande.getAttribute("quantite")));
+            }
+
+            Boutique.getInstance().ajouterCommande(currentCommand);
+        }
+
     }
-/*
-        if (racine != null){
-           //Client
-
-           for (int indexRacineChild = 0; indexRacineChild <= racine.getChildNodes().getLength(); indexRacineChild++){
-               Element currentElement =(Element) racine.getChildNodes().item(indexRacineChild);
-
-
-
-
-
-        }*/
 
 }

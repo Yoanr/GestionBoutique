@@ -80,16 +80,21 @@ public final class Boutique {
     }
 
     public String ajouterClient(Client newClient) {
-         if (! clientList.contains(newClient)) {
+        if (! clientList.contains(newClient)) {
             clientList.add(newClient);
-           return AJOUTE;
+            return AJOUTE;
         }
         return AJOUTE_ERROR;
     }
 
-    public String ajouterCommande(){
-        return AJOUTE;
-    }
+    public String ajouterCommande(String [] commandeArgs){
+        switch (commandeArgs.length) {
+            case 3:
+                return ajouterCommande(new Commande(Integer.parseInt(commandeArgs[0]), commandeArgs[1], Double.parseDouble(commandeArgs[2])));
+
+        }
+        return AJOUTE_ERROR;
+}
 
     public String ajouterCommande(Commande c){
         if (! commandeList.contains(c)) {
@@ -106,7 +111,7 @@ public final class Boutique {
     }
 
     public String ajouterArticle(Article article, int quantite){
-       if (! stocks.containsKey(article)) {
+        if (! stocks.containsKey(article)) {
             stocks.put(article, quantite );
             return AJOUTE;
         }
