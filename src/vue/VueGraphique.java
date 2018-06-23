@@ -49,4 +49,17 @@ public class VueGraphique implements Affichage {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public String modifier(){
+		// TODO Auto-generated method stub
+		return null;
+		
+	}
+
+	@Override
+	public String getClientid() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

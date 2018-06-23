@@ -13,38 +13,45 @@ import modele.client.Client;
 public class VueTerminal implements Affichage{
 
     public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer","quitter"));
-    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article","menu"));
+    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article","boutique","menu"));
+    public static final List<String> commandes3 = Collections.unmodifiableList(Arrays.asList("client","boutique"));
 
+    private Scanner scanInn;
     public VueTerminal() {
     	this.afficherMenu();
+    	scanInn = new Scanner(System.in);
     }
 
     public String[] utilisateurAction() {
     	String argument = new String(); 
-    	String arguments[] = new String[2];
-    	Scanner scanIn =new Scanner(System.in);
+    	String arguments[] = new String[3];
     	try {
     		do {
     	    	System.out.println("Que souhaitez-vous ?");
-        		argument = scanIn.nextLine();
+        		argument = scanInn.nextLine();
         		String arg[] = argument.split(" ");
-        		
         		if(arg.length < 2) {
         			arguments[0] = arg[0];
         			arguments[1] = "";
+        			arguments[2] = "";
         			
-        		}else {
+        		}else if(arg.length == 2) {
         			arguments[0] = arg[0];
         			arguments[1] = arg[1];
+        			arguments[2] = "";
+        		}else if(arg.length == 3) {
+        			arguments[0] = arg[0];
+        			arguments[1] = arg[1];
+        			arguments[2] = arg[2];
         		}
         		
         		if(arguments[0].equals("quitter")) {
+        			scanInn.close();
         			arguments[1] = "menu";	
         		}
         	}while(!commandes.contains(arguments[0]) || !commandes2.contains(arguments[1])  );
     		
     	}catch(ArrayIndexOutOfBoundsException e) {
-    		scanIn.close();
     	}
     	
     	
@@ -54,7 +61,6 @@ public class VueTerminal implements Affichage{
     
     @Override
     public String[] ajouter() {
-    	Scanner scanInn =new Scanner(System.in);
     	String s = scanInn.nextLine();
     	return s.split(" ");
     }
@@ -76,13 +82,15 @@ public class VueTerminal implements Affichage{
 	}
 
 	public void afficherMenu() {
-    	System.out.println("***********                MENU                ***********");
-    	System.out.println("**     Action : afficher, ajouter, modifier, supprimer  **");                         
-    	System.out.println("**                 (ou quitter)                         **");
-    	System.out.println("**	   Sur quoi ? : client, commande, article,menu  **");
-    	System.out.println("**                                                      **");
-    	System.out.println("** exemple : <afficher> <client> / <quitter>            **");
-    	System.out.println("**********************************************************");
+    	System.out.println("***********                MENU                 ***********");
+    	System.out.println("**     Action : afficher, ajouter, modifier, supprimer   **");                         
+    	System.out.println("**                 (ou quitter)                          **");
+    	System.out.println("**	   Sur quoi ? : client, commande, article,menu   **");
+    	System.out.println("**     si commande : client ou boutique ?                **");
+    	System.out.println("**   exemple : <ajouter> <client>                        **");
+    	System.out.println("**   exemple : <afficher> <commande> <boutique>          **");
+    	System.out.println("**   exemple : <quitter>                                 **");
+    	System.out.println("***********************************************************");
     }
 
     @Override
@@ -94,7 +102,7 @@ public class VueTerminal implements Affichage{
 
 	@Override
 	public String supprimer() {
-		Scanner scanInn =new Scanner(System.in);
+		System.out.println("Saississez l'identifiant que vous voulez supprimer :");
     	String s = scanInn.nextLine();
     	return s;
 	}
@@ -102,8 +110,7 @@ public class VueTerminal implements Affichage{
 	@Override
 	public List<String[]> getLignesCommande() {
 		System.out.println("Ajout de ligne :");
-		System.out.println("exemple : <item> <quantite>");
-		Scanner scanInn =new Scanner(System.in);
+		System.out.println("exemple : <item> <quantite> , écrire fin pour arreter");
     	List<String[]> lignes = new ArrayList<>();
     	boolean ajouter = true;
     	int indice_ligne=1;
@@ -121,6 +128,17 @@ public class VueTerminal implements Affichage{
     		indice_ligne++;
     	}
 		return lignes;
+	}
+	@Override
+	public String modifier(){
+		return null;
+		
+	}
+
+	@Override
+	public String getClientid() {
+		String id = scanInn.nextLine();
+		return id;
 	}
 
     /*

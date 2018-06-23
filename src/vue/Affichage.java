@@ -22,4 +22,8 @@ public interface Affichage {
 	String supprimer();
 	
 	List<String[]> getLignesCommande();
+
+	String modifier();
+
+	String getClientid();
 }

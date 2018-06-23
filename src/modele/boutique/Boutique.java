@@ -25,6 +25,7 @@ public final class Boutique {
     public static final String SUPPRIME = "Elément supprimé";
     public static final String AJOUTE_ERROR = "Elément non ajouté";
     public static final String SUPPRIME_ERROR = "Elément non supprimé";
+    public static final String CLIENT_ERROR = "Client non existant";
 
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
@@ -43,6 +44,12 @@ public final class Boutique {
 
     public List<Commande> getCommandeList() {
         return commandeList;
+    }
+    
+    public List<String> getBoutiqueInfo(){
+    	List<String> liste =  new ArrayList<String>();
+    	liste.add(toString());
+    	return liste;
     }
 
     public HashMap<Article, Integer> getStocksMap() {
@@ -215,6 +222,7 @@ public final class Boutique {
     public void setBenefice(double benefice) {
         this.benefice = benefice;
     }
+    
 
     @Override
     public String toString() {
@@ -226,4 +234,15 @@ public final class Boutique {
                 ", benefice=" + benefice +
                 '}';
     }
+
+	public List<?> getCommandeListByClient(int idClient) {
+		List<Commande> l = commandeList;
+		List<Commande> l2 = new ArrayList<Commande>();
+		 for (Commande element : l){
+	            if(element.getIdClient() == idClient) {
+	            	l2.add(element);
+	            }
+	        }
+		return l2;
+	}
 }

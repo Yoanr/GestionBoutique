@@ -2,6 +2,7 @@ package controleur;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import modele.boutique.Boutique;
 import modele.client.Client;
@@ -19,12 +20,12 @@ public class Controleur {
     Boutique boutique = Boutique.getInstance();
     Affichage affichage;
 
+
     public Controleur(String arg) {
         DonneeManager.lire();
         if("commandLine".equals(arg)) {
             this.affichage = new VueTerminal();
             controllerCommandLine();
-
         }
 
         else
@@ -35,18 +36,18 @@ public class Controleur {
 
         if (arguments[0].equals(VueTerminal.commandes.get(0))) {
 
-            controllerAfficher(arguments[1]);
+            controllerAfficher(arguments);
 
         } else if (arguments[0].equals(VueTerminal.commandes.get(1))) {
 
-            controllerAjouter(arguments[1]);
+            controllerAjouter(arguments);
 
         } else if (arguments[0].equals(VueTerminal.commandes.get(2))) {
 
-            controllerModifier(arguments[1]);
+            controllerModifier(arguments);
 
         } else if (arguments[0].equals(VueTerminal.commandes.get(3))) {
-            controllerSupprimer(arguments[1]);
+            controllerSupprimer(arguments);
 
         }else if(arguments[0].equals("quitter")) {
             return true;
@@ -70,17 +71,18 @@ public class Controleur {
 
     }
 
-    private void controllerAjouter(String argument) {
+    private void controllerAjouter(String[] arguments) {
         String[] s;
         String msg=Boutique.DEFAULT;
         try {
 
-            if(argument.equals(VueTerminal.commandes2.get(0))) {
+            if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(0));
                 s = this.affichage.ajouter();
                 msg = boutique.ajouterClient(s);
 
-            }else if(argument.equals(VueTerminal.commandes2.get(1))) {
+            }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
+            	
                 this.affichage.afficherAide(VueTerminal.commandes2.get(1));
                 s = this.affichage.ajouter();
                 
@@ -91,6 +93,9 @@ public class Controleur {
                 Commande c = boutique.ajouterCommande(s);
                 List<String[]> lignesCommande;
                 lignesCommande = this.affichage.getLignesCommande();
+                if(lignesCommande.size() == 0) {
+                	boutique.supprimerCommande(String.valueOf(c.getId()));
+                }
                 for(int i=0;i<lignesCommande.size();i++) {
                 	String reference = lignesCommande.get(i)[0];
                 	int quantite = Integer.parseInt(lignesCommande.get(i)[1]);
@@ -104,10 +109,7 @@ public class Controleur {
                 	
                 }
                 
-                
-                //<reference objet vendable> <quantite>
-                System.out.println(" commande");
-            }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+            }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));
                 s = this.affichage.ajouter();
                 msg = boutique.ajouterArticle(s);
@@ -121,35 +123,76 @@ public class Controleur {
 
     }
 
-    private void controllerAfficher(String argument) {
+    private void controllerAfficher(String[] arguments) {
         List<?> liste = null;
-        if(argument.equals(VueTerminal.commandes2.get(0))) {
+        String msg=Boutique.DEFAULT;
+        if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
             liste = boutique.getClientList();
-        }else if(argument.equals(VueTerminal.commandes2.get(1))) {
-            liste = boutique.getCommandeList();
-        }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
+        	if(arguments[2] == null) {
+        		return;
+        	}
+        	if(arguments[2].equals(VueTerminal.commandes3.get(0))){
+        		System.out.println("Saississez l'id du client :");
+        		String idClient = affichage.getClientid();
+        		if(!boutique.verifClient(Integer.parseInt(idClient))){
+        			this.affichage.msgModele(Boutique.CLIENT_ERROR); 
+        			return;
+        		}else {
+        			liste = boutique.getCommandeListByClient(Integer.parseInt(idClient));
+        		}
+        		
+        	}else if(arguments[2].equals(VueTerminal.commandes3.get(1))){
+        		liste = boutique.getCommandeList();
+        	}else {
+        		return;
+        	}
+            
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
             liste = boutique.getStocksList();
-        }else if(argument.equals(VueTerminal.commandes2.get(3))) {
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(3))) {
+       	 liste = boutique.getBoutiqueInfo();
+       }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
             this.affichage.afficherMenu();
             return;
-        }
+       }else {
+    	   return;
+       }
         this.affichage.afficher(liste);
     }
 
-    private void controllerModifier(String argument) {
-
+    private void controllerModifier(String[] arguments) {
+    	String msg=Boutique.DEFAULT;
+    	String s;
+    	
+    	if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
+    		s = this.affichage.modifier();
+    		String[] ss;
+    		// STOCK stock = boutique.getStockbyId(Integer.parseInt(s));
+    		// ss = this.affichage.modifierstock(stock); afficher ancien stock
+    		// boutique.modifierstock(ss);
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
+        	//s = this.affichage.modifier();
+        	//ss = this.affichage.modifierBoutique(stock); afficher ancien boutique
+        	//boutique.modifierstock(ss);
+        }else {
+        	return;
+        }
+    	
+    	DonneeManager.ecrire();
+    	this.affichage.msgModele(msg);
     }
 
-    private void controllerSupprimer(String argument) {
+    private void controllerSupprimer(String[] arguments) {
     	String s = this.affichage.supprimer();
     	String msg=Boutique.DEFAULT;
-    	if(argument.equals(VueTerminal.commandes2.get(0))) {
-        	msg = boutique.supprimerClient(s); 
+    	if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
+        	msg = boutique.supprimerClient(s);  // TODO supprimer les commandes associé !!!
         	
-        }else if(argument.equals(VueTerminal.commandes2.get(1))) {
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
         	msg = boutique.supprimerCommande(s);
         	
-        }else if(argument.equals(VueTerminal.commandes2.get(2))) {
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
         	msg = boutique.supprimerArticle(s);
         }
     	 this.affichage.msgModele(msg);
