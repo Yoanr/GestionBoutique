@@ -27,12 +27,16 @@ public class DonneeManager {
     
     private static final Boutique boutiqueInstance =  Boutique.getInstance();
 
-    public static void lire() {
+    public static void lire(){
+        lire(XMLFILE);
+    }
+
+    public static void lire(String fichier) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
-            final Document document = builder.parse(new File(XMLFILE));
+            final Document document = builder.parse(new File(fichier));
 
             boutiqueInstance.getStocksList().clear();
             boutiqueInstance.getStocksMap().clear();
@@ -48,7 +52,7 @@ public class DonneeManager {
         }
     }
 
-    public static void ecrire(){
+    public static void ecrire(String fichier){
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -59,7 +63,7 @@ public class DonneeManager {
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();
             final Transformer transformer = transformerFactory.newTransformer();
             final DOMSource source = new DOMSource(document);
-            final StreamResult sortie = new StreamResult(new File(XMLFILE));
+            final StreamResult sortie = new StreamResult(new File(fichier));
 
             //prologue
             transformer.setOutputProperty(OutputKeys.VERSION, "1.0");
@@ -77,6 +81,10 @@ public class DonneeManager {
         }catch (ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void ecrire(){
+       ecrire(XMLFILE);
     }
 
     private static Element dataToXml(Document document){
@@ -217,7 +225,6 @@ public class DonneeManager {
                 if ((currentElementCommande.getChildNodes().item(indexLigne).getNodeType() != Node.ELEMENT_NODE)) continue;
 
                 Element currentLigneCommande = (Element) currentElementCommande.getChildNodes().item(indexLigne);
-                System.out.println(currentLigneCommande.getNodeName());
                 Article articleCmd = boutiqueInstance.getArticleByReference(currentLigneCommande.getAttribute("referenceArticle"));
                 currentCommand.ajoutObjet(articleCmd, Integer.parseInt(currentLigneCommande.getAttribute("quantite")));
             }

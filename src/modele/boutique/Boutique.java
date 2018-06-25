@@ -25,6 +25,8 @@ public final class Boutique {
     public static final String SUPPRIME = "Elément supprimé";
     public static final String AJOUTE_ERROR = "Elément non ajouté";
     public static final String SUPPRIME_ERROR = "Elément non supprimé";
+    public static final String MODIFIE_ERROR = "Modification de l'élément impossible";
+    public static final String MODIFIE = "Modification reussi";
     public static final String CLIENT_ERROR = "Client non existant";
 
     private List<Client> clientList = new ArrayList<>();
@@ -45,11 +47,11 @@ public final class Boutique {
     public List<Commande> getCommandeList() {
         return commandeList;
     }
-    
+
     public List<String> getBoutiqueInfo(){
-    	List<String> liste =  new ArrayList<String>();
-    	liste.add(toString());
-    	return liste;
+        List<String> liste =  new ArrayList<String>();
+        liste.add(toString());
+        return liste;
     }
 
     public HashMap<Article, Integer> getStocksMap() {
@@ -63,11 +65,14 @@ public final class Boutique {
             int quantite = entry.getValue();
             Article article = entry.getKey();
 
-            StringBuilder stringBuilder = new StringBuilder(String.valueOf(quantite));
+            StringBuilder stringBuilder = new StringBuilder("Quantité : ");
+
+            stringBuilder.append(String.valueOf(quantite));
             stringBuilder.append(" - ");
             stringBuilder.append(article.toString());
             stockList.add(stringBuilder.toString());
         }
+        System.out.println(stockList);
         return stockList;
     }
 
@@ -175,6 +180,19 @@ public final class Boutique {
         c.ajoutObjet(getArticleByReference(reference), quantite);
     }
 
+    public int getQuantiteById(String reference){
+        Article  article = getArticleByReference(reference);
+
+        if(article == null || !stocks.containsKey(article)) return -1;
+        return stocks.get(article);
+    }
+
+    public void modifierStock(String [] stock){
+        //int quantite = Integer.parseInt(stock[0]);
+
+
+    }
+
     public String getNom() {
         return nom;
     }
@@ -222,7 +240,7 @@ public final class Boutique {
     public void setBenefice(double benefice) {
         this.benefice = benefice;
     }
-    
+
 
     @Override
     public String toString() {
@@ -235,14 +253,14 @@ public final class Boutique {
                 '}';
     }
 
-	public List<?> getCommandeListByClient(int idClient) {
-		List<Commande> l = commandeList;
-		List<Commande> l2 = new ArrayList<Commande>();
-		 for (Commande element : l){
-	            if(element.getIdClient() == idClient) {
-	            	l2.add(element);
-	            }
-	        }
-		return l2;
-	}
+    public List<?> getCommandeListByClient(int idClient) {
+        List<Commande> l = commandeList;
+        List<Commande> l2 = new ArrayList<Commande>();
+        for (Commande element : l){
+            if(element.getIdClient() == idClient) {
+                l2.add(element);
+            }
+        }
+        return l2;
+    }
 }
