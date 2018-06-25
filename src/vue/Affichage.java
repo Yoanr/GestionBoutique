@@ -26,4 +26,6 @@ public interface Affichage {
 	String modifier();
 
 	String getClientid();
+	
+	String modifierstock(int quantite);
 }

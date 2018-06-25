@@ -11,13 +11,13 @@
     <commande date="1" fraisDePort="2.0" id="2" idClient="1" prix="2.2">
       <ligneCommande quantite="1" referenceArticle="lol"/>
     </commande>
-    <commande date="11" fraisDePort="20.0" id="4" idClient="1" prix="6.6000000000000005">
+    <commande date="11" fraisDePort="20.0" id="3" idClient="1" prix="6.6000000000000005">
       <ligneCommande quantite="1" referenceArticle="lol"/>
       <ligneCommande quantite="2" referenceArticle="lol"/>
     </commande>
   </commandes>
   <stocks>
-    <article quantite="2" type="stylo">
+    <article quantite="5" type="stylo">
       <stylo couleur="" marque="lol" nom="" prix="2.2" reference="lol"/>
     </article>
   </stocks>

@@ -187,12 +187,12 @@ public final class Boutique {
         return stocks.get(article);
     }
 
-    public String modifierStock(int newQuantité, String reference){
+    public String modifierStock(int newQuantite, String reference){
         Article article = getArticleByReference(reference);
 
         if(article == null || !stocks.containsKey(article)) return MODIFIE_ERROR;
 
-        stocks.put(article, newQuantité);
+        stocks.put(article, newQuantite);
         return MODIFIE;
 
     }

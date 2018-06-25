@@ -131,14 +131,22 @@ public class VueTerminal implements Affichage{
 	}
 	@Override
 	public String modifier(){
-		return null;
-		
+		System.out.println("Veuillez saisir la référence/id de l'element :");
+		return scanInn.nextLine();
 	}
 
 	@Override
 	public String getClientid() {
 		String id = scanInn.nextLine();
 		return id;
+	}
+
+	@Override
+	public String modifierstock(int quantite) {
+		System.out.println("Quantite actuelle : "+quantite);
+		System.out.print("Nouvelle quantite : ");
+		String newQuantite = scanInn.nextLine();
+		return newQuantite;
 	}
 
     /*

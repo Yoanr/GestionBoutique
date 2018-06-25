@@ -90,7 +90,7 @@ public class Controleur {
                 	 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
                 	return;
                 }
-                Commande c = boutique.ajouterCommande(s);
+                Commande c = boutique.ajouterCommande(s); // gerer si lot ou article
                 List<String[]> lignesCommande;
                 lignesCommande = this.affichage.getLignesCommande();
                 if(lignesCommande.size() == 0) {
@@ -123,7 +123,7 @@ public class Controleur {
 
     }
 
-    private void controllerAfficher(String[] arguments) {
+    private void controllerAfficher(String[] arguments) { 
         List<?> liste = null;
         String msg=Boutique.DEFAULT;
         if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
@@ -166,12 +166,18 @@ public class Controleur {
     	String s;
     	
     	if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
-    		s = this.affichage.modifier();
-    		String[] ss;
-    		// STOCK stock = boutique.getStockbyId(Integer.parseInt(s));
-    		// ss = this.affichage.modifierstock(stock); afficher ancien stock
-    		// boutique.modifierstock(ss);
+    		
+    		String reference = this.affichage.modifier();
+    		int quantite = boutique.getQuantiteById(reference);
+    		if(quantite == -1) {
+    			System.out.println("Reference introuvable");
+    			return;
+    		}
+    		int nouvelleQuantite = Integer.parseInt(this.affichage.modifierstock(quantite)); //afficher ancien stock
+    		msg = boutique.modifierStock(nouvelleQuantite,reference);
+    		// 
         }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
+        	
         	//s = this.affichage.modifier();
         	//ss = this.affichage.modifierBoutique(stock); afficher ancien boutique
         	//boutique.modifierstock(ss);

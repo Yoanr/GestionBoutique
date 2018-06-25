@@ -166,4 +166,10 @@ public class VueGraphique extends Application implements Affichage {
     public String getClientid() {
         return null;
     }
+
+	@Override
+	public String modifierstock(it quantite) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
