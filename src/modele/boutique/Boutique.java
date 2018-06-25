@@ -187,9 +187,13 @@ public final class Boutique {
         return stocks.get(article);
     }
 
-    public void modifierStock(String [] stock){
-        //int quantite = Integer.parseInt(stock[0]);
+    public String modifierStock(int newQuantité, String reference){
+        Article article = getArticleByReference(reference);
 
+        if(article == null || !stocks.containsKey(article)) return MODIFIE_ERROR;
+
+        stocks.put(article, newQuantité);
+        return MODIFIE;
 
     }
 
