@@ -31,6 +31,7 @@ public final class Boutique {
     public static final String MODIFIE_ERROR = "Modification de l'élément impossible";
     public static final String MODIFIE = "Modification reussi";
     public static final String CLIENT_ERROR = "Client non existant";
+	public static final String REF_ERROR = "Reference introuvable";
 
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();

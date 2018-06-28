@@ -73,6 +73,8 @@ public class VueTerminal implements Affichage{
     		System.out.println("exemple commande : <idClient> <date> <frais de port>");
     	}else if(type.equals(commandes2.get(2))) {
     		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
+    	}else if(type.equals(commandes2.get(3))) {
+    		System.out.println("exemple :<nom> <loyer> <salaire> <CA>");
     	}else if(type.equals(commandes2.get(5))){
     		System.out.println("exemple :<ref lot> <ref article> <quantite article> <reduction>");	
     	}
@@ -135,6 +137,7 @@ public class VueTerminal implements Affichage{
 
 	@Override
 	public String getClientid() {
+		System.out.println("Saississez l'id du client :");
 		String id = scanInn.nextLine();
 		return id;
 	}
