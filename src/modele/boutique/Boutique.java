@@ -198,6 +198,17 @@ public final class Boutique {
 
     }
 
+    public String ajouterLot(String referenceLot, String referenceArticle, int quantite){
+        Lot lot = getArticleByReference(referenceArticle) != null ? new Lot(referenceLot, getArticleByReference(referenceArticle), quantite) : null;
+
+        if (lot != null){
+            lotList.add(lot);
+            return AJOUTE;
+        }else{
+            return AJOUTE_ERROR;
+        }
+    }
+
     //values {"nom", "loyer", "salaire", "CA"}
     public String modifierInfoBoutique(String [] values){
         setNom(values[0]);

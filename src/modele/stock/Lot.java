@@ -22,6 +22,13 @@ public class Lot extends ObjetVendable {
         updatePrix();
     }
 
+    public Lot (String reference, Article article, int quantite){
+        this(reference, article);
+        for (int index = 0; index< quantite; index++){
+            addArticle(article);
+        }
+    }
+
     public void addArticle(Article article){
         nbArticle++;
         articles.add(article);
