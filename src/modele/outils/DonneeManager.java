@@ -4,8 +4,6 @@ import modele.boutique.Boutique;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -213,30 +211,29 @@ public class DonneeManager {
                 typeArticle = (Element) currentElementArticle.getChildNodes().item(indexTypeArticle);
             }
 
-            List<String> attributeArticle = new ArrayList<>();
+            String[] attributeArticle  =  new String[10];
 
-            attributeArticle.add(typeArticle.getNodeName());
-            attributeArticle.add(typeArticle.getAttribute("reference"));
-            attributeArticle.add(typeArticle.getAttribute("marque"));
-            attributeArticle.add(typeArticle.getAttribute("prix"));
+            attributeArticle[0] = typeArticle.getNodeName();
+            attributeArticle[1] = typeArticle.getAttribute("reference");
+            attributeArticle[2] = typeArticle.getAttribute("marque");
+            attributeArticle[3] = typeArticle.getAttribute("prix");
             switch (typeArticle.getNodeName()) {
                 case "stylo":
 
-                    attributeArticle.add(      typeArticle.getAttribute("couleur"));
-                    attributeArticle.add(        currentElementArticle.getAttribute("quantite"));
+                    attributeArticle[4] =          typeArticle.getAttribute("couleur");
+                    attributeArticle[5] =          currentElementArticle.getAttribute("quantite");
                     break;
                 case "ramette":
-                    attributeArticle.add(       typeArticle.getAttribute("dimH"));
-                    attributeArticle.add(        typeArticle.getAttribute("dimL"));
-                    attributeArticle.add(        currentElementArticle.getAttribute("quantite"));
+                    attributeArticle[4] =          typeArticle.getAttribute("dimH");
+                    attributeArticle[5] =          typeArticle.getAttribute("dimL");
+                    attributeArticle[6] =          currentElementArticle.getAttribute("quantite");
                     break;
             }
 
             for (String str :attributeArticle)
                 System.out.println(str);
 
-            String [] tabAttribute  = (String []) attributeArticle.toArray();
-            boutiqueInstance.ajouterArticle(tabAttribute);
+            boutiqueInstance.ajouterArticle(attributeArticle);
         }
 
         //Commandes

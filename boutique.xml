@@ -13,13 +13,13 @@
     <commande date="1" fraisDePort="2.0" id="2" idClient="1" prix="2.2">
       <ligneCommande quantite="1" referenceArticle="lol"/>
     </commande>
-    <commande date="tototo" fraisDePort="23.0" id="5" idClient="1" prix="11.0">
+    <commande date="tototo" fraisDePort="23.0" id="3" idClient="1" prix="6.6000000000000005">
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
   </commandes>
   <stocks>
-    <article quantite="50" type="stylo">
-      <stylo couleur="VERT" marque="lol" nom="" prix="2.2" reference="lol"/>
+    <article quantite="38" type="stylo">
+      <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
     </article>
   </stocks>
 </boutique>

@@ -258,4 +258,9 @@ public class VueGraphique extends Application implements Affichage {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public String[] ajouterArticle(String typeArticle) {
+        return new String[0];
+    }
 }

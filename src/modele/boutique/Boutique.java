@@ -124,13 +124,13 @@ public final class Boutique {
 
 
     public String ajouterArticle(String [] articleTab) {
-        switch (articleTab.length) {
-            case 6:
+        switch (articleTab[0].toLowerCase()) {
+            case "stylo":
                 return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab), Integer.parseInt(articleTab[5]));
-            case 7:
+            case "ramette":
                 return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab), Integer.parseInt(articleTab[6]));
             default:
-                return AJOUTE_ERROR;
+                return ErreurManager.AJOUTE_ERROR;
         }
     }
 
@@ -164,7 +164,7 @@ public final class Boutique {
                             ajouterArticle((Article)ligneDeCommande.getObjet(), ligneDeCommande.getQuantite() + stocks.get(ligneDeCommande.getObjet()));
                     }
                 }
-                return ErreurManager;SUPPRIME;
+                return ErreurManager.SUPPRIME;
             }
         }
         return ErreurManager.SUPPRIME_ERROR;
