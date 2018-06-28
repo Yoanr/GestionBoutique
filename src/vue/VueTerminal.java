@@ -13,7 +13,7 @@ import modele.client.Client;
 public class VueTerminal implements Affichage{
 
     public static final List<String> commandes = Collections.unmodifiableList(Arrays.asList("afficher","ajouter","modifier","supprimer","quitter"));
-    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("client","commande","article","boutique","menu"));
+    public static final List<String> commandes2 = Collections.unmodifiableList(Arrays.asList("clients","commandes","stock","boutique","menu","lots"));
     public static final List<String> commandes3 = Collections.unmodifiableList(Arrays.asList("client","boutique"));
 
     private Scanner scanInn;
@@ -74,7 +74,7 @@ public class VueTerminal implements Affichage{
     	if(type.equals(commandes2.get(0))) {
     		System.out.println("exemple : <nom> <prenom> <adresse>");
     	}else if(type.equals(commandes2.get(1))) {
-    		System.out.println("exemple commande : <idClient> <date> <port>");
+    		System.out.println("exemple commande : <idClient> <date> <fraix de port>");
     	}else if(type.equals(commandes2.get(2))) {
     		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
     	}
@@ -85,10 +85,10 @@ public class VueTerminal implements Affichage{
     	System.out.println("***********                MENU                 ***********");
     	System.out.println("**     Action : afficher, ajouter, modifier, supprimer   **");                         
     	System.out.println("**                 (ou quitter)                          **");
-    	System.out.println("**	   Sur quoi ? : client, commande, article,menu   **");
-    	System.out.println("**     si commande : client ou boutique ?                **");
-    	System.out.println("**   exemple : <ajouter> <client>                        **");
-    	System.out.println("**   exemple : <afficher> <commande> <boutique>          **");
+    	System.out.println("**	   Sur quoi ? : lots, clients, commandes, stock, menu  **");
+    	System.out.println("**     si commande : clients ou boutique ?               **");
+    	System.out.println("**   exemple : <ajouter> <clients/commandes/...>         **");
+    	System.out.println("**   exemple : <afficher> <commandes> <boutique/client>  **");
     	System.out.println("**   exemple : <quitter>                                 **");
     	System.out.println("***********************************************************");
     }
@@ -110,7 +110,7 @@ public class VueTerminal implements Affichage{
 	@Override
 	public List<String[]> getLignesCommande() {
 		System.out.println("Ajout de ligne :");
-		System.out.println("exemple : <item> <quantite> , écrire fin pour arreter");
+		System.out.println("exemple : <reference> <quantite> , ecrire fin pour arreter");
     	List<String[]> lignes = new ArrayList<>();
     	boolean ajouter = true;
     	int indice_ligne=1;
@@ -131,7 +131,7 @@ public class VueTerminal implements Affichage{
 	}
 	@Override
 	public String modifier(){
-		System.out.println("Veuillez saisir la référence/id de l'element :");
+		System.out.println("Veuillez saisir la rï¿½fï¿½rence/id de l'element :");
 		return scanInn.nextLine();
 	}
 

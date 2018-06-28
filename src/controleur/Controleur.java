@@ -1,8 +1,6 @@
 package controleur;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 import modele.boutique.Boutique;
 import modele.client.Client;
@@ -113,6 +111,10 @@ public class Controleur {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));
                 s = this.affichage.ajouter();
                 msg = boutique.ajouterArticle(s);
+            }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
+            	this.affichage.afficherAide(VueTerminal.commandes2.get(5));
+            	s = this.affichage.ajouter();
+            	//todo msg = boutique.ajouterLot(s);
             }
 
         }catch(Exception ArrayIndexOutOfBoundsException) {
@@ -155,7 +157,9 @@ public class Controleur {
        }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
             this.affichage.afficherMenu();
             return;
-       }else {
+       }else if(arguments[1].equals(VueTerminal.commandes2.get(5))) {
+    	   //todo liste = boutique.getLotsList();
+      }else {
     	   return;
        }
         this.affichage.afficher(liste);
@@ -177,10 +181,15 @@ public class Controleur {
     		msg = boutique.modifierStock(nouvelleQuantite,reference);
     		// 
         }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
+        	System.out.println("<nom> <loyer> <salaire>");
+        	String infoBoutique = this.affichage.modifier();
+        	String[] infoBoutiqueSplited =  infoBoutique.split(" ");
+        	if(infoBoutiqueSplited.length != 5) {
+        		msg=Boutique.ARGS_ERROR;
+        	}else {
+        		//todo boutique.modifierInfoBoutique(infoBoutiqueSplited);
+        	}
         	
-        	//s = this.affichage.modifier();
-        	//ss = this.affichage.modifierBoutique(stock); afficher ancien boutique
-        	//boutique.modifierstock(ss);
         }else {
         	return;
         }
@@ -193,7 +202,7 @@ public class Controleur {
     	String s = this.affichage.supprimer();
     	String msg=Boutique.DEFAULT;
     	if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-        	msg = boutique.supprimerClient(s);  // TODO supprimer les commandes associé !!!
+        	msg = boutique.supprimerClient(s);  // TODO supprimer les commandes associï¿½ !!!
         	
         }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
         	msg = boutique.supprimerCommande(s);
