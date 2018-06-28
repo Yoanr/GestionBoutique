@@ -74,7 +74,6 @@ public final class Boutique {
             stringBuilder.append(article.toString());
             stockList.add(stringBuilder.toString());
         }
-        System.out.println(stockList);
         return stockList;
     }
 
