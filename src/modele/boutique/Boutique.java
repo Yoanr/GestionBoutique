@@ -197,6 +197,18 @@ public final class Boutique {
 
     }
 
+    //values {"nom", "loyer", "salaire", "CA"}
+    public String modifierInfoBoutique(String [] values){
+        setNom(values[0]);
+        setLoyer(Double.parseDouble(values[1]));
+        setSalaire(Double.parseDouble(values[2]));
+        setCa(Double.parseDouble(values[3]));
+        setCharge(salaire+loyer);
+        setBenefice(ca-charge);
+
+        return MODIFIE;
+    }
+
     public String getNom() {
         return nom;
     }

@@ -89,7 +89,7 @@ public class DonneeManager {
 
     private static Element dataToXml(Document document){
         Element racine = document.createElement("boutique");
-
+        //TODO infoBoutique
         //Clients
         Element clients = document.createElement("clients");
         for (Client client : boutiqueInstance.getClientList()){
@@ -167,7 +167,7 @@ public class DonneeManager {
 
     private static void xmlToData(Document document) {
         Element racine = document.getDocumentElement();
-
+        //TODO infoBoutique
         //Clients
         NodeList nodeListClient = racine.getElementsByTagName("client");
         for (int index = 0; index < nodeListClient.getLength(); index++) {
