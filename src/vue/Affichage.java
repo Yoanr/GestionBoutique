@@ -28,4 +28,6 @@ public interface Affichage {
 	String getClientid();
 	
 	String modifierstock(int quantite);
+
+	String[] ajouterArticle(String typeArticle);
 }

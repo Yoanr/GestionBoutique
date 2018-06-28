@@ -72,7 +72,7 @@ public class VueTerminal implements Affichage{
     	}else if(type.equals(commandes2.get(1))) {
     		System.out.println("exemple commande : <idClient> <date> <frais de port>");
     	}else if(type.equals(commandes2.get(2))) {
-    		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
+    		System.out.println("exemple :<ref article> <marque> <prixUnitaire> <quantite>");
     	}else if(type.equals(commandes2.get(3))) {
     		System.out.println("exemple :<nom> <loyer> <salaire> <CA>");
     	}else if(type.equals(commandes2.get(5))){
@@ -148,6 +148,23 @@ public class VueTerminal implements Affichage{
 		System.out.print("Nouvelle quantite : ");
 		String newQuantite = scanInn.nextLine();
 		return newQuantite;
+	}
+
+	@Override
+	public String[] ajouterArticle(String typeArticle) {
+		String s = scanInn.nextLine();
+		if(typeArticle.equals("stylo")) {
+			System.out.println("stylo : <ref article> <marque> <prixUnitaire> <couleur> <quantite>");
+			
+		}else if(typeArticle.equals("ramette")) {
+			System.out.println("ramette : <ref article> <marque> <prixUnitaire> <dimension hauteur> <dimension largeur> <quantite>");
+		}else {
+			String[] ss = new String[1];
+			ss[0]="LOL";
+			return ss;
+		}
+		
+		return s.split(" ");
 	}
 
     /*

@@ -6,6 +6,7 @@ import modele.boutique.Boutique;
 import modele.commande.Commande;
 import modele.outils.DonneeManager;
 import vue.Affichage;
+import vue.ErreurManager;
 import vue.VueTerminal;
 
 public class Controleur {
@@ -66,14 +67,14 @@ public class Controleur {
 
     private void controllerAjouter(String[] arguments) {
         String[] s;
-        String msg=Boutique.DEFAULT;
+        String msg=ErreurManager.DEFAULT;
         try {
 
             if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(0));
                 s = this.affichage.ajouter();
                 if(s.length != 3) {
-                	msg = Boutique.ARGS_ERROR;
+                	msg = ErreurManager.ARGS_ERROR;
                 }else {
                 	msg =boutique.ajouterClient(s);
                 }
@@ -85,11 +86,11 @@ public class Controleur {
                 s = this.affichage.ajouter();
                 
                 if(!boutique.verifClient(Integer.parseInt(s[0]))) {
-                	 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
+                	 this.affichage.msgModele(ErreurManager.AJOUTE_ERROR);
                 	return;
                 }
                 if(s.length !=  3) {
-                	msg = Boutique.ARGS_ERROR;
+                	msg = ErreurManager.ARGS_ERROR;
                 }else {
                 	msg = this.commandeControleur(s);
                 }
@@ -97,13 +98,18 @@ public class Controleur {
                 
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));
-                s = this.affichage.ajouter();
-                if(s.length != 5) {
-                	msg = Boutique.ARGS_ERROR;
-                }else {
-                		msg = boutique.ajouterArticle(s);
-                          	
+                s = this.affichage.ajouterArticle(arguments[2]);
+                if(s.length == 6 && arguments[2].equals("ramette") ) {
+                	msg = boutique.ajouterArticle(s);
+                }else if(s.length == 5 && arguments[2].equals("stylo")) {
+                	msg = boutique.ajouterArticle(s);
+                }else if(s.length == 1) {
+                	msg = ErreurManager.TYPE_VENDABLE_ERROR;
                 }
+                else {
+                	msg = ErreurManager.ARGS_ERROR;
+                }
+                	
                 
             }else if(arguments[1].equals(VueTerminal.commandes2.get(5))) {
             	this.affichage.afficherAide(VueTerminal.commandes2.get(5));
@@ -111,21 +117,21 @@ public class Controleur {
             	if(s.length == 4 ) {
             		double reduc = Double.parseDouble(s[3]);
             		if(reduc < 0 || reduc > 100) {
-            			msg = Boutique.REDUC_ERROR;
+            			msg = ErreurManager.REDUC_ERROR;
             		}else {
             			msg = boutique.ajouterLot(s[0],s[1],Integer.parseInt(s[2]),reduc);
             		}
             		
             	}else {
-            		msg = Boutique.ARGS_ERROR;	
+            		msg = ErreurManager.ARGS_ERROR;	
             	}
             	
             }
 
         }catch(NumberFormatException e) {
-			msg = Boutique.TYPE_ERROR;	
+			msg = ErreurManager.TYPE_ERROR;	
 		}catch(ArrayIndexOutOfBoundsException e) {
-            msg = Boutique.ARGS_ERROR;
+            msg = ErreurManager.ARGS_ERROR;
         }
         DonneeManager.ecrire();
         this.affichage.msgModele(msg);
@@ -138,14 +144,14 @@ public class Controleur {
             liste = boutique.getClientList();
         }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
         	if(arguments[2] == null) {
-        		this.affichage.msgModele(Boutique.CLIENT_ERROR);
+        		this.affichage.msgModele(ErreurManager.CLIENT_ERROR);
         		return;
         	}
         	if(arguments[2].equals(VueTerminal.commandes3.get(0))){
         		
         		String idClient = affichage.getClientid();
         		if(!boutique.verifClient(Integer.parseInt(idClient))){
-        			this.affichage.msgModele(Boutique.CLIENT_ERROR); 
+        			this.affichage.msgModele(ErreurManager.CLIENT_ERROR); 
         			return;
         		}else {
         			liste = boutique.getCommandeListByClient(Integer.parseInt(idClient));
@@ -173,13 +179,15 @@ public class Controleur {
     }
 
     private void controllerModifier(String[] arguments) {
-    	String msg=Boutique.DEFAULT;    	
+    	String msg=ErreurManager.DEFAULT; 
+    	try {
+    	
     	if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
     		
     		String reference = this.affichage.modifier();
     		int quantite = boutique.getQuantiteById(reference);
     		if(quantite == -1) {
-    			msg = Boutique.REF_ERROR;
+    			msg = ErreurManager.REF_ERROR;
     		}else {
     			int nouvelleQuantite = Integer.parseInt(this.affichage.modifierstock(quantite)); //afficher ancien stock
         		msg = boutique.modifierStock(nouvelleQuantite,reference);
@@ -189,15 +197,21 @@ public class Controleur {
         	this.affichage.afficherAide(VueTerminal.commandes2.get(3));
         	String infoBoutique = this.affichage.modifier();
         	String[] infoBoutiqueSplited =  infoBoutique.split(" ");
-        	if(infoBoutiqueSplited.length != 4) {
-        		msg=Boutique.ARGS_ERROR;
+        	if(infoBoutiqueSplited.length != 3) {
+        		msg=ErreurManager.ARGS_ERROR;
         	}else {
         		boutique.modifierInfoBoutique(infoBoutiqueSplited);
-        		msg=Boutique.AJOUTE;
+        		msg=ErreurManager.MODIFIE;
         	}
         	
         }else {
         	return;
+        }
+    	
+    	}catch(NumberFormatException e) {
+			msg = ErreurManager.TYPE_ERROR;	
+		}catch(ArrayIndexOutOfBoundsException e) {
+            msg = ErreurManager.ARGS_ERROR;
         }
     	
     	DonneeManager.ecrire();
@@ -206,9 +220,9 @@ public class Controleur {
 
     private void controllerSupprimer(String[] arguments) {
     	String s = this.affichage.supprimer();
-    	String msg=Boutique.DEFAULT;
+    	String msg=ErreurManager.DEFAULT;
     	if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
-        	msg = boutique.supprimerClient(s);  // TODO supprimer les commandes associ� !!!
+        	msg = boutique.supprimerClient(s);
         	
         }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
         	msg = boutique.supprimerCommande(s);
@@ -223,25 +237,25 @@ public class Controleur {
     }
     private String commandeControleur(String[] s) {
     	
-    	Commande c = boutique.ajouterCommande(s); // gerer si lot ou article
+    	Commande c = boutique.ajouterCommande(s); //TODO  gerer si lot ou article
         List<String[]> lignesCommande;
         lignesCommande = this.affichage.getLignesCommande();
         if(lignesCommande.size() == 0) {
         	boutique.supprimerCommande(String.valueOf(c.getId()));
-        	return Boutique.NO_LIGNE_COMMANDE;
+        	return ErreurManager.NO_LIGNE_COMMANDE;
         }
         for(int i=0;i<lignesCommande.size();i++) {
         	String reference = lignesCommande.get(i)[0];
         	int quantite = Integer.parseInt(lignesCommande.get(i)[1]);
         	if(!boutique.verifStock(reference,quantite)) {
         		boutique.supprimerCommande(String.valueOf(c.getId()));
-        		return Boutique.AJOUTE_ERROR;
+        		return ErreurManager.AJOUTE_ERROR;
         	}else {
         		boutique.ajouterLigne(c,reference,quantite);
         	}
         	
         }
-        return Boutique.AJOUTE;
+        return ErreurManager.AJOUTE;
     	
     }
 }
