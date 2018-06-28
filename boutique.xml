@@ -5,6 +5,7 @@
     <client adresse="3" id="2" nom="3" prenom="3"/>
     <client adresse="olivier" id="3" nom="olivier" prenom="olivier"/>
     <client adresse="toto" id="4" nom="toto" prenom="tata"/>
+    <client adresse="3" id="5" nom="3" prenom="3"/>
   </clients>
   <commandes>
     <commande date="tata" fraisDePort="2.0" id="1" idClient="1" prix="4.4">
