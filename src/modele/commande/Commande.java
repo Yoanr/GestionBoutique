@@ -111,13 +111,13 @@ public class Commande {
         for (LigneDeCommande LigneDeCommande : lignes){
             facture +=  String.format("%10s\t",LigneDeCommande.getQuantite())+
                     String.format("%10s\t",LigneDeCommande.getObjet().getReference()) +
-                    String.format("%20s\t",LigneDeCommande.getObjet().getNom()) +
+                    String.format("%20s\t",LigneDeCommande.getObjet().toString()) +
                     String.format("%10s\t",LigneDeCommande.getObjet().getMarque()) +
-                    String.format("%10s\t",LigneDeCommande.getObjet().getPrix()) +
-                    String.format("%10s\n",LigneDeCommande.getObjet().getPrix() * LigneDeCommande.getQuantite());
+                    String.format("%10.2f\t",LigneDeCommande.getObjet().getPrix()) +
+                    String.format("%10.2f\n",LigneDeCommande.getObjet().getPrix() * LigneDeCommande.getQuantite());
         }
 
-        facture += "\nprixTotal= " + prixTotal + " euros";
+        facture += String.format("\nprixTotal= %.2f euros", prixTotal);
 
         return facture;
     }

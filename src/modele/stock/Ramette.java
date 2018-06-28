@@ -25,7 +25,14 @@ public class Ramette extends Article {
     }
 
     @Override
-    public String descriptionArticle() {
-        return "Ramette " + grammage + " " + reference;
+    public String toString() {
+        return "Ramette{" +
+                "reference='" + reference + '\'' +
+                ", marque='" + marque + '\'' +
+                ", grammage='" + grammage + '\'' +
+                ", dimL=" + dimL +
+                ", dimH=" + dimH +
+                ", prix=" + prix +
+                '}';
     }
 }

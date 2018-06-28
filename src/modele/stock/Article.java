@@ -13,13 +13,4 @@ public abstract class Article extends ObjetVendable {
     public double getCoutObtention() {
         return coutObtention;
     }
-
-    public abstract String descriptionArticle();
-
-    @Override
-    public String toString() {
-        return descriptionArticle();
-    }
-
-
 }

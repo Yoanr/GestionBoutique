@@ -60,9 +60,10 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "nom='" + nom + '\'' +
+                "identifiant=" + identifiant +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
                 ", adresse='" + adresse + '\'' +
-                ", identifiant=" + identifiant +
                 '}';
     }
 

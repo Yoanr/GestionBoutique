@@ -26,7 +26,13 @@ public class Stylo extends Article {
     }
 
     @Override
-    public String descriptionArticle() {
-        return "Stylo " + couleur + " " + reference;
+    public String toString() {
+        return "Stylo{" +
+                "nom='" + nom + '\'' +
+                ", reference='" + reference + '\'' +
+                ", couleur=" + couleur +
+                ", marque='" + marque + '\'' +
+                ", prix=" + prix +
+                '}';
     }
 }

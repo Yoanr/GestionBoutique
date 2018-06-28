@@ -2,13 +2,9 @@ package vue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import modele.client.Client;
 
 public class VueTerminal implements Affichage{
 
@@ -110,7 +106,7 @@ public class VueTerminal implements Affichage{
 	@Override
 	public List<String[]> getLignesCommande() {
 		System.out.println("Ajout de ligne :");
-		System.out.println("exemple : <item> <quantite> , écrire fin pour arreter");
+		System.out.println("exemple : <item> <quantite> , ï¿½crire fin pour arreter");
     	List<String[]> lignes = new ArrayList<>();
     	boolean ajouter = true;
     	int indice_ligne=1;
@@ -131,7 +127,7 @@ public class VueTerminal implements Affichage{
 	}
 	@Override
 	public String modifier(){
-		System.out.println("Veuillez saisir la référence/id de l'element :");
+		System.out.println("Veuillez saisir la rï¿½fï¿½rence/id de l'element :");
 		return scanInn.nextLine();
 	}
 

@@ -39,10 +39,7 @@ public class Lot extends ObjetVendable {
                 }
 
             }
-            System.out.println("Article "+ reference + " non trouvée");
         }
-        else
-            System.out.println("Lot " + nom + " vide");
     }
 
     private void updatePrix(){
@@ -68,5 +65,18 @@ public class Lot extends ObjetVendable {
 
     public void setReduc(int reduc) {
         this.reduc = reduc;
+    }
+
+    @Override
+    public String toString() {
+        return "Lot{" +
+                "nom='" + nom + '\'' +
+                ", reference='" + reference + '\'' +
+                ", marque='" + marque + '\'' +
+                ", type=" + type +
+                ", reduc=" + reduc +
+                ", articles=" + articles +
+                ", prix=" + prix +
+                '}';
     }
 }

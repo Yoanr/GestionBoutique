@@ -4,6 +4,7 @@ import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
 import modele.stock.ArticleFactory;
+import modele.stock.Lot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public final class Boutique {
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
     private HashMap<Article, Integer > stocks = new HashMap<>();
+    private List<Lot> lotList = new ArrayList<>();
 
     private static Boutique instance = new Boutique();
 
@@ -209,6 +211,12 @@ public final class Boutique {
         return MODIFIE;
     }
 
+    public List<String> getLotsList(){
+        List<String> stringList = new ArrayList<>();
+        lotList.forEach(lot->stringList.add(lot.toString()));
+        return stringList;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -257,11 +265,11 @@ public final class Boutique {
         this.benefice = benefice;
     }
 
-
     @Override
     public String toString() {
         return "Boutique{" +
-                "loyer=" + loyer +
+                "nom='" + nom + '\'' +
+                ", loyer=" + loyer +
                 ", salaire=" + salaire +
                 ", charge=" + charge +
                 ", ca=" + ca +
