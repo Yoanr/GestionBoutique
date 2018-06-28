@@ -79,7 +79,7 @@ public class Lot extends ObjetVendable {
     @Override
     public String toString() {
         return "Lot{" +
-                "nom='" + "Lot de "+ articles.size() + " " + type.getClass().getSimpleName() + '\'' +
+                "nom='" + "Lot de "+ articles.size() + "(s) " + type.getClass().getSimpleName() + '\'' +
                 ", reference='" + reference + '\'' +
                 ", marque='" + marque + '\'' +
                 ", reduc=" + reduc +
