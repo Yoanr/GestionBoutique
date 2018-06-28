@@ -12,7 +12,7 @@ public class Stylo extends Article {
     }
 
 
-    public Stylo(String nom, String reference, String marque, double prixUnitaire, Couleur couleur) {
+    public Stylo(String reference, String marque, double prixUnitaire, Couleur couleur) {
         super(reference, marque, prixUnitaire);
         this.couleur = couleur;
     }
@@ -28,8 +28,7 @@ public class Stylo extends Article {
     @Override
     public String toString() {
         return "Stylo{" +
-                "nom='" + nom + '\'' +
-                ", reference='" + reference + '\'' +
+                "reference='" + reference + '\'' +
                 ", couleur=" + couleur +
                 ", marque='" + marque + '\'' +
                 ", prix=" + prix +

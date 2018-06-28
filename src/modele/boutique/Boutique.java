@@ -31,8 +31,8 @@ public final class Boutique {
     public static final String MODIFIE_ERROR = "Modification de l'élément impossible";
     public static final String MODIFIE = "Modification reussi";
     public static final String CLIENT_ERROR = "Client non existant";
-	public static final String REF_ERROR = "Reference introuvable";
-	public static final String NO_LIGNE_COMMANDE = "Aucune ligne dans la commande donc commande non créee";
+    public static final String REF_ERROR = "Reference introuvable";
+    public static final String NO_LIGNE_COMMANDE = "Aucune ligne dans la commande donc commande non créee";
 
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
@@ -86,6 +86,11 @@ public final class Boutique {
         for (Client client : clientList){
             if (client.getId() == idClient){
                 clientList.remove(client);
+
+                for(Commande commande : getCommandeListByClient(idClient)){
+                    commandeList.remove(commande);
+                }
+
                 return SUPPRIME;
             }
         }
@@ -116,20 +121,37 @@ public final class Boutique {
     public Commande ajouterCommande(Commande c){
         if (! commandeList.contains(c)) {
             commandeList.add(c);
+
+            for (Commande.LigneDeCommande ligneDeCommande : c.getLignes()){
+                if (ligneDeCommande.getObjet() instanceof Article){
+                    Article article= (Article) ligneDeCommande.getObjet();
+                    if (article != null)
+                        stocks.put(article, stocks.get(article) - ligneDeCommande.getQuantite());
+                }
+            }
+
             return c;
         }
         return null;
     }
 
 
-    public String ajouterArticle(String [] articleTab){
-        return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab[0], articleTab[1], articleTab[2], Double.parseDouble(articleTab[3])), Integer.parseInt(articleTab[4]));
+    public String ajouterArticle(String [] articleTab) {
+        switch (articleTab.length) {
+            case 6:
+                return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab), Integer.parseInt(articleTab[5]));
+            case 7:
+                return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab), Integer.parseInt(articleTab[6]));
+            default:
+                return AJOUTE_ERROR;
+        }
     }
 
     private String ajouterArticle(Article article, int quantite){
-        if (! stocks.containsKey(article)) {
-            stocks.put(article, quantite );
+        if (article != null) {
+            stocks.put(article, quantite);
             return AJOUTE;
+
         }
         return AJOUTE_ERROR;
     }
@@ -147,6 +169,14 @@ public final class Boutique {
         for (Commande commande : commandeList){
             if (commande.getId() == idCommande){
                 commandeList.remove(commande);
+
+                for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()) {
+                    if (ligneDeCommande.getObjet() instanceof Article) {
+                        Article article= (Article) ligneDeCommande.getObjet();
+                        if (article != null)
+                            ajouterArticle((Article)ligneDeCommande.getObjet(), ligneDeCommande.getQuantite() + stocks.get(ligneDeCommande.getObjet()));
+                    }
+                }
                 return SUPPRIME;
             }
         }
@@ -165,7 +195,11 @@ public final class Boutique {
         Article  article = getArticleByReference(articleReference);
         if (article != null) {
             int oldQuantite = stocks.get(article);
-            stocks.put(article, oldQuantite -1);
+
+            if (oldQuantite <= 1)
+                stocks.remove(article);
+            else
+                stocks.put(article, oldQuantite -1);
             return SUPPRIME;
         }
         return SUPPRIME_ERROR;
@@ -306,7 +340,7 @@ public final class Boutique {
                 '}';
     }
 
-    public List<?> getCommandeListByClient(int idClient) {
+    public List<Commande> getCommandeListByClient(int idClient) {
         List<Commande> l = commandeList;
         List<Commande> l2 = new ArrayList<>();
         for (Commande element : l){

@@ -49,12 +49,17 @@ public class Client {
 
         Client client = (Client) o;
 
-        return getIdentifiant() == client.getIdentifiant();
+        if (getNom() != null ? !getNom().equals(client.getNom()) : client.getNom() != null) return false;
+        if (getPrenom() != null ? !getPrenom().equals(client.getPrenom()) : client.getPrenom() != null) return false;
+        return getAdresse() != null ? getAdresse().equals(client.getAdresse()) : client.getAdresse() == null;
     }
 
     @Override
     public int hashCode() {
-        return getIdentifiant();
+        int result = getNom() != null ? getNom().hashCode() : 0;
+        result = 31 * result + (getPrenom() != null ? getPrenom().hashCode() : 0);
+        result = 31 * result + (getAdresse() != null ? getAdresse().hashCode() : 0);
+        return result;
     }
 
     @Override

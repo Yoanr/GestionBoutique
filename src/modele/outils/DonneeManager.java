@@ -4,6 +4,8 @@ import modele.boutique.Boutique;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -142,29 +144,29 @@ public class DonneeManager {
         for(Map.Entry<Article, Integer> entry : boutiqueInstance.getStocksMap().entrySet()) {
             int quantite = entry.getValue();
             Article article = entry.getKey();
+            if (article != null){
+                Class<?> currentClass = entry.getKey().getClass();
+                Field[] fields = currentClass.getDeclaredFields();
+                Element articleElement = document.createElement("article");
+                articleElement.setAttribute("quantite", String.valueOf(quantite));
+                articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
 
-            Class<?> currentClass = entry.getKey().getClass();
-            Field[] fields = currentClass.getDeclaredFields();
-            Element articleElement = document.createElement("article");
-            articleElement.setAttribute("quantite", String.valueOf(quantite));
-            articleElement.setAttribute("type", currentClass.getSimpleName().toLowerCase());
-
-            //For a specific article
-            Element specificArticle = document.createElement(currentClass.getSimpleName().toLowerCase());
-            specificArticle.setAttribute("nom", article.getNom());
-            specificArticle.setAttribute("reference", article.getReference());
-            specificArticle.setAttribute("marque", article.getMarque());
-            specificArticle.setAttribute("prix", String.valueOf(article.getPrix()));
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-                    specificArticle.setAttribute(field.getName(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                //For a specific article
+                Element specificArticle = document.createElement(currentClass.getSimpleName().toLowerCase());
+                specificArticle.setAttribute("reference", article.getReference());
+                specificArticle.setAttribute("marque", article.getMarque());
+                specificArticle.setAttribute("prix", String.valueOf(article.getPrix()));
+                for (Field field : fields) {
+                    try {
+                        field.setAccessible(true);
+                        specificArticle.setAttribute(field.getName(), field.get(entry.getKey()) != null ? field.get(entry.getKey()).toString() : "");
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
+                articleElement.appendChild(specificArticle);
+                stocks.appendChild(articleElement);
             }
-            articleElement.appendChild(specificArticle);
-            stocks.appendChild(articleElement);
         }
         racine.appendChild(stocks);
 
@@ -211,13 +213,30 @@ public class DonneeManager {
                 typeArticle = (Element) currentElementArticle.getChildNodes().item(indexTypeArticle);
             }
 
-            String attributeArticle [] = {typeArticle.getNodeName(),
-                    typeArticle.getAttribute("reference"),
-                    typeArticle.getAttribute("marque"),
-                    typeArticle.getAttribute("prix"),
-                    currentElementArticle.getAttribute("quantite")};
+            List<String> attributeArticle = new ArrayList<>();
 
-            boutiqueInstance.ajouterArticle(attributeArticle);
+            attributeArticle.add(typeArticle.getNodeName());
+            attributeArticle.add(typeArticle.getAttribute("reference"));
+            attributeArticle.add(typeArticle.getAttribute("marque"));
+            attributeArticle.add(typeArticle.getAttribute("prix"));
+            switch (typeArticle.getNodeName()) {
+                case "stylo":
+
+                    attributeArticle.add(      typeArticle.getAttribute("couleur"));
+                    attributeArticle.add(        currentElementArticle.getAttribute("quantite"));
+                    break;
+                case "ramette":
+                    attributeArticle.add(       typeArticle.getAttribute("dimH"));
+                    attributeArticle.add(        typeArticle.getAttribute("dimL"));
+                    attributeArticle.add(        currentElementArticle.getAttribute("quantite"));
+                    break;
+            }
+
+            for (String str :attributeArticle)
+                System.out.println(str);
+
+            String [] tabAttribute  = (String []) attributeArticle.toArray();
+            boutiqueInstance.ajouterArticle(tabAttribute);
         }
 
         //Commandes
