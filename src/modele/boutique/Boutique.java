@@ -53,7 +53,7 @@ public final class Boutique {
     }
 
     public List<String> getBoutiqueInfo(){
-        List<String> liste =  new ArrayList<String>();
+        List<String> liste =  new ArrayList<>();
         liste.add(toString());
         return liste;
     }
@@ -69,12 +69,11 @@ public final class Boutique {
             int quantite = entry.getValue();
             Article article = entry.getKey();
 
-            StringBuilder stringBuilder = new StringBuilder("Quantité : ");
+            String stringBuilder = "Quantité : " + String.valueOf(quantite) +
+                    " - " +
+                    article.toString();
 
-            stringBuilder.append(String.valueOf(quantite));
-            stringBuilder.append(" - ");
-            stringBuilder.append(article.toString());
-            stockList.add(stringBuilder.toString());
+            stockList.add(stringBuilder);
         }
         return stockList;
     }
@@ -95,7 +94,7 @@ public final class Boutique {
         return ajouterClient(new Client(clientArgs[0], clientArgs[1], clientArgs[2]));
     }
 
-    public String ajouterClient(Client newClient) {
+    private String ajouterClient(Client newClient) {
         if (! clientList.contains(newClient)) {
             clientList.add(newClient);
             return AJOUTE;
@@ -126,7 +125,7 @@ public final class Boutique {
         return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab[0], articleTab[1], articleTab[2], Double.parseDouble(articleTab[3])), Integer.parseInt(articleTab[4]));
     }
 
-    public String ajouterArticle(Article article, int quantite){
+    private String ajouterArticle(Article article, int quantite){
         if (! stocks.containsKey(article)) {
             stocks.put(article, quantite );
             return AJOUTE;
@@ -173,10 +172,7 @@ public final class Boutique {
 
     public boolean verifStock(String referenceArticle, int quantite){
         Article  article = getArticleByReference(referenceArticle);
-        if (article == null) return false;
-        if (stocks.get(article) < quantite) return false;
-
-        return true;
+        return article != null && stocks.get(article) >= quantite;
     }
 
     public void ajouterLigne(Commande c, String reference, int quantite){
@@ -210,6 +206,18 @@ public final class Boutique {
             return AJOUTE_ERROR;
         }
     }
+
+
+    public String supprimerLot (String referenceLot){
+        for (Lot lot : lotList){
+            if (lot.getReference().equals(referenceLot)){
+                lotList.remove(lot);
+                return SUPPRIME;
+            }
+        }
+        return SUPPRIME_ERROR;
+    }
+
 
     //values {"nom", "loyer", "salaire", "CA"}
     public String modifierInfoBoutique(String [] values){
@@ -291,7 +299,7 @@ public final class Boutique {
 
     public List<?> getCommandeListByClient(int idClient) {
         List<Commande> l = commandeList;
-        List<Commande> l2 = new ArrayList<Commande>();
+        List<Commande> l2 = new ArrayList<>();
         for (Commande element : l){
             if(element.getIdClient() == idClient) {
                 l2.add(element);
