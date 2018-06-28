@@ -9,9 +9,7 @@ public abstract class ObjetVendable {
     protected double prix;
 
     public ObjetVendable(String reference) {
-        this.nom = nom;
         this.reference = reference;
-
     }
 
     public String getNom() {

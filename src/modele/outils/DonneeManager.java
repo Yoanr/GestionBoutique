@@ -158,7 +158,7 @@ public class DonneeManager {
             for (Field field : fields) {
                 try {
                     field.setAccessible(true);
-                    specificArticle.setAttribute(field.getName().toString(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
+                    specificArticle.setAttribute(field.getName(), field.get(entry.getKey()) != null? field.get(entry.getKey()).toString() : "");
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

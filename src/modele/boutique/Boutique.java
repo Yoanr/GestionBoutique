@@ -121,7 +121,6 @@ public final class Boutique {
 
 
     public String ajouterArticle(String [] articleTab){
-
         return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab[0], articleTab[1], articleTab[2], Double.parseDouble(articleTab[3])), Integer.parseInt(articleTab[4]));
     }
 
@@ -224,9 +223,9 @@ public final class Boutique {
         setNom(values[0]);
         setLoyer(Double.parseDouble(values[1]));
         setSalaire(Double.parseDouble(values[2]));
-        setCa(Double.parseDouble(values[3]));
         setCharge(salaire+loyer);
         setBenefice(ca-charge);
+        setCa();
 
         return MODIFIE;
     }
@@ -275,6 +274,14 @@ public final class Boutique {
 
     public void setCa(double ca) {
         this.ca = ca;
+    }
+
+    public void setCa() {
+        Double somme = 0.0;
+        for (Commande commande : commandeList){
+            somme += commande.getPrixTotal();
+        }
+        this.ca =  somme;
     }
 
     public double getBenefice() {
