@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<boutique benefice="0.0" ca="0.0" charges="0.0" loyer="0.0" nom="" salaires="0.0">
+<boutique benefice="-100.0" ca="19.8" charges="0.0" loyer="100.0" nom="toto" salaires="0.0">
   <clients>
     <client adresse="1" id="1" nom="1" prenom="1"/>
     <client adresse="3" id="2" nom="3" prenom="3"/>
     <client adresse="olivier" id="3" nom="olivier" prenom="olivier"/>
     <client adresse="toto" id="4" nom="toto" prenom="tata"/>
     <client adresse="3" id="5" nom="3" prenom="3"/>
+    <client adresse="1" id="6" nom="1" prenom="1"/>
   </clients>
   <commandes>
     <commande date="tata" fraisDePort="2.0" id="1" idClient="1" prix="4.4">
@@ -21,10 +22,16 @@
     <commande date="date" fraisDePort="3.0" id="4" idClient="2" prix="6.6000000000000005">
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
+    <commande date="1" fraisDePort="10.0" id="5" idClient="1" prix="300.0">
+      <ligneCommande quantite="30" referenceArticle="tata"/>
+    </commande>
   </commandes>
   <stocks>
     <article quantite="5" type="stylo">
       <stylo couleur="" marque="lol" nom="" prix="2.2" reference="lol"/>
+    </article>
+    <article quantite="30" type="stylo">
+      <stylo couleur="" marque="bic" nom="" prix="10.0" reference="tata"/>
     </article>
   </stocks>
 </boutique>

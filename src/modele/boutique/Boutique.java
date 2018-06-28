@@ -5,6 +5,7 @@ import modele.commande.Commande;
 import modele.stock.Article;
 import modele.stock.ArticleFactory;
 import modele.stock.Lot;
+import vue.ErreurManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,20 +20,6 @@ public final class Boutique {
     private double charge;
     private double  ca;
     private double benefice;
-
-    public static final String DEFAULT = "";
-    public static final String REDUC_ERROR = "Reduction entre 0 et 100 obligatoirement";
-    public static final String TYPE_ERROR = "Type d'un des arguments incorrect";
-    public static final String ARGS_ERROR = "Nombre d'arguments incorrect";
-    public static final String AJOUTE = "Elément ajouté";
-    public static final String SUPPRIME = "Elément supprimé";
-    public static final String AJOUTE_ERROR = "Elément non ajouté";
-    public static final String SUPPRIME_ERROR = "Elément non supprimé";
-    public static final String MODIFIE_ERROR = "Modification de l'élément impossible";
-    public static final String MODIFIE = "Modification reussi";
-    public static final String CLIENT_ERROR = "Client non existant";
-	public static final String REF_ERROR = "Reference introuvable";
-	public static final String NO_LIGNE_COMMANDE = "Aucune ligne dans la commande donc commande non créee";
 
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
@@ -86,10 +73,10 @@ public final class Boutique {
         for (Client client : clientList){
             if (client.getId() == idClient){
                 clientList.remove(client);
-                return SUPPRIME;
+                return ErreurManager.SUPPRIME;
             }
         }
-        return SUPPRIME_ERROR;
+        return ErreurManager.SUPPRIME_ERROR;
     }
 
     public String ajouterClient(String [] clientArgs) {
@@ -99,9 +86,9 @@ public final class Boutique {
     private String ajouterClient(Client newClient) {
         if (! clientList.contains(newClient)) {
             clientList.add(newClient);
-            return AJOUTE;
+            return ErreurManager.AJOUTE;
         }
-        return AJOUTE_ERROR;
+        return ErreurManager.AJOUTE_ERROR;
     }
 
     public Commande ajouterCommande(String [] commandeArgs){
@@ -129,9 +116,9 @@ public final class Boutique {
     private String ajouterArticle(Article article, int quantite){
         if (! stocks.containsKey(article)) {
             stocks.put(article, quantite );
-            return AJOUTE;
+            return ErreurManager.AJOUTE;
         }
-        return AJOUTE_ERROR;
+        return ErreurManager.AJOUTE_ERROR;
     }
 
     public Article getArticleByReference(String reference){
@@ -147,10 +134,10 @@ public final class Boutique {
         for (Commande commande : commandeList){
             if (commande.getId() == idCommande){
                 commandeList.remove(commande);
-                return SUPPRIME;
+                return ErreurManager.SUPPRIME;
             }
         }
-        return SUPPRIME_ERROR;
+        return ErreurManager.SUPPRIME_ERROR;
     }
 
     public boolean verifClient(int idClient){
@@ -166,9 +153,9 @@ public final class Boutique {
         if (article != null) {
             int oldQuantite = stocks.get(article);
             stocks.put(article, oldQuantite -1);
-            return SUPPRIME;
+            return ErreurManager.SUPPRIME;
         }
-        return SUPPRIME_ERROR;
+        return ErreurManager.SUPPRIME_ERROR;
     }
 
     public boolean verifStock(String referenceArticle, int quantite){
@@ -190,10 +177,10 @@ public final class Boutique {
     public String modifierStock(int newQuantite, String reference){
         Article article = getArticleByReference(reference);
 
-        if(article == null || !stocks.containsKey(article)) return MODIFIE_ERROR;
+        if(article == null || !stocks.containsKey(article)) return ErreurManager.MODIFIE_ERROR;
 
         stocks.put(article, newQuantite);
-        return MODIFIE;
+        return ErreurManager.MODIFIE;
 
     }
 
@@ -202,9 +189,9 @@ public final class Boutique {
 
         if (lot != null){
             lotList.add(lot);
-            return AJOUTE;
+            return ErreurManager.AJOUTE;
         }else{
-            return AJOUTE_ERROR;
+            return ErreurManager.AJOUTE_ERROR;
         }
     }
 
@@ -213,10 +200,10 @@ public final class Boutique {
         for (Lot lot : lotList){
             if (lot.getReference().equals(referenceLot)){
                 lotList.remove(lot);
-                return SUPPRIME;
+                return ErreurManager.SUPPRIME;
             }
         }
-        return SUPPRIME_ERROR;
+        return ErreurManager.SUPPRIME_ERROR;
     }
 
 
@@ -229,7 +216,7 @@ public final class Boutique {
         setBenefice(ca-charge);
         setCa();
 
-        return MODIFIE;
+        return ErreurManager.MODIFIE;
     }
 
     public List<String> getLotsList(){

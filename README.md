@@ -9,7 +9,9 @@ Liste des commandes :
 ajouter clients
 ajouter commandes
 ajouter lots
-ajouter stock
+
+ajouter stock stylo
+ajouter stock ramette
 
 afficher clients
 afficher commandes client
