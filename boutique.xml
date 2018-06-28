@@ -20,7 +20,9 @@
     <commande date="date" fraisDePort="3.0" id="4" idClient="2" prix="6.6000000000000005">
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
-    <commande date="port" fraisDePort="4.0" id="5" idClient="2" prix="0.0"/>
+    <commande date="10/10/2018" fraisDePort="10.0" id="5" idClient="3" prix="6.6000000000000005">
+      <ligneCommande quantite="3" referenceArticle="lol"/>
+    </commande>
   </commandes>
   <stocks>
     <article quantite="5" type="stylo">

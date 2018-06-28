@@ -21,6 +21,8 @@ public final class Boutique {
     private double benefice;
 
     public static final String DEFAULT = "";
+    public static final String REDUC_ERROR = "Reduction entre 0 et 100 obligatoirement";
+    public static final String TYPE_ERROR = "Type d'un des arguments incorrect";
     public static final String ARGS_ERROR = "Nombre d'arguments incorrect";
     public static final String AJOUTE = "Elément ajouté";
     public static final String SUPPRIME = "Elément supprimé";
