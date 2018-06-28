@@ -3,14 +3,9 @@ package controleur;
 import java.util.List;
 
 import modele.boutique.Boutique;
-import modele.client.Client;
 import modele.commande.Commande;
 import modele.outils.DonneeManager;
-import modele.stock.Article;
-import modele.stock.Stylo;
-import modele.stock.Stylo.Couleur;
 import vue.Affichage;
-import vue.VueGraphique;
 import vue.VueTerminal;
 
 public class Controleur {
@@ -93,24 +88,12 @@ public class Controleur {
                 	 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
                 	return;
                 }
-                Commande c = boutique.ajouterCommande(s); // gerer si lot ou article
-                List<String[]> lignesCommande;
-                lignesCommande = this.affichage.getLignesCommande();
-                if(lignesCommande.size() == 0) {
-                	boutique.supprimerCommande(String.valueOf(c.getId()));
+                if(s.length !=  3) {
+                	msg = Boutique.ARGS_ERROR;
+                }else {
+                	msg = this.commandeControleur(s);
                 }
-                for(int i=0;i<lignesCommande.size();i++) {
-                	String reference = lignesCommande.get(i)[0];
-                	int quantite = Integer.parseInt(lignesCommande.get(i)[1]);
-                	if(!boutique.verifStock(reference,quantite)) {
-                		boutique.supprimerCommande(String.valueOf(c.getId()));
-                		 this.affichage.msgModele(Boutique.AJOUTE_ERROR);
-                		return;
-                	}else {
-                		boutique.ajouterLigne(c,reference,quantite);
-                	}
-                	
-                }
+                
                 
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));
@@ -236,6 +219,29 @@ public class Controleur {
         	msg = boutique.supprimerLot(s);
         }
     	 this.affichage.msgModele(msg);
+    	
+    }
+    private String commandeControleur(String[] s) {
+    	
+    	Commande c = boutique.ajouterCommande(s); // gerer si lot ou article
+        List<String[]> lignesCommande;
+        lignesCommande = this.affichage.getLignesCommande();
+        if(lignesCommande.size() == 0) {
+        	boutique.supprimerCommande(String.valueOf(c.getId()));
+        	return Boutique.NO_LIGNE_COMMANDE;
+        }
+        for(int i=0;i<lignesCommande.size();i++) {
+        	String reference = lignesCommande.get(i)[0];
+        	int quantite = Integer.parseInt(lignesCommande.get(i)[1]);
+        	if(!boutique.verifStock(reference,quantite)) {
+        		boutique.supprimerCommande(String.valueOf(c.getId()));
+        		return Boutique.AJOUTE_ERROR;
+        	}else {
+        		boutique.ajouterLigne(c,reference,quantite);
+        	}
+        	
+        }
+        return Boutique.AJOUTE;
     	
     }
 }
