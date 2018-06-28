@@ -77,7 +77,12 @@ public class Controleur {
             if(arguments[1].equals(VueTerminal.commandes2.get(0))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(0));
                 s = this.affichage.ajouter();
-                msg = boutique.ajouterClient(s);
+                if(s.length != 3) {
+                	msg = Boutique.ARGS_ERROR;
+                }else {
+                	msg =boutique.ajouterClient(s);
+                }
+                
 
             }else if(arguments[1].equals(VueTerminal.commandes2.get(1))) {
             	
@@ -110,14 +115,33 @@ public class Controleur {
             }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
                 this.affichage.afficherAide(VueTerminal.commandes2.get(2));
                 s = this.affichage.ajouter();
-                msg = boutique.ajouterArticle(s);
-            }else if(arguments[1].equals(VueTerminal.commandes2.get(2))) {
+                if(s.length != 5) {
+                	msg = Boutique.ARGS_ERROR;
+                }else {
+                		msg = boutique.ajouterArticle(s);
+                          	
+                }
+                
+            }else if(arguments[1].equals(VueTerminal.commandes2.get(5))) {
             	this.affichage.afficherAide(VueTerminal.commandes2.get(5));
             	s = this.affichage.ajouter();
-            	//todo msg = boutique.ajouterLot(s);
+            	if(s.length == 4 ) {
+            		double reduc = Double.parseDouble(s[3]);
+            		if(reduc < 0 || reduc > 100) {
+            			msg = Boutique.REDUC_ERROR;
+            		}else {
+            			msg = boutique.ajouterLot(s[0],s[1],Integer.parseInt(s[2]),reduc);
+            		}
+            		
+            	}else {
+            		msg = Boutique.ARGS_ERROR;	
+            	}
+            	
             }
 
-        }catch(Exception ArrayIndexOutOfBoundsException) {
+        }catch(NumberFormatException e) {
+			msg = Boutique.TYPE_ERROR;	
+		}catch(ArrayIndexOutOfBoundsException e) {
             msg = Boutique.ARGS_ERROR;
         }
         DonneeManager.ecrire();
@@ -158,7 +182,7 @@ public class Controleur {
             this.affichage.afficherMenu();
             return;
        }else if(arguments[1].equals(VueTerminal.commandes2.get(5))) {
-    	   //todo liste = boutique.getLotsList();
+    	   liste = boutique.getLotsList();
       }else {
     	   return;
        }
@@ -179,15 +203,16 @@ public class Controleur {
     		}
     		int nouvelleQuantite = Integer.parseInt(this.affichage.modifierstock(quantite)); //afficher ancien stock
     		msg = boutique.modifierStock(nouvelleQuantite,reference);
-    		// 
-        }else if(arguments[1].equals(VueTerminal.commandes2.get(4))) {
-        	System.out.println("<nom> <loyer> <salaire>");
+    		 
+        }else if(arguments[1].equals(VueTerminal.commandes2.get(3))) {
+        	System.out.println("<nom> <loyer> <salaire> <CA>");
         	String infoBoutique = this.affichage.modifier();
         	String[] infoBoutiqueSplited =  infoBoutique.split(" ");
-        	if(infoBoutiqueSplited.length != 5) {
+        	if(infoBoutiqueSplited.length != 4) {
         		msg=Boutique.ARGS_ERROR;
         	}else {
-        		//todo boutique.modifierInfoBoutique(infoBoutiqueSplited);
+        		boutique.modifierInfoBoutique(infoBoutiqueSplited);
+        		msg=Boutique.AJOUTE;
         	}
         	
         }else {

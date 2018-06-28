@@ -70,9 +70,11 @@ public class VueTerminal implements Affichage{
     	if(type.equals(commandes2.get(0))) {
     		System.out.println("exemple : <nom> <prenom> <adresse>");
     	}else if(type.equals(commandes2.get(1))) {
-    		System.out.println("exemple commande : <idClient> <date> <fraix de port>");
+    		System.out.println("exemple commande : <idClient> <date> <frais de port>");
     	}else if(type.equals(commandes2.get(2))) {
     		System.out.println("exemple :<type article> <ref article> <marque> <prixUnitaire> <quantite>");
+    	}else if(type.equals(commandes2.get(5))){
+    		System.out.println("exemple :<ref lot> <ref article> <quantite article> <reduction>");	
     	}
 		
 	}
@@ -127,7 +129,7 @@ public class VueTerminal implements Affichage{
 	}
 	@Override
 	public String modifier(){
-		System.out.println("Veuillez saisir la r�f�rence/id de l'element :");
+		System.out.println("Veuillez saisir la reference/id de l'element :");
 		return scanInn.nextLine();
 	}
 
