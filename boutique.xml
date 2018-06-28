@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<boutique>
+<boutique benefice="0.0" ca="0.0" charges="0.0" loyer="0.0" nom="" salaires="0.0">
   <clients>
     <client adresse="1" id="1" nom="1" prenom="1"/>
     <client adresse="3" id="2" nom="3" prenom="3"/>
@@ -20,7 +20,6 @@
     <commande date="date" fraisDePort="3.0" id="4" idClient="2" prix="6.6000000000000005">
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
-    <commande date="port" fraisDePort="4.0" id="5" idClient="2" prix="0.0"/>
   </commandes>
   <stocks>
     <article quantite="5" type="stylo">

@@ -24,7 +24,7 @@ import org.xml.sax.SAXException;
 
 public class DonneeManager {
     private static final String XMLFILE = "boutique.xml";
-    
+
     private static final Boutique boutiqueInstance =  Boutique.getInstance();
 
     public static void lire(){
@@ -84,12 +84,19 @@ public class DonneeManager {
     }
 
     public static void ecrire(){
-       ecrire(XMLFILE);
+        ecrire(XMLFILE);
     }
 
     private static Element dataToXml(Document document){
         Element racine = document.createElement("boutique");
-        //TODO infoBoutique
+
+        racine.setAttribute("nom", boutiqueInstance.getNom());
+        racine.setAttribute("loyer", String.valueOf(boutiqueInstance.getLoyer()));
+        racine.setAttribute("salaires", String.valueOf(boutiqueInstance.getSalaire()));
+        racine.setAttribute("charges", String.valueOf(boutiqueInstance.getCharge()));
+        racine.setAttribute("ca", String.valueOf(boutiqueInstance.getCa()));
+        racine.setAttribute("benefice", String.valueOf(boutiqueInstance.getBenefice()));
+
         //Clients
         Element clients = document.createElement("clients");
         for (Client client : boutiqueInstance.getClientList()){
@@ -167,7 +174,14 @@ public class DonneeManager {
 
     private static void xmlToData(Document document) {
         Element racine = document.getDocumentElement();
-        //TODO infoBoutique
+
+        boutiqueInstance.setNom(racine.getAttribute("nom").isEmpty() ? null : racine.getAttribute("nom"));
+        boutiqueInstance.setLoyer( racine.getAttribute("loyer").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("loyer")));
+        boutiqueInstance.setSalaire( racine.getAttribute("salaire").isEmpty() ? 0: Double.parseDouble(racine.getAttribute("salaire")));
+        boutiqueInstance.setCharge(racine.getAttribute("charge").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("charge")));
+        boutiqueInstance.setCa( racine.getAttribute("ca").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("ca")));
+        boutiqueInstance.setBenefice(racine.getAttribute("benefice").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("benefice")));
+
         //Clients
         NodeList nodeListClient = racine.getElementsByTagName("client");
         for (int index = 0; index < nodeListClient.getLength(); index++) {

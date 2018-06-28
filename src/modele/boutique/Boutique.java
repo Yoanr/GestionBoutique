@@ -198,8 +198,8 @@ public final class Boutique {
 
     }
 
-    public String ajouterLot(String referenceLot, String referenceArticle, int quantite){
-        Lot lot = getArticleByReference(referenceArticle) != null ? new Lot(referenceLot, getArticleByReference(referenceArticle), quantite) : null;
+    public String ajouterLot(String referenceLot, String referenceArticle, int quantite, double reduction){
+        Lot lot = getArticleByReference(referenceArticle) != null ? new Lot(referenceLot, getArticleByReference(referenceArticle),reduction, quantite) : null;
 
         if (lot != null){
             lotList.add(lot);

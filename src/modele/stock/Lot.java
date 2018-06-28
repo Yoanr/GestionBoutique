@@ -7,10 +7,10 @@ public class Lot extends ObjetVendable {
     private Article type;
     private static int nbArticle;
 
-    private int reduc;
+    private double reduc;
     private List<Article> articles;
 
-    public Lot(String reference, Article article) {
+    public Lot(String reference, Article article, double reduction) {
         super(reference);
         this.type = article;
         marque = type.getMarque();
@@ -18,12 +18,14 @@ public class Lot extends ObjetVendable {
         articles = new ArrayList<>();
         articles.add(article);
 
+        this.reduc = reduction;
+
         nbArticle = 1;
         updatePrix();
     }
 
-    public Lot (String reference, Article article, int quantite){
-        this(reference, article);
+    public Lot (String reference, Article article,double reduction, int quantite){
+        this(reference, article, reduction);
         for (int index = 0; index< quantite; index++){
             addArticle(article);
         }
@@ -66,7 +68,7 @@ public class Lot extends ObjetVendable {
         return prix;
     }
 
-    public int getReduc() {
+    public double getReduc() {
         return reduc;
     }
 
@@ -77,12 +79,10 @@ public class Lot extends ObjetVendable {
     @Override
     public String toString() {
         return "Lot{" +
-                "nom='" + nom + '\'' +
+                "nom='" + "Lot de "+ articles.size() + " " + type.getClass().getSimpleName() + '\'' +
                 ", reference='" + reference + '\'' +
                 ", marque='" + marque + '\'' +
-                ", type=" + type +
                 ", reduc=" + reduc +
-                ", articles=" + articles +
                 ", prix=" + prix +
                 '}';
     }
