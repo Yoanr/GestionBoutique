@@ -22,7 +22,10 @@ import modele.stock.Lot;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-
+/**
+ * 
+ *
+ */
 public class DonneeManager {
     private static final String XMLFILE = "boutique.xml";
 

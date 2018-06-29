@@ -1,13 +1,20 @@
 package modele.stock;
-
+/**
+ * Cette classe est utilisée pour représenter un ObjetVendable.
+ *
+ */
 public abstract class ObjetVendable {
 	protected String nom;
 	protected String reference;
 	protected String marque;
 
-	// prix public
 	protected double prix;
 
+	/**
+	   * un constructeur de la classe ObjetVendable
+	   *
+	   * @param reference
+	   */
 	public ObjetVendable(String reference) {
 		this.reference = reference;
 	}
@@ -28,6 +35,12 @@ public abstract class ObjetVendable {
 		return marque;
 	}
 
+	/**
+	   * Cette méthode verifie l'égalité entre 2 objets vendables
+	   *
+	   * @param ObjetVendable
+	   * @return boolean
+	   */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

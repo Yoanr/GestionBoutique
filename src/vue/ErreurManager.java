@@ -1,6 +1,11 @@
 package vue;
 
+/**
+ * Classe ErreurManager permetant de stocker les messages d'erreurs de l'application
+ *
+ */
 public class ErreurManager {
+	
 
 	public static final String DEFAULT = "";
 	public static final String REDUC_ERROR = "Reduction entre 0 et 100 obligatoirement";
