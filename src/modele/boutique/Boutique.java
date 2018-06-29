@@ -24,6 +24,7 @@ public final class Boutique {
     private List<Client> clientList = new ArrayList<>();
     private List<Commande> commandeList= new ArrayList<>();
     private HashMap<Article, Integer > stocks = new HashMap<>();
+
     private List<Lot> lotList = new ArrayList<>();
 
     private static Boutique instance = new Boutique();
@@ -251,6 +252,10 @@ public final class Boutique {
         setCa();
 
         return ErreurManager.MODIFIE;
+    }
+
+    public List<Lot> getLots() {
+        return lotList;
     }
 
     public List<String> getLotsList(){

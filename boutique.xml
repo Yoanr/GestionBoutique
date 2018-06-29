@@ -17,8 +17,11 @@
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
   </commandes>
+  <lots>
+    <lot marque="lol" nom="" prix="1.9800000000000002" quantite="1" reduction="10.0" reference="fef"/>
+  </lots>
   <stocks>
-    <article quantite="38" type="stylo">
+    <article quantite="20" type="stylo">
       <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
     </article>
   </stocks>

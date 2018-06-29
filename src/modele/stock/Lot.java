@@ -26,7 +26,7 @@ public class Lot extends ObjetVendable {
 
     public Lot (String reference, Article article,double reduction, int quantite){
         this(reference, article, reduction);
-        for (int index = 0; index< quantite; index++){
+        for (int index = 1; index< quantite; index++){
             addArticle(article);
         }
     }
@@ -76,12 +76,16 @@ public class Lot extends ObjetVendable {
         this.reduc = reduc;
     }
 
+    public int getQuantite(){
+        return articles.size();
+    }
+
     @Override
     public String toString() {
         return "Lot{" +
                 "nom='" + "Lot de "+ articles.size() + "(s) " + type.getClass().getSimpleName() + '\'' +
                 ", reference='" + reference + '\'' +
-                ", marque='" + marque + '\'' +
+                ", referenceArticle='" + marque + '\'' +
                 ", reduc=" + reduc +
                 ", prix=" + prix +
                 '}';

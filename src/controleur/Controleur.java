@@ -17,13 +17,13 @@ public class Controleur {
 
     public Controleur(String arg) {
         DonneeManager.lire();
-        if("commandLine".equals(arg)) {
+      //  if("commandLine".equals(arg)) {
             this.affichage = new VueTerminal();
             controllerCommandLine();
-        }
+        //}
 
-        else
-            controllerGraphique();
+        //else
+          //  controllerGraphique();
     }
 
     private boolean interpreter(String[] arguments) {

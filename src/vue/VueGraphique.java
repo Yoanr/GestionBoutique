@@ -23,14 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VueGraphique extends Application implements Affichage {
+//TODO Vue graphique à faire en reprenant les éléments du modèle.
+public class VueGraphique  extends Application implements Affichage {
+/*
 
     private ComboBox<String> comboBoxType;
     private Button addButton ;
     private Group root ;
     private Scene scene ;
     private TableView table;
-    private ObservableList<Map> allData;
+    private ObservableList<Map> allData;*/
 
     public static void main(String[] args) {
         Application.launch(VueGraphique.class, args);
@@ -38,16 +40,16 @@ public class VueGraphique extends Application implements Affichage {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Gestionnaire de la boutique");
+        /* primaryStage.setTitle("Gestionnaire de la boutique");
 
         initComponent(primaryStage);
 
 
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show(); */
     }
-
+/*
     private void initComponent(Stage primaryStage){
         root = new Group();
         scene = new Scene(root, 700, 500, Color.WHITE);
@@ -196,6 +198,7 @@ public class VueGraphique extends Application implements Affichage {
     private void aide(){
         //TODO
     }
+*/
 
 
     @Override

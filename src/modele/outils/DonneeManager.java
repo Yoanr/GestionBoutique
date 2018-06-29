@@ -18,6 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 import modele.client.Client;
 import modele.commande.Commande;
 import modele.stock.Article;
+import modele.stock.Lot;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -111,32 +112,6 @@ public class DonneeManager {
         }
         racine.appendChild(clients);
 
-
-        //Commandes
-        Element commandes = document.createElement("commandes");
-        for (Commande commande : boutiqueInstance.getCommandeList()){
-            Element commandeElement = document.createElement("commande");
-
-            commandeElement.setAttribute("id", String.valueOf(commande.getId()));
-            commandeElement.setAttribute("idClient", String.valueOf(commande.getIdClient()));
-            commandeElement.setAttribute("date", commande.getDate());
-            commandeElement.setAttribute("date", commande.getDate());
-            commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
-
-            for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
-                Element ligneCommandeElement = document.createElement("ligneCommande");
-
-                ligneCommandeElement.setAttribute("quantite", String.valueOf(ligneDeCommande.getQuantite()));
-                ligneCommandeElement.setAttribute("referenceArticle", ligneDeCommande.getObjet().getReference());
-
-                commandeElement.appendChild(ligneCommandeElement);
-            }
-
-            commandeElement.setAttribute("prix", String.valueOf(commande.getPrixTotal()));
-            commandes.appendChild(commandeElement);
-        }
-        racine.appendChild(commandes);
-
         //Stocks
         Element stocks = document.createElement("stocks");
         for(Map.Entry<Article, Integer> entry : boutiqueInstance.getStocksMap().entrySet()) {
@@ -168,6 +143,45 @@ public class DonneeManager {
         }
         racine.appendChild(stocks);
 
+        Element lots = document.createElement("lots");
+        for (Lot lot : boutiqueInstance.getLots()) {
+            Element lolElement = document.createElement("lot");
+            lolElement.setAttribute("nom", lot.getNom());
+            lolElement.setAttribute("reference", lot.getReference());
+            lolElement.setAttribute("marque", lot.getMarque());
+            lolElement.setAttribute("reduction", String.valueOf(lot.getReduc()));
+            lolElement.setAttribute("quantite", String.valueOf(lot.getQuantite()));
+            lolElement.setAttribute("prix", String.valueOf(lot.getPrix()));
+
+            lots.appendChild(lolElement);
+        }
+        racine.appendChild(lots);
+
+
+        //Commandes
+        Element commandes = document.createElement("commandes");
+        for (Commande commande : boutiqueInstance.getCommandeList()){
+            Element commandeElement = document.createElement("commande");
+
+            commandeElement.setAttribute("id", String.valueOf(commande.getId()));
+            commandeElement.setAttribute("idClient", String.valueOf(commande.getIdClient()));
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("date", commande.getDate());
+            commandeElement.setAttribute("fraisDePort", String.valueOf(commande.getFraisDePort()));
+
+            for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()){
+                Element ligneCommandeElement = document.createElement("ligneCommande");
+
+                ligneCommandeElement.setAttribute("quantite", String.valueOf(ligneDeCommande.getQuantite()));
+                ligneCommandeElement.setAttribute("referenceArticle", ligneDeCommande.getObjet().getReference());
+
+                commandeElement.appendChild(ligneCommandeElement);
+            }
+
+            commandeElement.setAttribute("prix", String.valueOf(commande.getPrixTotal()));
+            commandes.appendChild(commandeElement);
+        }
+        racine.appendChild(commandes);
 
         return racine;
     }
@@ -230,10 +244,22 @@ public class DonneeManager {
                     break;
             }
 
-            for (String str :attributeArticle)
-                System.out.println(str);
-
             boutiqueInstance.ajouterArticle(attributeArticle);
+        }
+
+        // Lots
+        NodeList nodeListlot = racine.getElementsByTagName("lot");
+        for (int index = 0; index < nodeListlot.getLength(); index++) {
+            if (!"lots".equals(nodeListlot.item(index).getParentNode().getNodeName())) continue;
+
+            Element currentElementLot = (Element) nodeListlot.item(index);
+            String referenceLot = currentElementLot.getAttribute("reference");
+            String referenceArticle = currentElementLot.getAttribute("marque");
+            int quantite = Integer.parseInt(currentElementLot.getAttribute("quantite"));
+            Double reduction = Double.parseDouble(currentElementLot.getAttribute("reduction"));
+            System.out.println(currentElementLot.getAttribute("reference"));
+
+            boutiqueInstance.ajouterLot(referenceLot, referenceArticle,quantite, reduction);
         }
 
         //Commandes
