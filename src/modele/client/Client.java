@@ -1,82 +1,82 @@
 package modele.client;
 
 public class Client {
-    private String nom;
-    private String prenom;
-    private String adresse;
-    private int identifiant;
-    private static int cptId = 1;
+	private String nom;
+	private String prenom;
+	private String adresse;
+	private int identifiant;
+	private static int cptId = 1;
 
-    public Client(String nom, String prenom, String adresse) {
-        this.nom = nom;
-        this.prenom =prenom;
-        this.adresse = adresse;
-        this.identifiant = cptId++;
-    }
+	public Client(String nom, String prenom, String adresse) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.identifiant = cptId++;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public String getNom() {
+		return nom;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public String getAdresse() {
-        return adresse;
-    }
+	public String getAdresse() {
+		return adresse;
+	}
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
 
-    public int getId() {
-        return identifiant;
-    }
+	public int getId() {
+		return identifiant;
+	}
 
-    public void setIdentifiant(int identifiant) {
-        this.identifiant = identifiant;
-    }
+	public void setIdentifiant(int identifiant) {
+		this.identifiant = identifiant;
+	}
 
-    public void display(){
-        System.out.println("Nom : " + nom + ", identifiant : " + identifiant);
-    }
+	public void display() {
+		System.out.println("Nom : " + nom + ", identifiant : " + identifiant);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Client)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Client))
+			return false;
 
-        Client client = (Client) o;
+		Client client = (Client) o;
 
-        if (getNom() != null ? !getNom().equals(client.getNom()) : client.getNom() != null) return false;
-        if (getPrenom() != null ? !getPrenom().equals(client.getPrenom()) : client.getPrenom() != null) return false;
-        return getAdresse() != null ? getAdresse().equals(client.getAdresse()) : client.getAdresse() == null;
-    }
+		if (getNom() != null ? !getNom().equals(client.getNom()) : client.getNom() != null)
+			return false;
+		if (getPrenom() != null ? !getPrenom().equals(client.getPrenom()) : client.getPrenom() != null)
+			return false;
+		return getAdresse() != null ? getAdresse().equals(client.getAdresse()) : client.getAdresse() == null;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = getNom() != null ? getNom().hashCode() : 0;
-        result = 31 * result + (getPrenom() != null ? getPrenom().hashCode() : 0);
-        result = 31 * result + (getAdresse() != null ? getAdresse().hashCode() : 0);
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = getNom() != null ? getNom().hashCode() : 0;
+		result = 31 * result + (getPrenom() != null ? getPrenom().hashCode() : 0);
+		result = 31 * result + (getAdresse() != null ? getAdresse().hashCode() : 0);
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "identifiant=" + identifiant +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Client{" + "identifiant=" + identifiant + ", nom='" + nom + '\'' + ", prenom='" + prenom + '\''
+				+ ", adresse='" + adresse + '\'' + '}';
+	}
 
-    public String getPrenom() {
-        return prenom;
-    }
+	public String getPrenom() {
+		return prenom;
+	}
 
-    public int getIdentifiant() {
-        return identifiant;
-    }
+	public int getIdentifiant() {
+		return identifiant;
+	}
 }

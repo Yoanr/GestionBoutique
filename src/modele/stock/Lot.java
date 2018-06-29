@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lot extends ObjetVendable {
-    private Article type;
-    private static int nbArticle;
+	private Article type;
+	private static int nbArticle;
 
-    private double reduc;
-    private List<Article> articles;
+	private double reduc;
+	private List<Article> articles;
 
-    public Lot(String reference, Article article, double reduction) {
-        super(reference);
-        this.type = article;
-        marque = type.getMarque();
+	public Lot(String reference, Article article, double reduction) {
+		super(reference);
+		this.type = article;
+		marque = type.getMarque();
 
-        articles = new ArrayList<>();
-        articles.add(article);
+		articles = new ArrayList<>();
+		articles.add(article);
 
-        this.reduc = reduction;
+		this.reduc = reduction;
 
-        nbArticle = 1;
-        updatePrix();
-    }
+		nbArticle = 1;
+		updatePrix();
+	}
 
     public Lot (String reference, Article article,double reduction, int quantite){
         this(reference, article, reduction);
@@ -31,50 +31,49 @@ public class Lot extends ObjetVendable {
         }
     }
 
-    public void addArticle(Article article){
-        nbArticle++;
-        articles.add(article);
-        updatePrix();
-    }
+	public void addArticle(Article article) {
+		nbArticle++;
+		articles.add(article);
+		updatePrix();
+	}
 
-    public void removeArticle(String reference){
-        if(nbArticle >0) {
-            for(Article article : articles){
-                if(article.reference.equals(reference)){
-                    articles.remove(article);
-                    nbArticle--;
-                    updatePrix();
-                    return;
-                }
+	public void removeArticle(String reference) {
+		if (nbArticle > 0) {
+			for (Article article : articles) {
+				if (article.reference.equals(reference)) {
+					articles.remove(article);
+					nbArticle--;
+					updatePrix();
+					return;
+				}
 
-            }
-        }
-    }
+			}
+		}
+	}
 
-    private void updatePrix(){
-        prix = 0;
-        for (Article article : articles)
-        {
-            this.prix += article.getPrix();
-        }
-        prix = prix * (100-reduc)/100;
-    }
+	private void updatePrix() {
+		prix = 0;
+		for (Article article : articles) {
+			this.prix += article.getPrix();
+		}
+		prix = prix * (100 - reduc) / 100;
+	}
 
-    public String getMarque() {
-        return marque;
-    }
+	public String getMarque() {
+		return marque;
+	}
 
-    public double getPrix() {
-        return prix;
-    }
+	public double getPrix() {
+		return prix;
+	}
 
-    public double getReduc() {
-        return reduc;
-    }
+	public double getReduc() {
+		return reduc;
+	}
 
-    public void setReduc(int reduc) {
-        this.reduc = reduc;
-    }
+	public void setReduc(int reduc) {
+		this.reduc = reduc;
+	}
 
     public int getQuantite(){
         return articles.size();
