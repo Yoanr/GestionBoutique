@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<boutique benefice="0.0" ca="0.0" charges="0.0" loyer="0.0" nom="" salaires="0.0">
+<boutique benefice="10000.0" ca="3000.0" charges="1000.00" loyer="500.00" nom="ChezYoEtOliv" salaires="5000.00">
   <clients>
     <client adresse="1" id="1" nom="1" prenom="1"/>
     <client adresse="3" id="2" nom="3" prenom="3"/>
     <client adresse="olivier" id="3" nom="olivier" prenom="olivier"/>
     <client adresse="toto" id="4" nom="toto" prenom="tata"/>
+    <client adresse="Massy" id="5" nom="Olivier" prenom="Marie-Louise"/>
   </clients>
   <stocks>
     <article quantite="18" type="stylo">

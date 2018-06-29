@@ -142,6 +142,15 @@ public final class Boutique {
 		return null;
 	}
 
+
+	public Lot getLotByReference(String reference) {
+		for (Lot lot : lotList) {
+			if (lot.getReference().equals(reference))
+				return lot;
+		}
+		return null;
+	}
+
 	public String supprimerCommande(String commandeID) {
 		int idCommande = Integer.parseInt(commandeID);
 		for (Commande commande : commandeList) {
@@ -187,15 +196,22 @@ public final class Boutique {
 
 	public boolean verifStock(String referenceArticle, int quantite) {
 		Article article = getArticleByReference(referenceArticle);
-		return article != null && stocks.get(article) >= quantite;
+		Lot lot = getLotByReference(referenceArticle);
+		return (article != null && stocks.get(article) >= quantite) || lot != null;
 	}
 
 	public void ajouterLigne(Commande c, String reference, int quantite) {
 
 		Article article = getArticleByReference(reference);
+		Lot lot = getLotByReference(reference);
 		if (article != null) {
 			c.ajoutObjet(article, quantite);
 			stocks.put(article, stocks.get(article) - quantite);
+		} else if(getLotByReference(reference) != null){
+			int quantiteInList = lot.getQuantite();
+			if (quantiteInList >= quantite){
+				c.ajoutObjet(getLotByReference(reference), quantite);
+			}
 		}
 	}
 
@@ -321,8 +337,8 @@ public final class Boutique {
 
 	@Override
 	public String toString() {
-		return "Boutique{" + "nom='" + nom + '\'' + ", loyer=" + loyer + ", salaire=" + salaire + ", charge=" + charge
-				+ ", ca=" + ca + ", benefice=" + benefice + '}';
+		return "Boutique " + nom  + ", loyer=" + loyer + ", salaire=" + salaire + ", charge=" + charge
+				+ ", ca=" + ca + ", benefice=" + benefice ;
 	}
 
 	public List<Commande> getCommandeListByClient(int idClient) {

@@ -191,8 +191,8 @@ public class DonneeManager {
 
         boutiqueInstance.setNom(racine.getAttribute("nom").isEmpty() ? null : racine.getAttribute("nom"));
         boutiqueInstance.setLoyer( racine.getAttribute("loyer").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("loyer")));
-        boutiqueInstance.setSalaire( racine.getAttribute("salaire").isEmpty() ? 0: Double.parseDouble(racine.getAttribute("salaire")));
-        boutiqueInstance.setCharge(racine.getAttribute("charge").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("charge")));
+        boutiqueInstance.setSalaire( racine.getAttribute("salaires").isEmpty() ? 0: Double.parseDouble(racine.getAttribute("salaires")));
+        boutiqueInstance.setCharge(racine.getAttribute("charges").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("charges")));
         boutiqueInstance.setCa( racine.getAttribute("ca").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("ca")));
         boutiqueInstance.setBenefice(racine.getAttribute("benefice").isEmpty() ? 0 : Double.parseDouble(racine.getAttribute("benefice")));
 

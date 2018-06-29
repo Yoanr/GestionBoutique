@@ -68,15 +68,11 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client{" + "identifiant=" + identifiant + ", nom='" + nom + '\'' + ", prenom='" + prenom + '\''
-				+ ", adresse='" + adresse + '\'' + '}';
+		return "Client " + identifiant + " : nom='" + nom + '\'' + ", prenom='" + prenom + '\''
+				+ ", adresse='" + adresse + '\'';
 	}
 
 	public String getPrenom() {
 		return prenom;
-	}
-
-	public int getIdentifiant() {
-		return identifiant;
 	}
 }

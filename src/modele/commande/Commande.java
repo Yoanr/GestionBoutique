@@ -110,15 +110,14 @@ public class Commande {
 	public String toString() {
 		String facture = "Facture n° " + id + "\tNom du client= " + idClient + "\tDate= " + date + "\tFrais de Port "+ fraisDePort +"\n\n";
 
-		facture += String.format("%10s\t%10s\t%20s\t%10s\t%10s\t%10s", "Quant.", "Ref.", "Nom", "Marque", "PU (€)",
+		facture += String.format("%10s\t%10s\t%10s\t%10s\t%10s", "Quant.", "Ref.", "Marque", "PU (€)",
 				"PT (€)\n");
 		for (LigneDeCommande LigneDeCommande : lignes) {
 			facture += String.format("%10s\t", LigneDeCommande.getQuantite())
 					+ String.format("%10s\t", LigneDeCommande.getObjet().getReference())
-					+ String.format("%20s\t", LigneDeCommande.getObjet().toString())
 					+ String.format("%10s\t", LigneDeCommande.getObjet().getMarque())
 					+ String.format("%10.2f\t", LigneDeCommande.getObjet().getPrix())
-					+ String.format("%10.2f\n", LigneDeCommande.getObjet().getPrix() * LigneDeCommande.getQuantite());
+					+ String.format("%9.2f\n", LigneDeCommande.getObjet().getPrix() * LigneDeCommande.getQuantite());
 		}
 
 		facture += String.format("\nprixTotal= %.2f euros", prixTotal);

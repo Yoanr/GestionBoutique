@@ -1,5 +1,5 @@
 package vue;
-
+/*
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,14 +22,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+*/
 //TODO Vue graphique à faire en reprenant les éléments du modèle.
+
+import java.util.List;
 
 /**
  * Représente la vue graphique de notre application
  */
 
-public class VueGraphique  extends Application implements Affichage {
+public class VueGraphique  /*extends Application*/ implements Affichage {
 /*
 
     private ComboBox<String> comboBoxType;
@@ -37,7 +39,7 @@ public class VueGraphique  extends Application implements Affichage {
     private Group root ;
     private Scene scene ;
     private TableView table;
-    private ObservableList<Map> allData;*/
+    private ObservableList<Map> allData;
 
     public static void main(String[] args) {
         Application.launch(VueGraphique.class, args);
@@ -52,9 +54,10 @@ public class VueGraphique  extends Application implements Affichage {
 
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.show(); */
-    }
-/*
+        primaryStage.show();
+    }*/
+    /*
+
     private void initComponent(Stage primaryStage){
         root = new Group();
         scene = new Scene(root, 700, 500, Color.WHITE);
@@ -225,7 +228,7 @@ public class VueGraphique  extends Application implements Affichage {
 
 	}
 
-	@Override
+    @Override
 	public <T> void afficher(List<T> listClient) {
 
 	}
