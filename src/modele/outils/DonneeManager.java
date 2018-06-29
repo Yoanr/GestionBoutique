@@ -257,7 +257,6 @@ public class DonneeManager {
             String referenceArticle = currentElementLot.getAttribute("marque");
             int quantite = Integer.parseInt(currentElementLot.getAttribute("quantite"));
             Double reduction = Double.parseDouble(currentElementLot.getAttribute("reduction"));
-            System.out.println(currentElementLot.getAttribute("reference"));
 
             boutiqueInstance.ajouterLot(referenceLot, referenceArticle,quantite, reduction);
         }
