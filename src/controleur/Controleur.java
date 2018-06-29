@@ -73,6 +73,7 @@ public class Controleur {
 		while (!quitter) {
 			arguments = this.affichage.utilisateurAction();
 			quitter = this.interpreter(arguments);
+			DonneeManager.ecrire();
 		}
 	}
 
@@ -164,7 +165,6 @@ public class Controleur {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			msg = ErreurManager.ARGS_ERROR;
 		}
-		DonneeManager.ecrire();
 		this.affichage.msgModele(msg);
 
 	}
@@ -252,7 +252,7 @@ public class Controleur {
 			msg = ErreurManager.ARGS_ERROR;
 		}
 
-		DonneeManager.ecrire();
+		
 		this.affichage.msgModele(msg);
 	}
 	/**
@@ -273,7 +273,7 @@ public class Controleur {
 		} else if (arguments[1].equals(VueTerminal.commandes2.get(5))) {
 			msg = boutique.supprimerLot(s);
 		}
-		DonneeManager.ecrire();
+		
 		this.affichage.msgModele(msg);
 
 	}
