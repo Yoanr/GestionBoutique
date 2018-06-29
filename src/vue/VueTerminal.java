@@ -49,7 +49,7 @@ public class VueTerminal implements Affichage {
 		String arguments[] = new String[3];
 		try {
 			do {
-				System.out.print("Que souhaitez-vous ? >");
+				System.out.print("Que souhaitez-vous ? > ");
 				argument = scanInn.nextLine();
 				String arg[] = argument.split(" ");
 				if (arg.length < 2) {
@@ -65,6 +65,10 @@ public class VueTerminal implements Affichage {
 					arguments[0] = arg[0];
 					arguments[1] = arg[1];
 					arguments[2] = arg[2];
+				}else {
+					for(int i=0;i<3;i++) {
+					arguments[i] = "";
+					}
 				}
 
 				if (arguments[0].equals("quitter")) {
@@ -108,7 +112,7 @@ public class VueTerminal implements Affichage {
 		} else if (type.equals(commandes2.get(2))) {
 			System.out.println("exemple :ajouter stock <stylo/ramette>");
 		} else if (type.equals(commandes2.get(3))) {
-			System.out.println("exemple :<nom> <loyer> <salaire> <CA>");
+			System.out.println("exemple :<nom> <loyer> <salaire>");
 		} else if (type.equals(commandes2.get(5))) {
 			System.out.println("exemple :<ref lot> <ref article> <quantite article> <reduction>");
 		}
