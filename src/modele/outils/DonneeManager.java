@@ -66,7 +66,7 @@ public class DonneeManager {
 
 
         }catch (FileNotFoundException e){
-            System.err.println("Aucun fichier xml trouvé, Effectuer une action pour creer le fichier");
+            System.err.println("Aucun fichier xml trouvé, Effectuer une action pour créer le fichier");
         }
         catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
