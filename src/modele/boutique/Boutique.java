@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Cette classe represente le modele de la boutique
+ */
 public final class Boutique {
 
 	private String nom;
@@ -21,9 +24,21 @@ public final class Boutique {
 	private double ca;
 	private double benefice;
 
+	/**
+	 * liste de clients
+	 */
 	private List<Client> clientList = new ArrayList<>();
+	/**
+	 * liste de commandes
+	 */
 	private List<Commande> commandeList = new ArrayList<>();
+	/**
+	 * liste de stock
+	 */
 	private HashMap<Article, Integer> stocks = new HashMap<>();
+	/**
+	 * liste de lots
+	 */
 	private List<Lot> lotList = new ArrayList<>();
 
 	private static Boutique instance = new Boutique();
@@ -43,6 +58,10 @@ public final class Boutique {
 		return commandeList;
 	}
 
+	/**
+	 * recupere les informations de la boutique
+	 * @return List<String>
+	 */
 	public List<String> getBoutiqueInfo() {
 		List<String> liste = new ArrayList<>();
 		liste.add(toString());
@@ -53,6 +72,10 @@ public final class Boutique {
 		return stocks;
 	}
 
+	/**
+	 * Recuperer la liste des stocks de manieres dynamique et deja pret pour la vue
+	 * @return List<String>
+	 */
 	public List<String> getStocksList() {
 		List<String> stockList = new ArrayList<>();
 
@@ -67,6 +90,11 @@ public final class Boutique {
 		return stockList;
 	}
 
+	/**
+	 * Supprimer un client par l'identifiant d'un client
+	 * @param clientId
+	 * @return message à la vue
+	 */
 	public String supprimerClient(String clientId) {
 		int idClient = Integer.parseInt(clientId);
 		for (Client client : clientList) {
@@ -83,10 +111,21 @@ public final class Boutique {
 		return ErreurManager.SUPPRIME_ERROR;
 	}
 
+	/**
+	 * ajouter un client
+	 * @param clientArgs
+	 * @return message pour la vue
+	 */
 	public String ajouterClient(String[] clientArgs) {
 		return ajouterClient(new Client(clientArgs[0], clientArgs[1], clientArgs[2]));
 	}
 
+
+	/**
+	 * ajouter un client
+	 * @param newClient
+	 * @return message pour la vue
+	 */
 	private String ajouterClient(Client newClient) {
 		if (!clientList.contains(newClient)) {
 			clientList.add(newClient);
@@ -95,6 +134,12 @@ public final class Boutique {
 		return ErreurManager.AJOUTE_ERROR;
 	}
 
+
+	/**
+	 * ajouter une commande avec une liste d'argument
+	 * @param commandeArgs
+	 * @return
+	 */
 	public Commande ajouterCommande(String[] commandeArgs) {
 		if (commandeArgs.length == 3) {
 			return ajouterCommande(new Commande(Integer.parseInt(commandeArgs[0]), commandeArgs[1],
@@ -103,6 +148,11 @@ public final class Boutique {
 		return null;
 	}
 
+	/**
+	 * ajouter une commande par un objet commande
+	 * @param commande
+	 * @return commande
+	 */
 	public Commande ajouterCommande(Commande c) {
 		if (!commandeList.contains(c)) {
 			commandeList.add(c);
@@ -111,7 +161,11 @@ public final class Boutique {
 		}
 		return null;
 	}
-
+/**
+ * ajouter un article avec la fabrique
+ * @param articleTab
+ * @return
+ */
 	public String ajouterArticle(String[] articleTab) {
 		switch (articleTab[0].toLowerCase()) {
 			case "stylo":
@@ -125,6 +179,12 @@ public final class Boutique {
 		}
 	}
 
+	/**
+	 * ajouter un article
+	 * @param article
+	 * @param quantite
+	 * @return message pour la vue
+	 */
 	private String ajouterArticle(Article article, int quantite) {
 		if (article != null) {
 			stocks.put(article, quantite);
@@ -134,6 +194,12 @@ public final class Boutique {
 		return ErreurManager.AJOUTE_ERROR;
 	}
 
+
+	/**
+	 * recuperer l'article par reference
+	 * @param reference
+	 * @return Article
+	 */
 	public Article getArticleByReference(String reference) {
 		for (Article article : stocks.keySet()) {
 			if (article.getReference().equals(reference))
@@ -142,7 +208,11 @@ public final class Boutique {
 		return null;
 	}
 
-
+    /**
+     * recuperer le lot par reference
+     * @param reference
+     * @return Lot
+     */
 	public Lot getLotByReference(String reference) {
 		for (Lot lot : lotList) {
 			if (lot.getReference().equals(reference))
@@ -151,6 +221,11 @@ public final class Boutique {
 		return null;
 	}
 
+	/**
+	 * supprimer une commande
+	 * @param commandeID
+	 * @return message à la vue
+	 */
 	public String supprimerCommande(String commandeID) {
 		int idCommande = Integer.parseInt(commandeID);
 		for (Commande commande : commandeList) {
@@ -172,6 +247,11 @@ public final class Boutique {
 		return ErreurManager.SUPPRIME_ERROR;
 	}
 
+	/**
+	 * verfier un client
+	 * @param idClient
+	 * @return boolean
+	 */
 	public boolean verifClient(int idClient) {
 		for (Client client : clientList) {
 			if (client.getId() == idClient)
@@ -180,6 +260,11 @@ public final class Boutique {
 		return false;
 	}
 
+	/**
+	 * supprimer un article par reference
+	 * @param articleReference
+	 * @return message a la vue
+	 */
 	public String supprimerArticle(String articleReference) {
 		Article article = getArticleByReference(articleReference);
 		if (article != null) {
@@ -194,12 +279,26 @@ public final class Boutique {
 		return ErreurManager.SUPPRIME_ERROR;
 	}
 
+
+	/**
+	 * verifier les stock
+	 * @param referenceArticle
+	 * @param quantite
+	 * @return boolean
+	 */
 	public boolean verifStock(String referenceArticle, int quantite) {
 		Article article = getArticleByReference(referenceArticle);
 		Lot lot = getLotByReference(referenceArticle);
 		return (article != null && stocks.get(article) >= quantite) || lot != null;
 	}
 
+
+	/**
+	 * ajouter une ligne
+	 * @param commande
+	 * @param reference
+	 * @param quantite
+	 */
 	public void ajouterLigne(Commande c, String reference, int quantite) {
 
 		Article article = getArticleByReference(reference);
@@ -215,6 +314,12 @@ public final class Boutique {
 		}
 	}
 
+
+	/**
+	 * recuperer la quantite d'un article dans la boutique
+	 * @param reference
+	 * @return quantite
+	 */
 	public int getQuantiteById(String reference) {
 		Article article = getArticleByReference(reference);
 
@@ -223,6 +328,13 @@ public final class Boutique {
 		return stocks.get(article);
 	}
 
+
+	/**
+	 * modifier les stock
+	 * @param newQuantite
+	 * @param reference
+	 * @return message à la vue
+	 */
 	public String modifierStock(int newQuantite, String reference) {
 		Article article = getArticleByReference(reference);
 
@@ -234,6 +346,14 @@ public final class Boutique {
 
 	}
 
+	/** ajouter un lot
+	 *
+	 * @param referenceLot
+	 * @param referenceArticle
+	 * @param quantite
+	 * @param reduction
+	 * @return message d'erreur
+	 */
 	public String ajouterLot(String referenceLot, String referenceArticle, int quantite, double reduction) {
 		Lot lot = getArticleByReference(referenceArticle) != null
 				? new Lot(referenceLot, getArticleByReference(referenceArticle), reduction, quantite)
@@ -247,6 +367,11 @@ public final class Boutique {
 		}
 	}
 
+	/**
+	 * supprimer un lot par reference
+	 * @param referenceLot
+	 * @return message ala vue
+	 */
 	public String supprimerLot(String referenceLot) {
 		for (Lot lot : lotList) {
 			if (lot.getReference().equals(referenceLot)) {
@@ -258,6 +383,11 @@ public final class Boutique {
 	}
 
 	// values {"nom", "loyer", "salaire", "CA"}
+	/**
+	 * modifier les info de la boutique
+	 * @param values
+	 * @return message à la vue
+	 */
 	public String modifierInfoBoutique(String[] values) {
 		setNom(values[0]);
 		setLoyer(Double.parseDouble(values[1]));
@@ -272,7 +402,10 @@ public final class Boutique {
 	public List<Lot> getLots() {
 		return lotList;
 	}
-
+/**
+ * recuperer a liste de lot pour la vue
+ * @return
+ */
 	public List<String> getLotsList(){
 		List<String> stringList = new ArrayList<>();
 		lotList.forEach(lot->stringList.add(lot.toString()));
@@ -319,6 +452,9 @@ public final class Boutique {
 		this.ca = ca;
 	}
 
+	/**
+	 * calcul dynamiquement le chiffre d'affaire en fonction des commandes passées
+	 */
 	public void setCa() {
 		Double somme = 0.0;
 		for (Commande commande : commandeList) {
@@ -334,13 +470,23 @@ public final class Boutique {
 	public void setBenefice(double benefice) {
 		this.benefice = benefice;
 	}
-
+	/**
+	   * Cette méthode renvoie une chaîne de caractères qui représente
+	   * la boutique
+	   *
+	   * @return Une chaîne de caractère
+	   */
 	@Override
 	public String toString() {
 		return "Boutique " + nom  + ", loyer=" + loyer + ", salaire=" + salaire + ", charge=" + charge
 				+ ", ca=" + ca + ", benefice=" + benefice ;
 	}
 
+	/**
+	 * recuperer la commande d'un client
+	 * @param idClient
+	 * @return Liste de commande
+	 */
 	public List<Commande> getCommandeListByClient(int idClient) {
 		List<Commande> l = commandeList;
 		List<Commande> l2 = new ArrayList<>();

@@ -9,12 +9,19 @@ import vue.Affichage;
 import vue.ErreurManager;
 import vue.VueTerminal;
 
+/**
+ * classe controleur
+ */
 public class Controleur {
 
 	Boutique boutique = Boutique.getInstance();
 	Affichage affichage;
 
 
+    /**
+     * constructeur du controleur
+     * @param arg de la ligne de commande
+     */
     public Controleur(String arg) {
         DonneeManager.lire();
       //  if("commandLine".equals(arg)) {
@@ -26,6 +33,11 @@ public class Controleur {
           //  controllerGraphique();
     }
 
+    /**
+     * interprete une action client
+     * @param arguments
+     * @return
+     */
     private boolean interpreter(String[] arguments) {
 
 		if (arguments[0].equals(VueTerminal.commandes.get(0))) {
@@ -50,6 +62,9 @@ public class Controleur {
 		return false;
 	}
 
+    /**
+     * fonction qui gere la boucle infini de l'application
+     */
 	private void controllerCommandLine() {
 		boolean quitter = false;
 
@@ -65,6 +80,10 @@ public class Controleur {
 
 	}
 
+	/**
+	 * ajouter un element dans l'application
+	 * @param arguments
+	 */
 	private void controllerAjouter(String[] arguments) {
 		String[] s;
 		String msg = ErreurManager.DEFAULT;
@@ -149,7 +168,10 @@ public class Controleur {
 		this.affichage.msgModele(msg);
 
 	}
-
+	/**
+	 * afficher un element dans l'application
+	 * @param arguments
+	 */
 	private void controllerAfficher(String[] arguments) {
 		List<?> liste = null;
 		if (arguments[1].equals(VueTerminal.commandes2.get(0))) {
@@ -189,7 +211,10 @@ public class Controleur {
 		}
 		this.affichage.afficher(liste);
 	}
-
+	/**
+	 * modifier un element dans l'application
+	 * @param arguments
+	 */
 	private void controllerModifier(String[] arguments) {
 		String msg = ErreurManager.DEFAULT;
 		try {
@@ -230,7 +255,10 @@ public class Controleur {
 		DonneeManager.ecrire();
 		this.affichage.msgModele(msg);
 	}
-
+	/**
+	 * supprimer un element dans l'application
+	 * @param arguments
+	 */
 	private void controllerSupprimer(String[] arguments) {
 		String s = this.affichage.supprimer();
 		String msg = ErreurManager.DEFAULT;
@@ -250,6 +278,10 @@ public class Controleur {
 
 	}
 
+	/**
+	 * recuperer les données de la commande à ajouter dans le modèle
+	 * @param arguments
+	 */
 	private String commandeControleur(String[] s) {
 
 		Commande c = boutique.ajouterCommande(s);

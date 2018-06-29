@@ -2,6 +2,10 @@ package modele.stock;
 
 import javax.print.DocFlavor;
 
+/**
+ * ArticleFactory fabrique des articles
+ *
+ */
 public final class ArticleFactory {
 
 	private static ArticleFactory instance = new ArticleFactory();
@@ -10,9 +14,16 @@ public final class ArticleFactory {
 		return instance;
 	}
 
+	/**
+	 * constructeur privé
+	 */
 	private ArticleFactory() {
 	}
 
+	/**
+	 * @param article type
+	 * @return Article
+	 */
 	public Article creerArticle(String[] args) {
 		String typeArticle = args[0].toLowerCase();
 

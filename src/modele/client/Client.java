@@ -1,12 +1,25 @@
 package modele.client;
 
+/**
+ *Cette classe represente un client
+ */
 public class Client {
 	private String nom;
 	private String prenom;
 	private String adresse;
 	private int identifiant;
+	/**
+	 * cptId represente son identifiant dans l'application, incrementé à chaque nouveau client ajouté
+	 */
 	private static int cptId = 1;
 
+	
+	/**
+	 * Constructeur d'un client
+	 * @param nom
+	 * @param prenom
+	 * @param adresse
+	 */
 	public Client(String nom, String prenom, String adresse) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -42,6 +55,9 @@ public class Client {
 		System.out.println("Nom : " + nom + ", identifiant : " + identifiant);
 	}
 
+	/**
+	 * fonction permettant de comparer deux client
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -65,7 +81,12 @@ public class Client {
 		result = 31 * result + (getAdresse() != null ? getAdresse().hashCode() : 0);
 		return result;
 	}
-
+	/**
+	   * Cette méthode renvoie une chaîne de caractères qui représente
+	   * un client
+	   *
+	   * @return Une chaîne de caractère
+	   */
 	@Override
 	public String toString() {
 		return "Client " + identifiant + " : nom='" + nom + '\'' + ", prenom='" + prenom + '\''

@@ -1,0 +1,69 @@
+@startuml
+
+class Client {
+-id
+-nom
+-prenom
+-adresse
+}
+
+class Commande {
+-id
+-reduction
+-fraixdeport
+-prixtotal
+
+}
+
+class Article {
+-prixPublique
+-cout
+}
+
+
+class Boutique{
+-coutFixe
+-coutMobile
+}
+
+class Lot{
+-type
+-nbArticle
+-reduction
+-articles
+}
+interface Vendable{
+-nom
+-reference
+-marque
+-prix
+}
+
+class Stylo{
+-typeEncre
+}
+
+class Ramette{
+-dimensionL
+-dimensionH
+}
+
+
+class Stock{
+-quantite
+}
+
+
+
+Boutique -- Client
+Client -- Commande
+Article ..> Vendable : << use >>
+Lot ..> Vendable : << use >>
+Lot --* "2..*" Article
+Stylo -up-|> Article
+Ramette -up-|> Article
+Vendable "1..*" *-- Commande
+(Boutique, Article) .. Stock
+
+
+@enduml

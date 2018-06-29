@@ -3,7 +3,10 @@ package modele.commande;
 import modele.stock.ObjetVendable;
 
 import java.util.ArrayList;
-
+/**
+ * Classe representant une Commande
+ *
+ */
 public class Commande {
 
 	private int idClient;
@@ -14,6 +17,13 @@ public class Commande {
 	private double fraisDePort;
 	private static int cptId = 1;
 
+	
+	/**
+	 * constructeur d'une commande
+	 * @param idClient
+	 * @param date
+	 * @param fraisDePort
+	 */
 	public Commande(int idClient, String date, double fraisDePort) {
 		this.idClient = idClient;
 		this.date = date;
@@ -23,15 +33,31 @@ public class Commande {
 		this.id = cptId++;
 	}
 
+	/**
+	 * Constructeur d'une commande
+	 * @param idClient
+	 * @param date
+	 * @param fraisDePort
+	 * @param ObjetVendable
+	 * @param quantite
+	 */
 	public Commande(int idClient, String date, double fraisDePort, ObjetVendable ObjetVendable, int quantite) {
 		this(idClient, date, fraisDePort);
 		addLigne(new LigneDeCommande(ObjetVendable, quantite));
 	}
 
+	/**
+	 * Classe interne d'une commande representant une ligne de cette commande
+	 */
 	public class LigneDeCommande {
 		private ObjetVendable ObjetVendable;
 		private int quantite;
 
+		/**
+		 * Constructeur d'une  ligne de commande
+		 * @param ObjetVendable
+		 * @param quantite
+		 */
 		public LigneDeCommande(ObjetVendable ObjetVendable, int quantite) {
 			this.ObjetVendable = ObjetVendable;
 			this.quantite = quantite;
@@ -48,15 +74,30 @@ public class Commande {
 
 	}
 
+	/**
+	 * Ajouter un objetVendable et de sa quantite dans cette ligne 
+	 * @param ObjetVendable
+	 * @param quantite
+	 */
 	public void ajoutObjet(ObjetVendable ObjetVendable, int quantite) {
 		addLigne(new LigneDeCommande(ObjetVendable, quantite));
 	}
 
+	
+	/**
+	 * ajout d'une ligne
+	 * @param LigneDeCommande
+	 */
 	private void addLigne(LigneDeCommande LigneDeCommande) {
 		lignes.add(LigneDeCommande);
 		updatePrix();
 	}
 
+	
+	/**
+	 * supprimer une ligne par sa reference
+	 * @param reference
+	 */
 	public void removeLigne(String reference) {
 		if (lignes.size() > 0) {
 			for (LigneDeCommande LigneDeCommande : lignes) {
@@ -71,10 +112,17 @@ public class Commande {
 		}
 	}
 
+	/**
+	 * fonction permettent de supprimer la commande et donc diminuer l'indice de commande 
+	 * (indice qui est assigné a chaque nouvelles commandes
+	 */
 	public static void suppCommande(){
 		cptId--;
 	}
 
+	/**
+	 * Change le prix dynamiquement
+	 */
 	private void updatePrix() {
 		prixTotal = 0;
 		for (LigneDeCommande LigneDeCommande : lignes) {
@@ -106,6 +154,12 @@ public class Commande {
 		return fraisDePort;
 	}
 
+	/**
+	   * Cette méthode renvoie une chaîne de caractères qui représente
+	   * une commande
+	   *
+	   * @return Une chaîne de caractère
+	   */
 	@Override
 	public String toString() {
 		String facture = "Facture n° " + id + "\tNom du client= " + idClient + "\tDate= " + date + "\tFrais de Port "+ fraisDePort +"\n\n";

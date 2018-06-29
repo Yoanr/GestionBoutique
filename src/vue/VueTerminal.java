@@ -6,27 +6,50 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Represente la vue coté terminal (Ligne de commande)
+ */
 public class VueTerminal implements Affichage {
 
+	/**
+	 * List contenant la 1er catégorie des mots de recherche
+	 */
 	public static final List<String> commandes = Collections
 			.unmodifiableList(Arrays.asList("afficher", "ajouter", "modifier", "supprimer", "quitter"));
+	/**
+	 * List contenant la 2eme catégorie des mots de recherche
+	 */
 	public static final List<String> commandes2 = Collections
 			.unmodifiableList(Arrays.asList("clients", "commandes", "stock", "boutique", "menu", "lots"));
+	/**
+	 * List contenant la 3eme catégorie des mots de recherche
+	 */
 	public static final List<String> commandes3 = Collections.unmodifiableList(Arrays.asList("client", "boutique"));
 
+	/**
+	 * Objet permettant de lire les instructions utilisateur
+	 */
 	private Scanner scanInn;
 
+	
+	/**
+	 * Constructeur de VueTerminal
+	 */
 	public VueTerminal() {
 		this.afficherMenu();
 		scanInn = new Scanner(System.in);
 	}
 
+	/** 
+	 * Fonction recuperant l'action de l'utilisateur
+	 * @return String[]
+	 */
 	public String[] utilisateurAction() {
 		String argument = new String();
 		String arguments[] = new String[3];
 		try {
 			do {
-				System.out.println("Que souhaitez-vous ?");
+				System.out.print("Que souhaitez-vous ? >");
 				argument = scanInn.nextLine();
 				String arg[] = argument.split(" ");
 				if (arg.length < 2) {
@@ -56,17 +79,27 @@ public class VueTerminal implements Affichage {
 		return arguments;
 	}
 
+	/** 
+	 * fonction proposé par l'interface Affichage retournant les arguments d'un ajout général
+	 */
 	@Override
 	public String[] ajouter() {
 		String s = scanInn.nextLine();
 		return s.split(" ");
 	}
 
+	/** 
+	 * fonction proposé par l'interface Affichage permettant d'afficher le message du model
+	 */
 	@Override
 	public void msgModele(String msg) {
 		System.out.println(msg);
 	}
 
+	/**
+	 * fonction permettant d'afficher les arguments d'une commande que l'utilisateur souhaite executer
+	 * @param type d'un article
+	 */
 	public void afficherAide(String type) {
 		if (type.equals(commandes2.get(0))) {
 			System.out.println("exemple : <nom> <prenom> <adresse>");
@@ -82,6 +115,9 @@ public class VueTerminal implements Affichage {
 
 	}
 
+	/** 
+	 * fonction permettant d'afficher le menu
+	 */
 	public void afficherMenu() {
 		System.out.println("***********                MENU                 ***********");
 		System.out.println("**     Action : afficher, ajouter, modifier, supprimer   **");
@@ -94,6 +130,10 @@ public class VueTerminal implements Affichage {
 		System.out.println("***********************************************************");
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage qui affiche une liste d'objet en utilisant le toString()
+	 * @param list général
+	 */
 	@Override
 	public <T> void afficher(List<T> listClient) {
 		for (T element : listClient) {
@@ -101,6 +141,10 @@ public class VueTerminal implements Affichage {
 		}
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage qui supprime un element à partir de sa reference 
+	 * @return String
+	 */
 	@Override
 	public String supprimer() {
 		System.out.println("Saississez l'identifiant que vous voulez supprimer :");
@@ -108,6 +152,10 @@ public class VueTerminal implements Affichage {
 		return s;
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage qui permet d'ajouter une commande
+	 * @return Liste de chaine de caractere
+	 */
 	@Override
 	public List<String[]> getLignesCommande() {
 		System.out.println("Ajout de ligne :");
@@ -131,12 +179,20 @@ public class VueTerminal implements Affichage {
 		return lignes;
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage qui permet de modifier un element à partir de sa reference
+	 * @return String
+	 */
 	@Override
 	public String modifier() {
 		System.out.println("Veuillez saisir la reference/id de l'element :");
 		return scanInn.nextLine();
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage 
+	 * @return String
+	 */
 	@Override
 	public String getClientid() {
 		System.out.println("Saississez l'id du client :");
@@ -144,6 +200,10 @@ public class VueTerminal implements Affichage {
 		return id;
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage pour modifier la quantite d'un article
+	 * @return String
+	 */
 	@Override
 	public String modifierstock(int quantite) {
 		System.out.println("Quantite actuelle : " + quantite);
@@ -152,6 +212,9 @@ public class VueTerminal implements Affichage {
 		return newQuantite;
 	}
 
+	/**
+	 * fonction proposé par l'interface Affichage permettant d'ajouter un article
+	 */
 	@Override
 	public String[] ajouterArticle(String typeArticle) {
 		if (typeArticle.equals("stylo")) {
@@ -169,22 +232,4 @@ public class VueTerminal implements Affichage {
 
 		return s.split(" ");
 	}
-
-	/*
-	 * private static void application() { String s = ""; boolean stop = false;
-	 * 
-	 * while (!stop) {
-	 * 
-	 * try { BufferedReader bufferRead = new BufferedReader(new
-	 * InputStreamReader(System.in)); s = bufferRead.readLine();
-	 * 
-	 * } catch (IOException e) { e.printStackTrace(); }
-	 * 
-	 * String[] args = s.split(" ");
-	 * 
-	 * Interpreteur interpreteur = new Interpreteur(args); if
-	 * (interpreteur.interprete()) { stop = true; }
-	 * 
-	 * } }
-	 */
 }
