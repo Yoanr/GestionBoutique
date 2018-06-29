@@ -6,27 +6,26 @@ import modele.client.Client;
 
 public interface Affichage {
 
- 
-    String[] ajouter();
-    
-    void afficherAide(String s);
-    
-    void afficherMenu();
-    
-    void msgModele(String msg);
+	String[] ajouter();
 
-    <T> void afficher (List<T> list);
+	void afficherAide(String s);
 
-    String[] utilisateurAction();
+	void afficherMenu();
+
+	void msgModele(String msg);
+
+	<T> void afficher(List<T> list);
+
+	String[] utilisateurAction();
 
 	String supprimer();
-	
+
 	List<String[]> getLignesCommande();
 
 	String modifier();
 
 	String getClientid();
-	
+
 	String modifierstock(int quantite);
 
 	String[] ajouterArticle(String typeArticle);

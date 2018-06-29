@@ -18,7 +18,13 @@
     </commande>
   </commandes>
   <stocks>
-    <article quantite="38" type="stylo">
+    <article quantite="10" type="stylo">
+      <stylo couleur="BLEU" marque="bic" prix="10.0" reference="loli"/>
+    </article>
+    <article quantite="10" type="ramette">
+      <ramette dimH="10.0" dimL="10.0" marque="bic" prix="100.0" reference="ramos"/>
+    </article>
+    <article quantite="10" type="stylo">
       <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
     </article>
   </stocks>
