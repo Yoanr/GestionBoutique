@@ -2,6 +2,7 @@ package modele.outils;
 
 import modele.boutique.Boutique;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -64,7 +65,10 @@ public class DonneeManager {
 
 
 
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+        }catch (FileNotFoundException e){
+            System.err.println("Aucun fichier xml trouvé, Lancez des commandes pour creer le fichier");
+        }
+        catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
     }
