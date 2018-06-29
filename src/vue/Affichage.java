@@ -11,19 +11,19 @@ import modele.client.Client;
 public interface Affichage {
 
 	/**
-	 * fonction permetant de recuperer les arguments pour ajouter un element
+	 * fonction permettant de recuperer les arguments pour ajouter un element
 	 * @return arguments de l'utilisateur
 	 */
 	String[] ajouter();
 
 	/**
-	 * fonction permetant d'afficher les aides
+	 * fonction permettant d'afficher les aides
 	 * @param typeDeCommande
 	 */
 	void afficherAide(String s);
 
 	/**
-	 * fonction permetant d'afficher le menu
+	 * fonction permettant d'afficher le menu
 	 */
 	void afficherMenu();
 

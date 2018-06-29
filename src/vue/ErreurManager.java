@@ -1,7 +1,7 @@
 package vue;
 
 /**
- * Classe ErreurManager permetant de stocker les messages d'erreurs de l'application
+ * Classe ErreurManager permettant de stocker les messages d'erreurs de l'application
  *
  */
 public class ErreurManager {

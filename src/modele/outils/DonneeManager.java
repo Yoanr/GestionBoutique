@@ -23,18 +23,31 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * DonneeManager est un service permettant la lecture et ecriture dans un fichier xml
  *
  */
 public class DonneeManager {
+	/**
+	 * Nom du fichier
+	 */
     private static final String XMLFILE = "boutique.xml";
 
+    /**
+     * Singleton
+     */
     private static final Boutique boutiqueInstance =  Boutique.getInstance();
 
+    /**
+     * Lire n fichier xml
+     */
     public static void lire(){
         lire(XMLFILE);
     }
 
+    /**
+     * fonction pour lire à partir d'un nom de fichier
+     * @param fichier
+     */
     public static void lire(String fichier) {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -55,7 +68,10 @@ public class DonneeManager {
             e.printStackTrace();
         }
     }
-
+/**
+ * fonction pour ecrire à partir d'un nom de fichier
+ * @param fichier
+ */
     public static void ecrire(String fichier){
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -86,11 +102,17 @@ public class DonneeManager {
             e.printStackTrace();
         }
     }
-
+/**
+ * ecrire dans un fichier xml
+ */
     public static void ecrire(){
         ecrire(XMLFILE);
     }
-
+/**
+ * fonction permettant de transformer les données de l'application en donnée xml
+ * @param document
+ * @return Element
+ */
     private static Element dataToXml(Document document){
         Element racine = document.createElement("boutique");
 
@@ -189,6 +211,11 @@ public class DonneeManager {
         return racine;
     }
 
+    /**
+     * fonction permettant de transformer les données de l'xml en donnée de l'application
+     * @param document
+     * @return Element
+     */
     private static void xmlToData(Document document) {
         Element racine = document.getDocumentElement();
 
