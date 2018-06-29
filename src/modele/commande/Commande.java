@@ -71,6 +71,10 @@ public class Commande {
 		}
 	}
 
+	public static void suppCommande(){
+		cptId--;
+	}
+
 	private void updatePrix() {
 		prixTotal = 0;
 		for (LigneDeCommande LigneDeCommande : lignes) {
@@ -104,7 +108,7 @@ public class Commande {
 
 	@Override
 	public String toString() {
-		String facture = "Facture n° " + id + "\tNom du client= " + idClient + "\tDate= " + date + "\n\n";
+		String facture = "Facture n° " + id + "\tNom du client= " + idClient + "\tDate= " + date + "\tFrais de Port "+ fraisDePort +"\n\n";
 
 		facture += String.format("%10s\t%10s\t%20s\t%10s\t%10s\t%10s", "Quant.", "Ref.", "Nom", "Marque", "PU (€)",
 				"PT (€)\n");

@@ -6,6 +6,14 @@
     <client adresse="olivier" id="3" nom="olivier" prenom="olivier"/>
     <client adresse="toto" id="4" nom="toto" prenom="tata"/>
   </clients>
+  <stocks>
+    <article quantite="18" type="stylo">
+      <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
+    </article>
+  </stocks>
+  <lots>
+    <lot marque="lol" nom="" prix="1.9800000000000002" quantite="1" reduction="10.0" reference="fef"/>
+  </lots>
   <commandes>
     <commande date="tata" fraisDePort="2.0" id="1" idClient="1" prix="4.4">
       <ligneCommande quantite="2" referenceArticle="lol"/>
@@ -16,13 +24,17 @@
     <commande date="tototo" fraisDePort="23.0" id="3" idClient="1" prix="6.6000000000000005">
       <ligneCommande quantite="3" referenceArticle="lol"/>
     </commande>
+    <commande date="refa" fraisDePort="12.0" id="4" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="lol"/>
+    </commande>
+    <commande date="zrfz" fraisDePort="23.0" id="5" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="lol"/>
+    </commande>
+    <commande date="zrefd" fraisDePort="23.0" id="6" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="lol"/>
+    </commande>
+    <commande date="gdsf" fraisDePort="21.0" id="7" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="lol"/>
+    </commande>
   </commandes>
-  <lots>
-    <lot marque="lol" nom="" prix="1.9800000000000002" quantite="1" reduction="10.0" reference="fef"/>
-  </lots>
-  <stocks>
-    <article quantite="20" type="stylo">
-      <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
-    </article>
-  </stocks>
 </boutique>

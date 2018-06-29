@@ -24,6 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 //TODO Vue graphique à faire en reprenant les éléments du modèle.
+
+/**
+ * Représente la vue graphique de notre application
+ */
+
 public class VueGraphique  extends Application implements Affichage {
 /*
 

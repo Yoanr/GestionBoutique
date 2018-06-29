@@ -35,9 +35,9 @@ public final class Boutique {
 		return instance;
 	}
 
-    public List<Client> getClientList() {
-        return clientList;
-    }
+	public List<Client> getClientList() {
+		return clientList;
+	}
 
 	public List<Commande> getCommandeList() {
 		return commandeList;
@@ -96,11 +96,9 @@ public final class Boutique {
 	}
 
 	public Commande ajouterCommande(String[] commandeArgs) {
-		switch (commandeArgs.length) {
-		case 3:
+		if (commandeArgs.length == 3) {
 			return ajouterCommande(new Commande(Integer.parseInt(commandeArgs[0]), commandeArgs[1],
 					Double.parseDouble(commandeArgs[2])));
-
 		}
 		return null;
 	}
@@ -109,14 +107,6 @@ public final class Boutique {
 		if (!commandeList.contains(c)) {
 			commandeList.add(c);
 
-			for (Commande.LigneDeCommande ligneDeCommande : c.getLignes()) {
-				if (ligneDeCommande.getObjet() instanceof Article) {
-					Article article = (Article) ligneDeCommande.getObjet();
-					if (article != null)
-						stocks.put(article, stocks.get(article) - ligneDeCommande.getQuantite());
-				}
-			}
-
 			return c;
 		}
 		return null;
@@ -124,14 +114,14 @@ public final class Boutique {
 
 	public String ajouterArticle(String[] articleTab) {
 		switch (articleTab[0].toLowerCase()) {
-		case "stylo":
-			return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab),
-					Integer.parseInt(articleTab[5]));
-		case "ramette":
-			return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab),
-					Integer.parseInt(articleTab[6]));
-		default:
-			return ErreurManager.AJOUTE_ERROR;
+			case "stylo":
+				return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab),
+						Integer.parseInt(articleTab[5]));
+			case "ramette":
+				return ajouterArticle(ArticleFactory.getInstance().creerArticle(articleTab),
+						Integer.parseInt(articleTab[6]));
+			default:
+				return ErreurManager.AJOUTE_ERROR;
 		}
 	}
 
@@ -157,6 +147,7 @@ public final class Boutique {
 		for (Commande commande : commandeList) {
 			if (commande.getId() == idCommande) {
 				commandeList.remove(commande);
+				Commande.suppCommande();
 
 				for (Commande.LigneDeCommande ligneDeCommande : commande.getLignes()) {
 					if (ligneDeCommande.getObjet() instanceof Article) {
@@ -200,7 +191,12 @@ public final class Boutique {
 	}
 
 	public void ajouterLigne(Commande c, String reference, int quantite) {
-		c.ajoutObjet(getArticleByReference(reference), quantite);
+
+		Article article = getArticleByReference(reference);
+		if (article != null) {
+			c.ajoutObjet(article, quantite);
+			stocks.put(article, stocks.get(article) - quantite);
+		}
 	}
 
 	public int getQuantiteById(String reference) {
@@ -257,15 +253,15 @@ public final class Boutique {
 		return ErreurManager.MODIFIE;
 	}
 
-    public List<Lot> getLots() {
-        return lotList;
-    }
+	public List<Lot> getLots() {
+		return lotList;
+	}
 
-    public List<String> getLotsList(){
-        List<String> stringList = new ArrayList<>();
-        lotList.forEach(lot->stringList.add(lot.toString()));
-        return stringList;
-    }
+	public List<String> getLotsList(){
+		List<String> stringList = new ArrayList<>();
+		lotList.forEach(lot->stringList.add(lot.toString()));
+		return stringList;
+	}
 
 	public String getNom() {
 		return nom;

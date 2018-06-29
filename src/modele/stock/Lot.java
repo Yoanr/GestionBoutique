@@ -85,6 +85,7 @@ public class Lot extends ObjetVendable {
                 "nom='" + "Lot de "+ articles.size() + "(s) " + type.getClass().getSimpleName() + '\'' +
                 ", reference='" + reference + '\'' +
                 ", referenceArticle='" + marque + '\'' +
+                ", quantité'"+getQuantite() +'\''+
                 ", reduc=" + reduc +
                 ", prix=" + prix +
                 '}';
