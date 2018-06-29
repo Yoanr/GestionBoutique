@@ -161,11 +161,11 @@ public final class Boutique {
 		}
 		return null;
 	}
-/**
- * ajouter un article avec la fabrique
- * @param articleTab
- * @return
- */
+	/**
+	 * ajouter un article avec la fabrique
+	 * @param articleTab
+	 * @return
+	 */
 	public String ajouterArticle(String[] articleTab) {
 		switch (articleTab[0].toLowerCase()) {
 			case "stylo":
@@ -208,11 +208,11 @@ public final class Boutique {
 		return null;
 	}
 
-    /**
-     * recuperer le lot par reference
-     * @param reference
-     * @return Lot
-     */
+	/**
+	 * recuperer le lot par reference
+	 * @param reference
+	 * @return Lot
+	 */
 	public Lot getLotByReference(String reference) {
 		for (Lot lot : lotList) {
 			if (lot.getReference().equals(reference))
@@ -268,12 +268,8 @@ public final class Boutique {
 	public String supprimerArticle(String articleReference) {
 		Article article = getArticleByReference(articleReference);
 		if (article != null) {
-			int oldQuantite = stocks.get(article);
 
-			if (oldQuantite <= 1)
-				stocks.remove(article);
-			else
-				stocks.put(article, oldQuantite - 1);
+			stocks.remove(article);
 			return ErreurManager.SUPPRIME;
 		}
 		return ErreurManager.SUPPRIME_ERROR;
@@ -402,10 +398,10 @@ public final class Boutique {
 	public List<Lot> getLots() {
 		return lotList;
 	}
-/**
- * recuperer a liste de lot pour la vue
- * @return
- */
+	/**
+	 * recuperer a liste de lot pour la vue
+	 * @return
+	 */
 	public List<String> getLotsList(){
 		List<String> stringList = new ArrayList<>();
 		lotList.forEach(lot->stringList.add(lot.toString()));
@@ -471,11 +467,11 @@ public final class Boutique {
 		this.benefice = benefice;
 	}
 	/**
-	   * Cette méthode renvoie une chaîne de caractères qui représente
-	   * la boutique
-	   *
-	   * @return Une chaîne de caractère
-	   */
+	 * Cette méthode renvoie une chaîne de caractères qui représente
+	 * la boutique
+	 *
+	 * @return Une chaîne de caractère
+	 */
 	@Override
 	public String toString() {
 		return "Boutique " + nom  + ", loyer=" + loyer + ", salaire=" + salaire + ", charge=" + charge

@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <boutique benefice="10000.0" ca="3000.0" charges="1000.00" loyer="500.00" nom="ChezYoEtOliv" salaires="5000.00">
   <clients>
-    <client adresse="1" id="1" nom="1" prenom="1"/>
-    <client adresse="3" id="2" nom="3" prenom="3"/>
-    <client adresse="olivier" id="3" nom="olivier" prenom="olivier"/>
-    <client adresse="toto" id="4" nom="toto" prenom="tata"/>
-    <client adresse="Massy" id="5" nom="Olivier" prenom="Marie-Louise"/>
+    <client adresse="Barcelone" id="4" nom="MARIE-LOUISE" prenom="Olivier"/>
+    <client adresse="Massy" id="5" nom="ROCK" prenom="Yoan"/>
   </clients>
   <stocks>
-    <article quantite="18" type="stylo">
-      <stylo couleur="VERT" marque="lol" prix="2.2" reference="lol"/>
+    <article quantite="20" type="stylo">
+      <stylo couleur="VERT" marque="Bic" prix="2.2" reference="R2FRT"/>
     </article>
   </stocks>
   <lots>
-    <lot marque="lol" nom="" prix="1.9800000000000002" quantite="1" reduction="10.0" reference="fef"/>
+    <lot marque="R2FRT" nom="" prix="1.9800000000000002" quantite="1" reduction="10.0" reference="R2HHH"/>
   </lots>
   <commandes>
-    <commande date="tata" fraisDePort="2.0" id="1" idClient="1" prix="4.4">
-      <ligneCommande quantite="2" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="2.0" id="1" idClient="1" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="1" fraisDePort="2.0" id="2" idClient="1" prix="2.2">
-      <ligneCommande quantite="1" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="2.0" id="2" idClient="1" prix="2.2">
+      <ligneCommande quantite="1" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="tototo" fraisDePort="23.0" id="3" idClient="1" prix="6.6000000000000005">
-      <ligneCommande quantite="3" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="23.0" id="3" idClient="1" prix="6.6000000000000005">
+      <ligneCommande quantite="3" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="refa" fraisDePort="12.0" id="4" idClient="2" prix="4.4">
-      <ligneCommande quantite="2" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="12.0" id="4" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="zrfz" fraisDePort="23.0" id="5" idClient="2" prix="4.4">
-      <ligneCommande quantite="2" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="23.0" id="5" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="zrefd" fraisDePort="23.0" id="6" idClient="2" prix="4.4">
-      <ligneCommande quantite="2" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="23.0" id="6" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="R2FRT"/>
     </commande>
-    <commande date="gdsf" fraisDePort="21.0" id="7" idClient="2" prix="4.4">
-      <ligneCommande quantite="2" referenceArticle="lol"/>
+    <commande date="29/09/2018" fraisDePort="21.0" id="7" idClient="2" prix="4.4">
+      <ligneCommande quantite="2" referenceArticle="R2FRT"/>
     </commande>
   </commandes>
 </boutique>
