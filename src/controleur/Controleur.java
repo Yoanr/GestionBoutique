@@ -22,7 +22,7 @@ public class Controleur {
      * constructeur du controleur
      * @param arg de la ligne de commande
      */
-    public Controleur(String arg) {
+    public Controleur(/*String arg*/) {
         DonneeManager.lire();
       //  if("commandLine".equals(arg)) {
             this.affichage = new VueTerminal();

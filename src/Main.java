@@ -17,7 +17,7 @@ public class Main {
         //TODO decomment pour la vue graphique
         // if (args.length == 1) {
 
-        Controleur controleur = new Controleur(args[0]);
+        Controleur controleur = new Controleur(/*args[0]*/);
 
         //}else {
         //  System.err.println("Erreur, Nombre d'arguments incorrect");
